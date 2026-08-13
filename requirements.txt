@@ -1,0 +1,5 @@
+cd GSWA-hylogger-Industry-Adoption
+# create the files
+git add .
+git commit -m "feat: add initial project structure and ETL scripts"
+git push origin main
