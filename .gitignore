@@ -216,3 +216,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+data/tsg_files/
+*.tsg
+*.bip
+*.cal
+*.ini
