@@ -19,3 +19,6 @@ shap
 matplotlib
 seaborn
 jupyter
+
+pytsg
+requests
