@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgis/postgis:16-3.4
+    container_name: gswa_db
+    environment:
+      POSTGRES_USER: gswa
+      POSTGRES_PASSWORD: gswa123
+      POSTGRES_DB: hylogger
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gswa -d hylogger"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gswa_api
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://gswa:gswa123@db:5432/hylogger
+    volumes:
+      - .:/app
+
+volumes:
+  postgres_data:
