@@ -5,7 +5,6 @@ numpy
 scikit-learn
 fastapi
 uvicorn
-streamlit
 sqlalchemy
 psycopg2-binary
 python-dotenv
@@ -13,4 +12,6 @@ shap
 matplotlib
 seaborn
 jupyter
+streamlit
+plotly
 requests
