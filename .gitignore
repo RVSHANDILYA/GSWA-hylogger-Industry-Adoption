@@ -222,3 +222,7 @@ data/tsg_files/
 *.bip
 *.cal
 *.ini
+
+# Locally generated project data
+data/*.csv
+data/*.parquet
