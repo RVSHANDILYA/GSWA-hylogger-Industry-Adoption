@@ -222,3 +222,6 @@ data/tsg_files/
 *.bip
 *.cal
 *.ini
+
+# Pulled data is reproducible; keep it out of the repo.
+data/*.csv
