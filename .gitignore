@@ -223,6 +223,6 @@ data/tsg_files/
 *.cal
 *.ini
 
-# Locally generated project data
+# Locally generated project data is reproducible; keep it out of the repo.
 data/*.csv
 data/*.parquet
