@@ -28,7 +28,9 @@ WASTE_COMBINED = 55
 WHITE_MICA_WASTE_MAX = 15
 CARBONATE_WASTE_MAX = 15
 # Placeholder pending client-validated Error thresholds, like mineral cutoffs.
-EXPECTED_MAX_ERROR = 15
+# Rounded 75th percentile (306.619297) of the current 276 interval means.
+# This empirical cutoff controls coverage; it is not validated spectral quality.
+EXPECTED_MAX_ERROR = 307
 
 
 def classify_interval(row):
@@ -175,11 +177,11 @@ def report(results):
 def run_self_test():
     """Fail loudly on mask, confidence, method or rule regressions."""
     base = {"WHITE-MICA": 48, "CHLORITE": 31, "CARBONATE": 10,
-            "DARK-MICA": 11, "total_n": 400, "Error": 15,
+            "DARK-MICA": 11, "total_n": 400, "Error": EXPECTED_MAX_ERROR,
             "Final Mask": 1, "method": "uTSAS", "Wt1": 1.0}
     assert classify_interval(base)["rule_fired"] == "R1_phyllic"
     pd.testing.assert_series_equal(classify_interval(base), classify_interval({**base, "Wt1": 0.1}))
-    for error in (15.01, np.nan, np.inf, -1):
+    for error in (EXPECTED_MAX_ERROR + 0.01, np.nan, np.inf, -1):
         assert classify_interval({**base, "Error": error})["label"] == "Unclassified"
     assert classify_interval({**base, "WHITE-MICA": 10, "CARBONATE": 20})["rule_fired"] == "R2_ore"
     assert classify_interval({**base, "WHITE-MICA": 10, "DARK-MICA": 60})["rule_fired"] == "R3_waste"
