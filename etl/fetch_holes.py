@@ -1,32 +1,16 @@
-"""
-Fetch uTSAS mineral-group data from the WA National Virtual Core Library.
+"""Fetch aligned Grp1, Min1, Wt1, Error and Final Mask native SWIR scans.
 
-This file retrieves the Grp1 uTSAS mineral classifications used by the
-mineral-percentage, EDA, classifier, anomaly, transition, and similarity
-components of the project.
-
-Important implementation choices
---------------------------------
-- Resolution is currently 20 m for the prototype. This is a downsampled
-  analysis resolution, not the native HyLogger scan spacing.
-- top_n=100 is deliberately used so the mineral composition is not truncated
-  to the top five classes. Testing on the first 20 WA holes found as many as
-  13 valid mineral classes at a sampled depth.
-- INVALID and NOTAROK records are deliberately retained here. They provide
-  useful data-quality evidence and are removed later when the modelling-ready
-  mineral-percentage matrix is created.
-
-Output
-------
-data/raw_holes.csv
-
-Run
----
-python etl/fetch_holes.py
+Final Mask must be filtered before aggregation into 20 m intervals. Existing
+raw_holes.csv fixes the hole selection; otherwise the first 20 WA holes are
+used. Wt1 records mineral mixture weight, not data quality.
+Run: python etl/fetch_holes.py
 """
 
 from pathlib import Path
+from io import StringIO
+import xml.etree.ElementTree as ET
 
+import numpy as np
 import pandas as pd
 from nvcl_kit.constants import Scalar
 from nvcl_kit.generators import gen_scalar_by_depth
@@ -175,68 +159,76 @@ def print_quality_summary(df):
     print("=" * 60)
 
 
-if __name__ == "__main__":
-    DATA_DIR.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
+def pull_native_scalars(reader, hole_ids):
+    """Fetch aligned SWIR scans, retaining the linked mask before binning.
 
-    print("Connecting to WA NVCL...")
+    Final Mask is log type 6, unsupported by getDownsampledData. Download
+    all five scalars together so duplicate scan depths remain aligned.
+    getLogCollection exposes maskLogID (capital ID), which nvcl-kit currently
+    misses when parsing mask_log_id. Never select a mask by name alone.
+    """
+    frames = []
+    names = ("Grp1 uTSAS", "Min1 uTSAS", "Wt1 uTSAS", "Error uTSAS")
+    for hole_id in hole_ids:
+        datasets = ET.fromstring(reader.svc.get_dataset_collection(hole_id))
+        candidates = []
+        for dataset in datasets.findall("Dataset"):
+            logs = ET.fromstring(reader.svc.get_log_collection(dataset.findtext("DatasetID")))
+            selected = {}
+            for name in names:
+                matches = [log for log in logs.findall("Log") if log.findtext("logName") == name]
+                if len(matches) > 1:
+                    raise ValueError(f"{hole_id}: ambiguous {name} logs")
+                if matches:
+                    selected[name] = matches[0]
+            if len(selected) == len(names):
+                candidates.append((logs, selected))
+        if len(candidates) != 1:
+            raise ValueError(f"{hole_id}: expected one complete uTSAS dataset, got {len(candidates)}")
+        logs, selected = candidates[0]
+        mask_ids = {log.findtext("maskLogID") for log in selected.values()}
+        if len(mask_ids) != 1 or None in mask_ids or "" in mask_ids:
+            raise ValueError(f"{hole_id}: missing or inconsistent SWIR mask linkage")
+        mask_id = mask_ids.pop()
+        masks = [log for log in logs.findall("Log") if log.findtext("LogID") == mask_id]
+        if len(masks) != 1 or masks[0].findtext("logName") != "Final Mask":
+            raise ValueError(f"{hole_id}: linked mask is not Final Mask")
+        ids = [log.findtext("LogID") for log in selected.values()] + [mask_id]
+        native = pd.read_csv(StringIO(reader.get_scalar_data(ids)))
+        required = {"StartDepth", "Grp1_uTSAS", "Min1_uTSAS", "Wt1_uTSAS", "Error_uTSAS", "Final_Mask"}
+        if native.empty or not required.issubset(native.columns):
+            raise ValueError(f"{hole_id}: incomplete native scalar response")
+        native = native.rename(columns={
+            "StartDepth": "sample_depth", "Grp1_uTSAS": "value",
+            "Min1_uTSAS": "Min1", "Wt1_uTSAS": "Wt1",
+            "Error_uTSAS": "Error", "Final_Mask": "Final Mask",
+        })
+        native["hole_id"] = hole_id
+        native["method"] = "uTSAS"
+        native["mask_log_id"] = mask_id
+        native["depth"] = np.floor(native["sample_depth"] / DEFAULT_RESOLUTION_M) * DEFAULT_RESOLUTION_M + DEFAULT_RESOLUTION_M / 2
+        native["count"] = 1
+        frames.append(native[["hole_id", "depth", "sample_depth", "value", "count", "Min1", "Wt1", "Error", "Final Mask", "method", "mask_log_id"]])
+        print(f"{hole_id}: {len(native):,} native SWIR scans downloaded")
+    return pd.concat(frames, ignore_index=True)
+
+
+def main():
+    """Refresh the existing hole selection with all required native scalars."""
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    existing = pd.read_csv(RAW_OUTPUT, usecols=["hole_id"]) if RAW_OUTPUT.exists() else None
     reader = get_reader()
-
-    hole_ids = get_hole_ids(reader)
-
+    hole_ids = existing["hole_id"].drop_duplicates().tolist() if existing is not None else get_hole_ids(reader)
     if not hole_ids:
-        raise RuntimeError(
-            "No NVCL boreholes were returned."
-        )
+        raise ValueError("No source holes selected")
+    df = pull_native_scalars(reader, hole_ids)
+    if set(df["hole_id"]) != set(hole_ids):
+        raise ValueError("Downloaded hole selection differs from requested holes")
+    temporary = RAW_OUTPUT.with_suffix(".tmp")
+    df.to_csv(temporary, index=False)
+    temporary.replace(RAW_OUTPUT)
+    print(f"Saved {len(df):,} native scans across {len(hole_ids)} holes to {RAW_OUTPUT}")
 
-    print(
-        f"Found {len(hole_ids)} holes with NVCL scan data."
-    )
 
-    print(
-        "\nPulling Grp1 uTSAS mineral groups "
-        f"at {DEFAULT_RESOLUTION_M:g} m resolution..."
-    )
-
-    rows = pull_scalar(
-        reader,
-        Scalar.Grp1_uTSAS,
-        log_type="1",
-        resolution=DEFAULT_RESOLUTION_M,
-        top_n=DEFAULT_TOP_N,
-        remove_invalid=False,
-    )
-
-    if not rows:
-        raise RuntimeError(
-            "NVCL returned no Grp1 uTSAS data."
-        )
-
-    df = pd.DataFrame(rows)
-
-    df["count"] = pd.to_numeric(
-        df["count"],
-        errors="coerce",
-    )
-
-    df = (
-        df.sort_values(
-            ["hole_id", "depth", "count"],
-            ascending=[True, True, False],
-            na_position="last",
-        )
-        .reset_index(drop=True)
-    )
-
-    print_quality_summary(df)
-
-    df.to_csv(
-        RAW_OUTPUT,
-        index=False,
-    )
-
-    print(
-        f"\nSaved raw TSA mineral data to {RAW_OUTPUT}"
-    )
+if __name__ == "__main__":
+    main()
