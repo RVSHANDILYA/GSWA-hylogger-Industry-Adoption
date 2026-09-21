@@ -15,13 +15,16 @@ data/mineral_percentages.csv
 
 data/interval_quality.csv
     One row per (hole_id, depth), containing data-quality diagnostics
-    calculated from the unfiltered raw NVCL response.
+    calculated after Final Mask filtering, before mineral-label cleaning.
 
 Important
 ---------
 The raw fetch deliberately retains INVALID and NOTAROK classifications.
 They are used to measure data quality here, but they are excluded from
 the mineral percentage calculation.
+Final Mask is applied to native scans immediately after loading. Error is
+averaged only over retained scans with valid mineral groups; Wt1 is not a
+confidence measure and does not enter the classifier input.
 
 Run
 ---
@@ -48,7 +51,39 @@ REQUIRED_COLUMNS = {
     "depth",
     "value",
     "count",
+    "Final Mask",
+    "Error",
+    "method",
 }
+
+
+def filter_final_mask(df):
+    """Keep native scans where the TSG inclusion mask is 1, before binning.
+
+    TSG boolean masks retain 1 and exclude 0. Do not infer polarity from
+    retention rates or average boolean masks across a depth interval.
+    """
+    if "Final Mask" not in df:
+        raise AssertionError("Final Mask is required before conversion")
+    mask = pd.to_numeric(df["Final Mask"], errors="coerce")
+    if not mask.isin([0, 1]).all():
+        raise AssertionError("Final Mask must contain only known binary values")
+    kept = df.loc[mask.eq(1)].copy()
+    print(f"Final Mask filter: {len(df):,} -> {len(kept):,} rows")
+    if len(df) and len(kept) < len(df) * 0.1:
+        print("WARNING: Final Mask excluded more than 90 percent; stopping for review.")
+        raise AssertionError("Final Mask exclusion exceeds 90 percent")
+    return kept
+
+
+def validate_swir(df):
+    """Require explicit SWIR provenance and reject other TSA methods."""
+    if "method" not in df or not df["method"].eq("uTSAS").all():
+        raise AssertionError("Only explicitly identified uTSAS data is accepted")
+    for column in df.columns:
+        upper = str(column).upper()
+        if "TSA" in upper and "TSAS" not in upper:
+            raise AssertionError(f"Non-SWIR column rejected: {column}")
 
 
 def load_raw_data(path=RAW_INPUT):
@@ -60,6 +95,8 @@ def load_raw_data(path=RAW_INPUT):
         )
 
     df = pd.read_csv(path)
+    df = filter_final_mask(df)
+    validate_swir(df)
 
     missing_columns = REQUIRED_COLUMNS.difference(df.columns)
 
@@ -274,6 +311,7 @@ def get_mineral_columns(df):
         "hole_id",
         "depth",
         "total_n",
+        "Error", "Final Mask", "method",
     }
 
     return [
@@ -507,6 +545,18 @@ if __name__ == "__main__":
     percentages = abundance_to_percentages(
         clean
     )
+
+    # Confidence uses mean Error over mask-retained scans with valid mineral
+    # classifications. Any missing/invalid Error makes the interval unknown.
+    valid_scans = raw.loc[~raw["flagged"]].copy()
+    errors = pd.to_numeric(valid_scans["Error"], errors="coerce")
+    valid_scans["Error"] = errors.where(np.isfinite(errors) & errors.ge(0))
+    interval_errors = valid_scans.groupby(["hole_id", "depth"])["Error"].agg(
+        lambda values: values.mean() if values.notna().all() else np.nan
+    ).reset_index()
+    percentages = percentages.merge(interval_errors, on=["hole_id", "depth"], validate="one_to_one")
+    percentages["Final Mask"] = 1
+    percentages["method"] = "uTSAS"
 
     percentages = (
         percentages

@@ -11,6 +11,9 @@ The NVCL numeric-scalar response for Wt1 contains:
 
 This script deliberately stores Wt1 separately from the mineral-group data.
 The two datasets can be joined using (hole_id, depth).
+The main fetch_holes.py pipeline also includes native Wt1 alongside its mask.
+This separate export is for exploration only. Wt1 measures mineral mixture
+weight, not quality or confidence; 1.0 means one dominant mineral phase.
 
 Output
 ------
@@ -79,7 +82,12 @@ def pull_wt1(
     """Retrieve Wt1 uTSAS values for all configured boreholes."""
     rows = []
 
-    for hole_id in reader.get_nvcl_id_list():
+    raw_path = DATA_DIR / "raw_holes.csv"
+    hole_ids = (
+        pd.read_csv(raw_path, usecols=["hole_id"])["hole_id"].drop_duplicates().tolist()
+        if raw_path.exists() else reader.get_nvcl_id_list()
+    )
+    for hole_id in hole_ids:
 
         log = find_log(
             reader,
