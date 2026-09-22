@@ -35,7 +35,9 @@ CREATE TABLE classification (
     label VARCHAR(50),
     confidence DOUBLE PRECISION,
     reason TEXT,
-    rule_fired VARCHAR(100)
+    rule_fired VARCHAR(100),
+    final_mask BOOLEAN,
+    confidence_error NUMERIC
 );
 
 CREATE TABLE validation (
