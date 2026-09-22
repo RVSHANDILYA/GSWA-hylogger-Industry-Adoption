@@ -1,0 +1,136 @@
+.notice {
+  margin-bottom: var(--space-6);
+}
+
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: start;
+}
+
+/* Selecting a hole opens a sticky panel beside the grid rather than pushing
+   the list down the page, so the cards stay in view while you read one. */
+@media (min-width: 960px) {
+  .withDetail {
+    grid-template-columns: minmax(0, 1fr) 24rem;
+  }
+}
+
+.detail {
+  position: sticky;
+  top: calc(var(--nav-height) + var(--space-4));
+}
+
+.detailHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.detailId {
+  font-family: var(--font-mono);
+  font-size: var(--size-lg);
+  color: var(--text-primary);
+}
+
+.detailRegion {
+  margin-top: 2px;
+  color: var(--text-muted);
+  font-size: var(--size-sm);
+}
+
+.close {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 1px solid var(--border-default);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.close:hover {
+  background: var(--surface-hover);
+  color: var(--text-primary);
+}
+
+.detailGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.detailFoot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+}
+
+.intervalList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  list-style: none;
+  padding: var(--space-4) 0 0;
+  margin: 0;
+}
+
+.intervalRow {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--surface-sunken);
+}
+
+.intervalDepth {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--size-sm);
+  color: var(--text-secondary);
+}
+
+.intervalLabel {
+  font-size: var(--size-sm);
+  color: var(--text-primary);
+}
+
+.sectionLabel {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-top: var(--space-5);
+}
+
+@media (max-width: 959px) {
+  .detail {
+    position: static;
+  }
+}
+
+@media (max-width: 720px) {
+  .intervalRow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-2);
+  }
+
+  .detail {
+    position: static;
+  }
+}

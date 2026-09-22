@@ -1,0 +1,329 @@
+/* Landing page. The one place on the site that gets to be expressive. */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* Two slow drifting washes behind the copy. They sit under a mask so the
+   colour never reaches the text and hurts contrast. */
+.wash {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+.washWarm {
+  top: -18%;
+  left: -8%;
+  width: 46rem;
+  height: 32rem;
+  background: radial-gradient(closest-side, rgba(227, 154, 59, 0.34), transparent);
+}
+
+.washCool {
+  top: 8%;
+  right: -14%;
+  width: 44rem;
+  height: 34rem;
+  background: radial-gradient(closest-side, rgba(57, 135, 229, 0.3), transparent);
+}
+
+/* A faint grid, the kind on a survey plan, keeps the hero from being an empty
+   gradient. It fades out before it reaches the bottom edge. */
+.grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(163, 176, 196, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(163, 176, 196, 0.06) 1px, transparent 1px);
+  background-size: 68px 68px;
+  mask-image: radial-gradient(120% 90% at 30% 0%, #000 20%, transparent 78%);
+}
+
+.heroInner {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-8);
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: clamp(3.5rem, 8vw, 7rem) var(--page-gutter) clamp(3rem, 6vw, 5.5rem);
+}
+
+.eyebrowRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.rule {
+  width: 2.5rem;
+  height: 1px;
+  background: var(--accent);
+  flex: none;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--size-hero);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  max-width: 16ch;
+}
+
+.titleAccent {
+  color: var(--ochre-400);
+  font-style: italic;
+}
+
+.tagline {
+  max-width: 54ch;
+  margin-top: var(--space-5);
+  color: var(--text-secondary);
+  font-size: var(--size-md);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+/* The core strip: the hero's one piece of illustration, and it is the same
+   idea as the charts, a hole read as a stack of minerals. */
+.core {
+  display: flex;
+  flex-direction: column;
+  width: 6rem;
+  flex: none;
+}
+
+.coreCap {
+  height: 1.9rem;
+  border: 1px solid var(--accent-line);
+  border-bottom: 0;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  background: var(--surface-sunken);
+}
+
+.coreBody {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--accent-line);
+  border-top: 0;
+  border-bottom: 0;
+  background: var(--surface-sunken);
+}
+
+/* Shading across the width turns a stack of flat bars into something that
+   reads as a cylinder of rock rather than a bar chart stood on its end. */
+.coreBody::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.62),
+    rgba(0, 0, 0, 0.12) 26%,
+    rgba(255, 255, 255, 0.12) 42%,
+    rgba(0, 0, 0, 0.14) 66%,
+    rgba(0, 0, 0, 0.66)
+  );
+}
+
+.coreBand {
+  width: 100%;
+}
+
+.coreFoot {
+  height: 1.9rem;
+  border: 1px solid var(--accent-line);
+  border-top: 0;
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  background: var(--surface-sunken);
+}
+
+.coreScale {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Figures strip under the hero */
+.figures {
+  position: relative;
+  border-top: 1px solid var(--border-subtle);
+  background: color-mix(in srgb, var(--surface-sunken) 70%, transparent);
+}
+
+.figuresInner {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-5);
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--space-6) var(--page-gutter);
+}
+
+/* Pipeline */
+.section {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--space-8) var(--page-gutter) 0;
+}
+
+.sectionHead {
+  max-width: 52ch;
+  margin-bottom: var(--space-6);
+}
+
+.sectionTitle {
+  margin-top: var(--space-2);
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--size-xl);
+  color: var(--text-primary);
+}
+
+.sectionLede {
+  margin-top: var(--space-3);
+  color: var(--text-secondary);
+}
+
+/* Six stages read best as one run. Below that they fold to three then two,
+   never five and an orphan. */
+.pipeline {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--space-3);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+@media (max-width: 1080px) {
+  .pipeline {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .pipeline {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+}
+
+.stepIndex {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: var(--tracking-label);
+  color: var(--accent);
+}
+
+.stepName {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.stepNote {
+  color: var(--text-muted);
+  font-size: var(--size-sm);
+}
+
+/* Route teasers */
+.routes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: var(--space-4);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.routes > li {
+  display: flex;
+}
+
+.routeCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  text-decoration: none;
+}
+
+.routeIcon {
+  display: grid;
+  place-items: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--accent-line);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.routeName {
+  font-size: var(--size-md);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.routeNote {
+  color: var(--text-secondary);
+  font-size: var(--size-sm);
+}
+
+.routeLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: auto;
+  padding-top: var(--space-3);
+  color: var(--accent);
+  font-size: var(--size-sm);
+  font-weight: 500;
+}
+
+@media (max-width: 900px) {
+  .heroInner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .core {
+    display: none;
+  }
+
+  .figuresInner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

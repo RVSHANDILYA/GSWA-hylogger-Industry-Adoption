@@ -1,0 +1,30 @@
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.value {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--size-xl);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--text-primary);
+}
+
+.unit {
+  margin-left: 0.15em;
+  font-size: var(--size-md);
+  color: var(--text-muted);
+}
+
+.label {
+  color: var(--text-secondary);
+  font-size: var(--size-sm);
+}
+
+.note {
+  color: var(--text-muted);
+  font-size: var(--size-xs);
+}
