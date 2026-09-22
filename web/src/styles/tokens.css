@@ -1,0 +1,158 @@
+/*
+  GSWA HyLogger, design tokens.
+
+  Single source of truth for colour, type, spacing, radius and motion.
+  Every component in src/components reads from here. If you need a value
+  that is not in this file, add it here first rather than hard coding it
+  in a component, so the whole site stays consistent.
+
+  Identity notes, so the choices are not a mystery to whoever edits next:
+
+  - The interface is dark only, on purpose. The client works with drill core
+    imagery and spectral plots, and a dark ground keeps those readable and
+    keeps the tool feeling like an instrument rather than a document.
+  - The neutrals are deliberately cool (hue near 222) rather than a flat grey,
+    so the warm ochre accent reads as a considered pairing.
+  - Ochre is the Western Australian iron rich core colour. It is reserved for
+    interactive and brand surfaces: buttons, the active nav item, focus rings,
+    rules and marks that belong to the product voice.
+  - Status colours are reserved for state (good, caution, problem) and are
+    never used as a chart series colour, and never carry meaning on their own.
+    They always ship with an icon and a text label.
+  - The --viz-* series colours are for chart marks only. The five slot order is
+    fixed and was validated for colour vision deficiency separation and for
+    contrast against --viz-surface, so do not reorder or recolour them. A sixth
+    category folds into --viz-other rather than inventing a new hue.
+*/
+
+:root {
+  color-scheme: dark;
+
+  /* Ink, the cool neutral ramp */
+  --ink-1000: #05080d;
+  --ink-900: #090d14;
+  --ink-800: #0f1520;
+  --ink-700: #151d2b;
+  --ink-600: #1e2839;
+  --ink-500: #2b3749;
+  --ink-400: #3d4b60;
+
+  /* Surfaces */
+  --surface-page: var(--ink-1000);
+  --surface-sunken: var(--ink-900);
+  --surface-raised: var(--ink-800);
+  --surface-hover: var(--ink-700);
+
+  /* Lines */
+  --border-subtle: #16202e;
+  --border-default: var(--ink-600);
+  --border-strong: var(--ink-500);
+
+  /* Text, all four clear 4.3:1 or better on --surface-raised */
+  --text-primary: #e9eef7;
+  --text-secondary: #a3b0c4;
+  --text-muted: #6e7d94;
+  --text-on-accent: #12100b;
+
+  /* Brand, ochre */
+  --ochre-300: #f7cb95;
+  --ochre-400: #f0b265;
+  --ochre-500: #e39a3b;
+  --ochre-600: #c87f26;
+  --accent: var(--ochre-500);
+  --accent-hover: var(--ochre-400);
+  --accent-soft: rgba(227, 154, 59, 0.13);
+  --accent-line: rgba(227, 154, 59, 0.32);
+
+  /* Status, reserved for state. Always pair with an icon and a label. */
+  --status-good: #0ca30c;
+  --status-caution: #ec835a;
+  --status-problem: #d03b3b;
+  --status-good-soft: rgba(12, 163, 12, 0.14);
+  --status-caution-soft: rgba(236, 131, 90, 0.14);
+  --status-problem-soft: rgba(208, 59, 59, 0.15);
+
+  /* Classifier outcome tones, one per label the classifier can return */
+  --label-ore: #0ca30c;
+  --label-altered: #9085e9;
+  --label-waste: #7d8ba1;
+  --label-unclassified: #6e7d94;
+
+  /* Chart series, mineral identity. Fixed order, validated set. */
+  --viz-1: #3987e5;
+  --viz-2: #d95926;
+  --viz-3: #199e70;
+  --viz-4: #c98500;
+  --viz-5: #d55181;
+  --viz-other: #7d8ba1;
+  --viz-surface: var(--ink-800);
+  --viz-grid: #1e2839;
+  --viz-axis: #6e7d94;
+
+  /* Type */
+  --font-display: "Instrument Serif", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --font-sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --size-xs: 0.75rem;
+  --size-sm: 0.8125rem;
+  --size-base: 0.9375rem;
+  --size-md: 1.0625rem;
+  --size-lg: 1.3125rem;
+  --size-xl: 1.75rem;
+  --size-2xl: 2.375rem;
+  --size-hero: clamp(2.75rem, 1.55rem + 4.8vw, 4.75rem);
+
+  --leading-tight: 1.1;
+  --leading-snug: 1.35;
+  --leading-normal: 1.65;
+  --tracking-label: 0.12em;
+  --tracking-tight: -0.015em;
+
+  /* Spacing, 4px base */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+
+  /* Shape */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+
+  /* Elevation. On a dark ground a hairline plus a soft drop reads better
+     than a heavy shadow, so cards carry an inset top highlight. */
+  --shadow-card:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035),
+    0 10px 28px rgba(0, 0, 0, 0.45);
+  --shadow-lifted:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 18px 44px rgba(0, 0, 0, 0.55);
+  --focus-ring: 0 0 0 2px var(--surface-page), 0 0 0 4px var(--accent);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 140ms;
+  --duration-base: 240ms;
+  --duration-slow: 420ms;
+
+  /* Layout */
+  --page-max: 1180px;
+  --page-gutter: var(--space-5);
+  --nav-height: 68px;
+}
+
+@media (max-width: 640px) {
+  :root {
+    --page-gutter: var(--space-4);
+    --nav-height: 60px;
+  }
+}

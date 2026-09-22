@@ -1,0 +1,26 @@
+.notice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface-sunken);
+  color: var(--text-secondary);
+  font-size: var(--size-sm);
+}
+
+.icon {
+  flex: none;
+  margin-top: 2px;
+  color: var(--accent);
+}
+
+.title {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.body {
+  margin-top: var(--space-1);
+}

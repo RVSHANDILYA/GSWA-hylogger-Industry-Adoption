@@ -1,0 +1,56 @@
+.card {
+  position: relative;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.padded {
+  padding: var(--space-5);
+}
+
+.compact {
+  padding: var(--space-4);
+}
+
+.flush {
+  padding: 0;
+}
+
+/* Interactive cards get a hairline that warms up and a small lift. Keep the
+   lift small: a card that jumps reads as a toy. */
+.interactive {
+  display: block;
+  width: 100%;
+  text-align: left;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    border-color var(--duration-base) var(--ease-out),
+    background-color var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
+}
+
+.interactive:hover {
+  background: var(--surface-hover);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-lifted);
+}
+
+.selected {
+  border-color: var(--accent-line);
+  background: var(--surface-hover);
+}
+
+/* A hairline of ochre down the left edge marks the selected card without
+   repainting it, so the card still reads as the same object. */
+.selected::before {
+  content: "";
+  position: absolute;
+  inset: var(--space-4) auto var(--space-4) 0;
+  width: 2px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+}

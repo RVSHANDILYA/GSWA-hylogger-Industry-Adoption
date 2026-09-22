@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="7" fill="#05080d"/>
+  <clipPath id="c"><path d="M8 8.5h16v15a8 3 0 0 1-16 0Z"/></clipPath>
+  <g clip-path="url(#c)">
+    <rect x="8" y="8.5" width="16" height="3.4" fill="#3987e5"/>
+    <rect x="8" y="11.9" width="16" height="3.4" fill="#d95926"/>
+    <rect x="8" y="15.3" width="16" height="3.4" fill="#199e70"/>
+    <rect x="8" y="18.7" width="16" height="3.4" fill="#c98500"/>
+    <rect x="8" y="22.1" width="16" height="5" fill="#d55181"/>
+  </g>
+  <ellipse cx="16" cy="8.5" rx="8" ry="3" fill="#05080d" stroke="#e39a3b" stroke-width="1.7"/>
+  <path d="M8 8.5v15a8 3 0 0 0 16 0v-15" fill="none" stroke="#e39a3b" stroke-width="1.7" stroke-linecap="round"/>
+</svg>

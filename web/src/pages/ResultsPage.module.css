@@ -1,0 +1,128 @@
+.layout {
+  display: grid;
+  grid-template-columns: 17rem minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.rail {
+  position: sticky;
+  top: calc(var(--nav-height) + var(--space-4));
+}
+
+.railHead {
+  margin-bottom: var(--space-4);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  gap: var(--space-4);
+}
+
+.intervals {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.interval {
+  display: grid;
+  grid-template-columns: 8.5rem minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: start;
+}
+
+.depth {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.depthRange {
+  font-size: var(--size-base);
+  color: var(--text-primary);
+}
+
+.depthSpan {
+  font-size: var(--size-xs);
+  color: var(--text-muted);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.reason {
+  color: var(--text-secondary);
+  font-size: var(--size-sm);
+}
+
+.dominant {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--size-sm);
+  color: var(--text-secondary);
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  flex: none;
+}
+
+/* Flagged intervals get a warm left edge and a dashed hairline, on top of the
+   badge and its icon. Three signals, none of them colour on its own. */
+.flagged {
+  border-color: rgba(236, 131, 90, 0.4);
+  border-left: 3px solid var(--status-caution);
+}
+
+.excluded {
+  border-color: rgba(208, 59, 59, 0.42);
+  border-left: 3px solid var(--status-problem);
+  border-style: dashed;
+  border-left-style: solid;
+}
+
+.empty {
+  display: grid;
+  place-items: center;
+  min-height: 22rem;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rail {
+    position: static;
+  }
+
+  .interval {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-2);
+  }
+}
