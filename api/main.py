@@ -1,5 +1,7 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from typing import Optional
+from api.db import get_connection
 
 app = FastAPI(
     title="GSWA HyLogger API",
@@ -14,37 +16,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# Dummy data for now. Sprint 2 replaces this with real database queries.
-DUMMY_HOLES = [
-    {
-        "hole_id": "05GJD001",
-        "region": "Kalgoorlie",
-        "latitude": -30.71,
-        "longitude": 121.39,
-        "total_depth_m": 210,
-        "intervals_classified": 6
-    },
-    {
-        "hole_id": "07LAV003",
-        "region": "Laverton",
-        "latitude": -28.62,
-        "longitude": 122.41,
-        "total_depth_m": 180,
-        "intervals_classified": 5
-    },
-]
-
-DUMMY_INTERVALS = {
-    "05GJD001": [
-        {"depth_from_m": 0, "depth_to_m": 30, "label": "Waste rock", "confidence": 0.72},
-        {"depth_from_m": 30, "depth_to_m": 70, "label": "Altered zone", "confidence": 0.81},
-        {"depth_from_m": 70, "depth_to_m": 110, "label": "Altered zone", "confidence": 0.85},
-        {"depth_from_m": 110, "depth_to_m": 150, "label": "Unclassified", "confidence": 0.40},
-        {"depth_from_m": 150, "depth_to_m": 180, "label": "Possible ore zone", "confidence": 0.67},
-        {"depth_from_m": 180, "depth_to_m": 210, "label": "Possible ore zone", "confidence": 0.74},
-    ]
-}
 
 
 @app.get("/")
@@ -65,29 +36,78 @@ def health():
 
 @app.get("/holes")
 def list_holes():
-    """Return all processed holes with summary metadata."""
+    """Return all holes with summary metadata, from the database."""
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT hole_id, region, latitude, longitude, total_depth_m
+                FROM hole
+                ORDER BY hole_id;
+            """)
+            holes = cur.fetchall()
+    finally:
+        conn.close()
     return {
-        "count": len(DUMMY_HOLES),
-        "holes": DUMMY_HOLES
+        "count": len(holes),
+        "holes": holes
     }
 
 
 @app.get("/holes/{hole_id}")
 def get_hole(hole_id: str):
     """Return metadata for one specific hole."""
-    for hole in DUMMY_HOLES:
-        if hole["hole_id"] == hole_id:
-            return hole
-    raise HTTPException(status_code=404, detail=f"Hole {hole_id} not found")
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT hole_id, region, latitude, longitude, total_depth_m
+                FROM hole
+                WHERE hole_id = %s;
+            """, (hole_id,))
+            hole = cur.fetchone()
+    finally:
+        conn.close()
+    if not hole:
+        raise HTTPException(status_code=404, detail=f"Hole {hole_id} not found")
+    return hole
 
 
 @app.get("/holes/{hole_id}/intervals")
-def get_hole_intervals(hole_id: str):
-    """Return the classified depth intervals for one hole."""
-    if hole_id not in DUMMY_INTERVALS:
+def get_hole_intervals(hole_id: str, min_confidence: Optional[float] = Query(None)):
+    """Return the classified depth intervals for one hole.
+
+    min_confidence filters to intervals whose confidence_error is at or
+    below the given threshold (lower Error means higher trust).
+    """
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            if min_confidence is not None:
+                cur.execute("""
+                    SELECT depth_from_m, depth_to_m, label, confidence,
+                           reason, rule_fired, final_mask, confidence_error
+                    FROM classification
+                    WHERE hole_id = %s AND confidence_error <= %s
+                    ORDER BY depth_from_m;
+                """, (hole_id, min_confidence))
+            else:
+                cur.execute("""
+                    SELECT depth_from_m, depth_to_m, label, confidence,
+                           reason, rule_fired, final_mask, confidence_error
+                    FROM classification
+                    WHERE hole_id = %s
+                    ORDER BY depth_from_m;
+                """, (hole_id,))
+            intervals = cur.fetchall()
+    finally:
+        conn.close()
+
+    if not intervals:
         raise HTTPException(status_code=404, detail=f"No intervals found for {hole_id}")
+
     return {
         "hole_id": hole_id,
-        "count": len(DUMMY_INTERVALS[hole_id]),
-        "intervals": DUMMY_INTERVALS[hole_id]
+        "count": len(intervals),
+        "intervals": intervals
     }
