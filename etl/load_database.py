@@ -14,11 +14,30 @@ CLASSIFICATION_FILE = Path(
 )
 
 
+MINERAL_COLUMNS = [
+    "AMPHIBOLE",
+    "CARBONATE",
+    "CHLORITE",
+    "DARK-MICA",
+    "EPIDOTE",
+    "KAOLIN",
+    "OTHER-ALOH",
+    "OTHER-MGOH",
+    "PAL-SEP",
+    "SERPENTINE",
+    "SMECTITE",
+    "SULPHATE",
+    "TOURMALINE",
+    "WHITE-MICA",
+]
+
+
 def get_connection():
     return psycopg2.connect(DATABASE_URL)
 
 
 def load_hole_metadata(conn):
+
     print("Loading hole metadata...")
 
     param = param_builder(
@@ -31,6 +50,7 @@ def load_hole_metadata(conn):
     holes = reader.get_boreholes_list()
 
     with conn.cursor() as cur:
+
         for hole in holes:
 
             cur.execute(
@@ -122,15 +142,78 @@ def load_classifications(conn):
     )
 
 
+def load_mineral_intervals(conn):
+
+    print("Loading mineral composition...")
+
+    df = pd.read_csv(
+        CLASSIFICATION_FILE
+    )
+
+    inserted = 0
+
+    with conn.cursor() as cur:
+
+        # Avoid duplicate mineral rows when rerunning loader
+        cur.execute(
+            "TRUNCATE TABLE interval RESTART IDENTITY;"
+        )
+
+        for _, row in df.iterrows():
+
+            for mineral in MINERAL_COLUMNS:
+
+                percentage = row[mineral]
+
+                # Skip missing or zero minerals
+                if pd.isna(percentage) or percentage <= 0:
+                    continue
+
+                cur.execute(
+                    """
+                    INSERT INTO interval
+                    (
+                        hole_id,
+                        depth_from_m,
+                        depth_to_m,
+                        mineral,
+                        mineral_pct,
+                        tsa_method,
+                        confidence_weight
+                    )
+                    VALUES
+                    (%s,%s,%s,%s,%s,%s,%s);
+                    """,
+                    (
+                        row.hole_id,
+                        row.depth,
+                        row.depth + 20,
+                        mineral,
+                        float(percentage),
+                        row.method,
+                        float(row.Error),
+                    )
+                )
+
+                inserted += 1
+
+    conn.commit()
+
+    print(
+        f"Inserted {inserted} mineral records"
+    )
+
+
 def main():
 
     conn = get_connection()
 
     try:
-        load_hole_metadata(conn)
-        load_classifications(conn)
+
+        load_mineral_intervals(conn)
 
     finally:
+
         conn.close()
 
 

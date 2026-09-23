@@ -222,7 +222,7 @@ export default function ResultsPage() {
                                       style={{ background: mineralColour(dominant.name) }}
                                     />
                                     {mineralLabel(dominant.name)} dominant at{" "}
-                                    {dominant.percentage.toFixed(1)}%
+                                    {Number(dominant.percentage).toFixed(1)}%
                                   </p>
                                 )}
 
