@@ -2,9 +2,14 @@
 
 CITS5553 Data Science Capstone Project, Group 6, Semester 2 2026.
 
-We are building an automated geological intelligence pipeline that translates GSWA's open HyLogger hyperspectral drill-core dataset into practitioner-ready insight. The system detects mineralogical transitions, surfaces unusual intervals, finds similar intervals across holes, and predicts physical rock properties from spectral data.
+We are building an automated geological intelligence pipeline that translates GSWA's open HyLogger hyperspectral drill-core dataset into practitioner-ready insight.
 
-## Team
+The system processes hyperspectral drill-core data to identify mineralogical transitions, classify geological intervals, surface unusual zones, and provide an interface for exploring processed borehole information.
+
+---
+
+# Team
+
 - Raja Venkata Shandilya Puram (24944809)
 - Simrat Sandhu (23628445)
 - Zhenghao Cui (24483898)
@@ -12,71 +17,356 @@ We are building an automated geological intelligence pipeline that translates GS
 - Sahaj Jayeshbhai Patel (24557489)
 - Likhita Chowdary Moparthi (24480549)
 
-## Tech Stack
-Backend and data: Python, nvcl-kit, pytsg, pandas, PostgreSQL, FastAPI, Docker Compose.
+---
 
-Frontend: React with Vite, React Router, Framer Motion, Recharts and Axios. The
-site is a custom React application, not Streamlit.
+# Technology Stack
 
-## Setup
+## Backend and Data Pipeline
 
-1. Create and activate the conda environment:
-   conda create -n gswa python=3.10 -y
-   conda activate gswa
-   pip install -r requirements.txt
-   
-2. Start the full system:
-   docker-compose up
+- Python
+- nvcl-kit
+- pytsg
+- pandas
+- NumPy
+- PostgreSQL / PostGIS
+- FastAPI
+- Docker Compose
 
-3. Run the data pull:
-   python etl/fetch_holes.py
+## Frontend
 
+- React
+- Vite
+- React Router
+- Axios
+- Framer Motion
+- Recharts
 
-## Running the frontend
+The frontend is a custom React application.
 
-The web application lives in `web/`. It runs on its own and does not need the
-API or the database to be up, since it falls back to placeholder data.
+---
 
-    cd web
-    npm install
-    npm run dev
+# System Architecture
 
-Vite prints a local address, usually http://localhost:5173. Open that in a
-browser. The dev server hot reloads, so leave it running while you work.
+```
+GSWA NVCL HyLogger Dataset
+            |
+            v
+     nvcl-kit Data Retrieval
+            |
+            v
+     SWIR Data Processing
+            |
+            v
+ Mineral Percentage Conversion
+            |
+            v
+   Rule-based Classification
+            |
+            v
+ PostgreSQL / PostGIS Database
+            |
+            v
+        FastAPI API
+            |
+            v
+      React Frontend
+```
 
-Other commands, all from inside `web/`:
+---
 
-    npm run build     production build into web/dist
-    npm run preview   serve the production build locally
-    npm run lint      oxlint over src/
+# Project Structure
 
-Node 20 or newer is required. Check with `node -v` and `npm -v`.
+```
+GSWA-hylogger-Industry-Adoption/
 
-### How the frontend is laid out
+├── api/
+│   ├── main.py              FastAPI application
+│   └── db.py                Database connection
 
-    web/src/styles/tokens.css    colour, type, spacing and motion tokens
-    web/src/styles/theme.js      the same chart values, for Recharts
-    web/src/components/ui        shared pieces: Button, Card, Badge and so on
-    web/src/components/layout    nav bar, footer, page transitions
-    web/src/components/holes     hole card and the shared hole selector
-    web/src/components/charts    Recharts components
-    web/src/pages                one file per route
-    web/src/data                 placeholder data and the shared vocabularies
+├── classifier/
+│   └── rules_baseline.py    Baseline geological classifier
 
-Read `web/src/styles/tokens.css` before adding styles. Every colour, spacing
-step and font is defined there, so reuse a token rather than introducing a new
-hard coded value. Import shared components from `web/src/components/ui/index.js`.
+├── database/
+│   └── schema.sql           PostgreSQL/PostGIS schema
 
-The pages currently read from `web/src/data/placeholderData.js`, which returns
-the same shapes the API returns. Task 9 replaces that module with an Axios
-client and nothing else has to change.
+├── etl/
+│   ├── fetch_holes.py       Download NVCL HyLogger data
+│   ├── convert_percentages.py
+│   └── load_database.py     Populate database tables
 
-## Branching Strategy
-Never push directly to main. Always create a feature branch:
+├── web/
+│   └── React frontend
 
-    git checkout -b feature/your-task-name
-    git push origin feature/your-task-name
+├── notebooks/
+│
+├── docker-compose.yml
+├── Dockerfile
+└── requirements.txt
+```
 
-Then open a pull request and get one teammate to review before merging.
+---
 
-    
+# Setup Instructions
+
+## 1. Install Python Dependencies
+
+Create and activate the Python environment:
+
+```bash
+conda create -n gswa python=3.10 -y
+
+conda activate gswa
+
+pip install -r requirements.txt
+```
+
+---
+
+# 2. Start Backend Services
+
+From the project root:
+
+```bash
+docker compose up
+```
+
+This starts:
+
+- PostgreSQL/PostGIS database
+- FastAPI backend
+
+The API will run at:
+
+```
+http://localhost:8000
+```
+
+Health check:
+
+```bash
+curl http://localhost:8000/health
+```
+
+Expected response:
+
+```json
+{
+  "status": "healthy"
+}
+```
+
+---
+
+# 3. Download GSWA HyLogger Data
+
+Run:
+
+```bash
+python etl/fetch_holes.py
+```
+
+This retrieves selected GSWA borehole SWIR scan data using nvcl-kit.
+
+Generated file:
+
+```
+data/raw_holes.csv
+```
+
+---
+
+# 4. Convert Spectral Data into Interval Features
+
+Run:
+
+```bash
+python etl/convert_percentages.py
+```
+
+This converts raw mineral classifications into interval-level mineral percentage features.
+
+Generated files:
+
+```
+data/mineral_percentages.csv
+
+data/interval_quality.csv
+```
+
+---
+
+# 5. Run Baseline Classification
+
+Run:
+
+```bash
+python classifier/rules_baseline.py
+```
+
+This applies the baseline rule-based classifier to processed intervals.
+
+Generated file:
+
+```
+data/classified_intervals.csv
+```
+
+---
+
+# 6. Load Processed Data into Database
+
+Run:
+
+```bash
+python etl/load_database.py
+```
+
+This populates PostgreSQL with:
+
+- Borehole metadata
+- Classified geological intervals
+
+The FastAPI backend uses this database to provide live data to the frontend.
+
+---
+
+# API Endpoints
+
+The FastAPI backend provides the following endpoints:
+
+| Endpoint | Description |
+|---|---|
+| `/health` | API health check |
+| `/holes` | Retrieve all available boreholes |
+| `/holes/{hole_id}` | Retrieve metadata for one borehole |
+| `/holes/{hole_id}/intervals` | Retrieve classified intervals for a borehole |
+
+Example:
+
+```bash
+curl http://localhost:8000/holes
+```
+
+Example response:
+
+```json
+{
+  "count": 20,
+  "holes": [
+    {
+      "hole_id": "05GJD001",
+      "latitude": -33.72188606,
+      "longitude": 118.96361011
+    }
+  ]
+}
+```
+
+---
+
+# Running the Frontend
+
+The React application is located inside:
+
+```
+web/
+```
+
+Navigate into the frontend folder:
+
+```bash
+cd web
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run development server:
+
+```bash
+npm run dev
+```
+
+Vite will provide a local address:
+
+```
+http://localhost:5173
+```
+
+Open this address in a browser.
+
+---
+
+# Frontend Structure
+
+```
+web/src/
+
+├── api/
+│   └── client.js              Axios API client
+
+├── components/
+│   ├── ui/                    Shared UI components
+│   ├── layout/                Navigation and layouts
+│   ├── holes/                 Borehole components
+│   └── charts/                Data visualisations
+
+├── pages/
+│   ├── ExplorerPage.jsx
+│   └── ResultsPage.jsx
+
+├── styles/
+│   ├── tokens.css
+│   └── theme.js
+```
+
+---
+
+# Development Workflow
+
+Do not push directly to main.
+
+Create a feature branch:
+
+```bash
+git checkout -b feature/your-task-name
+```
+
+Push the branch:
+
+```bash
+git push origin feature/your-task-name
+```
+
+Create a pull request and request teammate review before merging.
+
+---
+
+# Current Implementation Status
+
+Completed:
+
+✅ GSWA NVCL HyLogger data retrieval  
+✅ SWIR data processing pipeline  
+✅ Mineral percentage conversion  
+✅ Interval quality analysis  
+✅ Baseline rule-based classification  
+✅ PostgreSQL/PostGIS database setup  
+✅ FastAPI backend endpoints  
+✅ React frontend API integration  
+✅ Live borehole and classification data retrieval  
+
+---
+
+# Future Development
+
+Planned improvements include:
+
+- Advanced spectral similarity search
+- Improved geological classification methods
+- Deep learning-based property prediction
+- Additional interactive geological visualisations
+- Enhanced industry-focused exploration workflows
