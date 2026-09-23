@@ -36,78 +36,156 @@ def health():
 
 @app.get("/holes")
 def list_holes():
-    """Return all holes with summary metadata, from the database."""
+    """Return all holes with summary metadata."""
     conn = get_connection()
+
     try:
         with conn.cursor() as cur:
             cur.execute("""
-                SELECT hole_id, region, latitude, longitude, total_depth_m
+                SELECT 
+                    hole_id,
+                    region,
+                    latitude,
+                    longitude,
+                    total_depth_m
                 FROM hole
                 ORDER BY hole_id;
             """)
+
             holes = cur.fetchall()
+
     finally:
         conn.close()
+
     return {
         "count": len(holes),
-        "holes": holes
+        "holes": [
+            {
+                "hole_id": row["hole_id"],
+                "region": row["region"],
+                "latitude": row["latitude"],
+                "longitude": row["longitude"],
+                "total_depth_m": row["total_depth_m"],
+            }
+            for row in holes
+        ]
     }
 
 
 @app.get("/holes/{hole_id}")
 def get_hole(hole_id: str):
     """Return metadata for one specific hole."""
+
     conn = get_connection()
+
     try:
         with conn.cursor() as cur:
             cur.execute("""
-                SELECT hole_id, region, latitude, longitude, total_depth_m
+                SELECT 
+                    hole_id,
+                    region,
+                    latitude,
+                    longitude,
+                    total_depth_m
                 FROM hole
                 WHERE hole_id = %s;
             """, (hole_id,))
+
             hole = cur.fetchone()
+
     finally:
         conn.close()
+
     if not hole:
-        raise HTTPException(status_code=404, detail=f"Hole {hole_id} not found")
-    return hole
+        raise HTTPException(
+            status_code=404,
+            detail=f"Hole {hole_id} not found"
+        )
+
+    return {
+        "hole_id": hole["hole_id"],
+        "region": hole["region"],
+        "latitude": hole["latitude"],
+        "longitude": hole["longitude"],
+        "total_depth_m": hole["total_depth_m"],
+    }
 
 
 @app.get("/holes/{hole_id}/intervals")
-def get_hole_intervals(hole_id: str, min_confidence: Optional[float] = Query(None)):
-    """Return the classified depth intervals for one hole.
-
-    min_confidence filters to intervals whose confidence_error is at or
-    below the given threshold (lower Error means higher trust).
+def get_hole_intervals(
+    hole_id: str,
+    min_confidence: Optional[float] = Query(None)
+):
     """
+    Return classified depth intervals for one hole.
+
+    min_confidence filters intervals using confidence_error.
+    Lower Error means higher confidence.
+    """
+
     conn = get_connection()
+
     try:
         with conn.cursor() as cur:
+
             if min_confidence is not None:
                 cur.execute("""
-                    SELECT depth_from_m, depth_to_m, label, confidence,
-                           reason, rule_fired, final_mask, confidence_error
+                    SELECT
+                        depth_from_m,
+                        depth_to_m,
+                        label,
+                        confidence,
+                        reason,
+                        rule_fired,
+                        final_mask,
+                        confidence_error
                     FROM classification
-                    WHERE hole_id = %s AND confidence_error <= %s
+                    WHERE hole_id = %s
+                    AND confidence_error <= %s
                     ORDER BY depth_from_m;
                 """, (hole_id, min_confidence))
+
             else:
                 cur.execute("""
-                    SELECT depth_from_m, depth_to_m, label, confidence,
-                           reason, rule_fired, final_mask, confidence_error
+                    SELECT
+                        depth_from_m,
+                        depth_to_m,
+                        label,
+                        confidence,
+                        reason,
+                        rule_fired,
+                        final_mask,
+                        confidence_error
                     FROM classification
                     WHERE hole_id = %s
                     ORDER BY depth_from_m;
                 """, (hole_id,))
+
             intervals = cur.fetchall()
+
     finally:
         conn.close()
 
     if not intervals:
-        raise HTTPException(status_code=404, detail=f"No intervals found for {hole_id}")
+        raise HTTPException(
+            status_code=404,
+            detail=f"No intervals found for {hole_id}"
+        )
 
     return {
         "hole_id": hole_id,
         "count": len(intervals),
-        "intervals": intervals
+        "intervals": [
+            {
+                "depth_from_m": row["depth_from_m"],
+                "depth_to_m": row["depth_to_m"],
+                "label": row["label"],
+                "confidence": row["confidence"],
+                "reason": row["reason"],
+                "rule_fired": row["rule_fired"],
+                "final_mask": row["final_mask"],
+                "confidence_error": row["confidence_error"],
+            }
+            for row in intervals
+        ]
     }

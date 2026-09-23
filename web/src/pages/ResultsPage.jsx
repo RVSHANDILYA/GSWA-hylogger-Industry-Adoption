@@ -21,7 +21,7 @@ import {
 } from "../data/classification.js";
 import { dominantMineral, mineralColour, mineralLabel } from "../data/minerals.js";
 import useAsyncData from "../hooks/useAsyncData.js";
-import { fetchHoles, fetchIntervals } from "../data/placeholderData.js";
+import { fetchHoles, fetchIntervals } from "../api/client.js";
 import { easeOut } from "../styles/theme.js";
 import styles from "./ResultsPage.module.css";
 
@@ -93,10 +93,8 @@ export default function ResultsPage() {
         />
 
         <div style={{ marginBottom: "var(--space-6)" }}>
-          <Notice title="Placeholder data, page in progress">
-            The rows below are stand ins running through the same five rules as
-            the classifier. Task 10 finishes this page against the live API and
-            adds the depth against mineral view for the whole hole.
+          <Notice title="Live classification results">
+            Intervals below are generated from the GSWA HyLogger classification pipeline.
           </Notice>
         </div>
 
