@@ -54,11 +54,27 @@ export function mineralLabel(mineral) {
 }
 
 /* Largest mineral in an interval, used for the summary line on a card. */
-export function dominantMineral(minerals = {}) {
-  const entries = Object.entries(minerals).filter(([name]) => name !== OTHER_MINERAL);
-  if (entries.length === 0) return null;
-  const [name, percentage] = entries.reduce((best, current) =>
-    current[1] > best[1] ? current : best
+export function dominantMineral(minerals = []) {
+
+  if (!Array.isArray(minerals) || minerals.length === 0) {
+    return null;
+  }
+
+
+  const filtered = minerals.filter(
+    (mineral) => mineral.name !== OTHER_MINERAL
   );
-  return { name, percentage };
+
+
+  if (filtered.length === 0) {
+    return null;
+  }
+
+
+  return filtered.reduce(
+    (largest, current) =>
+      Number(current.percentage) > Number(largest.percentage)
+        ? current
+        : largest
+  );
 }
