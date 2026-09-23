@@ -15,7 +15,7 @@ import {
 } from "../components/ui/index.js";
 import useAsyncData from "../hooks/useAsyncData.js";
 import { confidenceState, labelTone, ruleShort } from "../data/classification.js";
-import { fetchHoles, fetchIntervals } from "../data/placeholderData.js";
+import { fetchHoles, fetchIntervals } from "../api/client.js";
 import { easeOut } from "../styles/theme.js";
 import styles from "./ExplorerPage.module.css";
 
@@ -67,9 +67,8 @@ export default function ExplorerPage() {
         />
 
         <div className={styles.notice}>
-          <Notice title="Placeholder data">
-            These rows are hand authored stand ins with the same field names the
-            API returns. Task 9 points this page at the live FastAPI service.
+          <Notice title="Live GSWA HyLogger data">
+            Boreholes are loaded from the FastAPI backend using processed NVCL HyLogger data.
           </Notice>
         </div>
 
