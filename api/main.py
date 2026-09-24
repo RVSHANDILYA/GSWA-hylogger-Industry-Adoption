@@ -41,15 +41,20 @@ def list_holes():
 
     try:
         with conn.cursor() as cur:
+            # LEFT JOIN so a hole with no classified intervals still appears,
+            # with a count of 0. The site's hole cards print this count.
             cur.execute("""
-                SELECT 
-                    hole_id,
-                    region,
-                    latitude,
-                    longitude,
-                    total_depth_m
-                FROM hole
-                ORDER BY hole_id;
+                SELECT
+                    h.hole_id,
+                    h.region,
+                    h.latitude,
+                    h.longitude,
+                    h.total_depth_m,
+                    COUNT(c.class_id) AS intervals_classified
+                FROM hole h
+                LEFT JOIN classification c ON c.hole_id = h.hole_id
+                GROUP BY h.hole_id, h.region, h.latitude, h.longitude, h.total_depth_m
+                ORDER BY h.hole_id;
             """)
 
             holes = cur.fetchall()
@@ -66,6 +71,7 @@ def list_holes():
                 "latitude": row["latitude"],
                 "longitude": row["longitude"],
                 "total_depth_m": row["total_depth_m"],
+                "intervals_classified": row["intervals_classified"],
             }
             for row in holes
         ]
@@ -117,7 +123,8 @@ def get_hole_intervals(
     min_confidence: Optional[float] = Query(None)
 ):
     """
-    Return classified depth intervals for one hole.
+    Return classified depth intervals for one hole, each with its mineral
+    composition attached.
 
     min_confidence filters intervals using confidence_error.
     Lower Error means higher confidence.
@@ -163,6 +170,22 @@ def get_hole_intervals(
 
             intervals = cur.fetchall()
 
+            # Mineral composition lives in a separate table, keyed the same
+            # way as classification (hole_id, depth_from_m, depth_to_m).
+            # Fetch it once for the whole hole and group it in Python rather
+            # than one extra query per interval.
+            cur.execute("""
+                SELECT
+                    depth_from_m,
+                    depth_to_m,
+                    mineral,
+                    mineral_pct
+                FROM interval
+                WHERE hole_id = %s;
+            """, (hole_id,))
+
+            mineral_rows = cur.fetchall()
+
     finally:
         conn.close()
 
@@ -171,6 +194,14 @@ def get_hole_intervals(
             status_code=404,
             detail=f"No intervals found for {hole_id}"
         )
+
+    minerals_by_depth = {}
+    for row in mineral_rows:
+        key = (row["depth_from_m"], row["depth_to_m"])
+        minerals_by_depth.setdefault(key, []).append({
+            "name": row["mineral"],
+            "percentage": row["mineral_pct"],
+        })
 
     return {
         "hole_id": hole_id,
@@ -185,6 +216,9 @@ def get_hole_intervals(
                 "rule_fired": row["rule_fired"],
                 "final_mask": row["final_mask"],
                 "confidence_error": row["confidence_error"],
+                "minerals": minerals_by_depth.get(
+                    (row["depth_from_m"], row["depth_to_m"]), []
+                ),
             }
             for row in intervals
         ]
