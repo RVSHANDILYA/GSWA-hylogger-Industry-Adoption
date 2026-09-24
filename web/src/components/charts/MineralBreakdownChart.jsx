@@ -12,8 +12,7 @@ import { chart } from "../../styles/theme.js";
 
 import {
   MINERAL_ORDER,
-  TRACKED_MINERALS,
-  OTHER_MINERAL,
+  groupMinerals,
   mineralColour,
   mineralLabel,
 } from "../../data/minerals.js";
@@ -79,41 +78,6 @@ function MineralTooltip({ active, payload, label }) {
 
 
 
-function formatMinerals(minerals = []) {
-
-  const result = {};
-
-  let otherTotal = 0;
-
-
-  minerals.forEach((mineral) => {
-
-    const name = mineral.name;
-    const percentage = Number(mineral.percentage) || 0;
-
-
-    if (TRACKED_MINERALS.includes(name)) {
-
-      result[name] = percentage;
-
-    } else {
-
-      otherTotal += percentage;
-
-    }
-
-  });
-
-
-  result[OTHER_MINERAL] = otherTotal;
-
-
-  return result;
-}
-
-
-
-
 export default function MineralBreakdownChart({
   intervals = [],
   title = "Mineral breakdown by depth",
@@ -127,7 +91,7 @@ export default function MineralBreakdownChart({
     depth:
       `${interval.depth_from_m} to ${interval.depth_to_m}`,
 
-    ...formatMinerals(interval.minerals),
+    ...groupMinerals(interval.minerals),
 
   }));
 
@@ -269,6 +233,8 @@ export default function MineralBreakdownChart({
             <Tooltip
 
               content={<MineralTooltip />}
+
+              isAnimationActive={false}
 
               cursor={{
                 fill:"rgba(255,255,255,0.035)"

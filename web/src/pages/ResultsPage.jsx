@@ -1,4 +1,4 @@
-import { Suspense, lazy, useCallback } from "react";
+import { Suspense, lazy, useCallback, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import PageTransition from "../components/layout/PageTransition.jsx";
@@ -31,22 +31,23 @@ import styles from "./ResultsPage.module.css";
 const MineralBreakdownChart = lazy(
   () => import("../components/charts/MineralBreakdownChart.jsx")
 );
+const DepthMineralTimeline = lazy(
+  () => import("../components/charts/DepthMineralTimeline.jsx")
+);
 
 /*
   Classification results.
 
-  Task 8 stands this page up: the hole rail on the left reuses the same
-  HoleSelector as the Hole Explorer, and the right hand panel shows one
-  worked example of every piece Task 10 needs, against placeholder data.
+  The hole rail on the left reuses the same HoleSelector as the Hole
+  Explorer. The right hand panel: a summary strip, the whole-hole depth
+  timeline, the per-interval mineral breakdown, then the interval list
+  itself with its confidence and mask treatment.
 
-  Task 10 (Dulya) owns the finished version. What is already here and worth
-  building on rather than replacing:
-  - the interval row, including the treatment for a flagged or masked reading
-  - MineralBreakdownChart, a reusable stacked chart with a hover tooltip
-  - the confidence helpers in src/data/classification.js
-
-  Still to build: the depth against mineral timeline for the whole hole, and
-  a per interval donut if that reads better than the stack.
+  The timeline and the interval list are linked through hoveredDepth: hover
+  a point on the timeline and the matching card gets a white ring and tint
+  (deliberately unlike the orange flagged edge), click it and the list
+  scrolls that card into view. Neither side needs to know how the other is
+  drawn, they only agree on a depth number.
 */
 export default function ResultsPage() {
   /* The chosen hole lives in the URL rather than in component state, so the
@@ -71,12 +72,48 @@ export default function ResultsPage() {
 
   const loadIntervals = useCallback(() => fetchIntervals(holeId), [holeId]);
   const intervalsRequest = useAsyncData(loadIntervals, [holeId], { skip: !holeId });
-  const intervals = intervalsRequest.data?.intervals ?? [];
+  /* Memoised so the empty fallback is one stable array, not a new one every
+     render, which would keep invalidating the hover handlers below. */
+  const intervals = useMemo(
+    () => intervalsRequest.data?.intervals ?? [],
+    [intervalsRequest.data]
+  );
 
   const classified = intervals.filter((row) => row.label !== "Unclassified");
   const flagged = intervals.filter(
     (row) => confidenceState(row.confidence_error, row.final_mask).state !== "good"
   );
+
+  /* Links the timeline chart to the interval list below it. The timeline
+     only knows a depth number; finding which card that belongs to, and
+     scrolling to it, is the list's job. */
+  const [hoveredDepth, setHoveredDepth] = useState(null);
+  const cardRefs = useRef({});
+
+  const intervalKey = (row) => `${row.depth_from_m}-${row.depth_to_m}`;
+
+  const intervalAtDepth = useCallback(
+    (depth) =>
+      intervals.find(
+        (row) => depth >= row.depth_from_m && depth < row.depth_to_m
+      ),
+    [intervals]
+  );
+
+  const handleSelectDepth = useCallback(
+    (depth) => {
+      const match = intervalAtDepth(depth);
+      const node = match && cardRefs.current[intervalKey(match)];
+      node?.scrollIntoView({ behavior: "smooth", block: "center" });
+    },
+    [intervalAtDepth]
+  );
+
+  const highlightedKey = useMemo(() => {
+    if (hoveredDepth == null) return null;
+    const match = intervalAtDepth(hoveredDepth);
+    return match ? intervalKey(match) : null;
+  }, [hoveredDepth, intervalAtDepth]);
 
   return (
     <PageTransition>
@@ -156,6 +193,18 @@ export default function ResultsPage() {
                   </Card>
 
                   <Card>
+                    <Suspense fallback={<Loading>Drawing the depth profile</Loading>}>
+                      <DepthMineralTimeline
+                        intervals={intervals}
+                        title={`Mineral composition by depth, ${selected.hole_id}`}
+                        subtitle="Hover to trace a depth, click to jump to that interval below"
+                        onHoverDepth={setHoveredDepth}
+                        onSelectDepth={handleSelectDepth}
+                      />
+                    </Suspense>
+                  </Card>
+
+                  <Card>
                     <Suspense fallback={<Loading>Drawing the breakdown</Loading>}>
                       <MineralBreakdownChart
                         intervals={intervals}
@@ -172,16 +221,24 @@ export default function ResultsPage() {
                         interval.final_mask
                       );
                       const dominant = dominantMineral(interval.minerals);
-                      const rowStyle =
+                      const key = intervalKey(interval);
+                      const rowStyle = [
                         flag.state === "problem"
                           ? styles.excluded
                           : flag.state === "caution"
                             ? styles.flagged
-                            : undefined;
+                            : "",
+                        key === highlightedKey ? styles.highlighted : "",
+                      ]
+                        .filter(Boolean)
+                        .join(" ");
 
                       return (
                         <motion.li
-                          key={`${interval.depth_from_m}-${interval.depth_to_m}`}
+                          key={key}
+                          ref={(node) => {
+                            cardRefs.current[key] = node;
+                          }}
                           initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{
@@ -211,7 +268,10 @@ export default function ResultsPage() {
                                     {ruleName(interval.rule_fired)}
                                   </Badge>
                                   <Badge tone={flag.state} icon={flag.icon} mono>
-                                    {flag.text}, Error {interval.confidence_error}
+                                    {flag.text}, Error{" "}
+                                    {interval.confidence_error == null
+                                      ? "n/a"
+                                      : Number(interval.confidence_error).toFixed(1)}
                                   </Badge>
                                 </div>
 
