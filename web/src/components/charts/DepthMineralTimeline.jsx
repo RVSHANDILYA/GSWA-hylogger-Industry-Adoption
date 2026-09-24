@@ -20,6 +20,7 @@ import {
   mineralLabel,
 } from "../../data/minerals.js";
 
+import RuleStrip from "./RuleStrip.jsx";
 import styles from "./DepthMineralTimeline.module.css";
 
 /* Recharts' own tooltip is pinned to the nearest data point's edge, and a
@@ -62,6 +63,7 @@ function DepthMineralTimeline({
 }) {
   const [activeRange, setActiveRange] = useState(null);
   const lastBrushChange = useRef(0);
+  const [visible, setVisible] = useState(null);
   const areaRef = useRef(null);
   const tipRef = useRef(null);
   const mouseX = useRef(0);
@@ -102,6 +104,16 @@ function DepthMineralTimeline({
         : undefined,
     [activeRange, data]
   );
+
+  /* The depth range on screen, which follows the zoom strip. The rule strip
+     under the chart uses it to stay lined up with the plot. Before the zoom
+     strip has moved, it is the whole hole. */
+  const depthRange = useMemo(() => {
+    if (data.length === 0) return null;
+    const first = data[visible?.start ?? 0];
+    const last = data[visible?.end ?? data.length - 1];
+    return first && last ? { from: first.depth, to: last.depth } : null;
+  }, [data, visible]);
 
   /* Centre the card on the cursor, kept inside the chart's width. It only
      ever moves sideways: it lives in a strip above the plot, so it cannot
@@ -266,8 +278,9 @@ function DepthMineralTimeline({
               dataKey="depth"
               height={22}
               travellerWidth={8}
-              onChange={() => {
+              onChange={(range) => {
                 lastBrushChange.current = Date.now();
+                setVisible({ start: range.startIndex, end: range.endIndex });
               }}
               stroke={chart.axis}
               fill={chart.surface}
@@ -279,6 +292,15 @@ function DepthMineralTimeline({
         </ResponsiveContainer>
         </div>
       </div>
+
+      {depthRange && (
+        <RuleStrip
+          intervals={intervals}
+          from={depthRange.from}
+          to={depthRange.to}
+          activeFrom={activeRange?.from}
+        />
+      )}
 
       <div className={styles.legend}>
         {MINERAL_ORDER.map((mineral) => (
