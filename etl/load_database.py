@@ -103,6 +103,11 @@ def load_classifications(conn):
 
     with conn.cursor() as cur:
 
+        # Avoid duplicate classification rows when rerunning loader
+        cur.execute(
+            "TRUNCATE TABLE classification RESTART IDENTITY;"
+        )
+
         for _, row in df.iterrows():
 
             cur.execute(
@@ -210,6 +215,10 @@ def main():
 
     try:
 
+        # Order matters: classification and interval both have a foreign
+        # key on hole_id, so the hole rows must exist first.
+        load_hole_metadata(conn)
+        load_classifications(conn)
         load_mineral_intervals(conn)
 
     finally:

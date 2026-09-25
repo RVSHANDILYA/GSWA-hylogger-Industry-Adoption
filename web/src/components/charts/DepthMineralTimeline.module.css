@@ -1,0 +1,136 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.title {
+  font-size: var(--size-md);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: var(--size-sm);
+}
+
+.plot {
+  width: 100%;
+}
+
+/* Clicking the chart focuses Recharts' inner SVG layer, and the browser draws
+   a default outline around it. Hide that for mouse focus only, so keyboard
+   users still get a visible focus ring. */
+.plot :focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Holds the plot and a strip above it for the floating card, so the card
+   never sits on top of the chart. */
+.plotArea {
+  position: relative;
+  /* The strip is just tall enough for the card, and pulled up into the gap
+     under the title so the chart does not sit far below its heading. */
+  padding-top: 2.5rem;
+  margin-top: calc(var(--space-4) * -1);
+}
+
+/* Follows the cursor sideways only. Positioned from script with a transform,
+   and ignoring the mouse so it can never sit between the cursor and the chart. */
+.floatingTip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface-sunken);
+  box-shadow: var(--shadow-lifted);
+  font-size: var(--size-sm);
+  color: var(--text-secondary);
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.tipDepth {
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+}
+
+.tipExcluded {
+  color: var(--status-problem);
+  font-size: var(--size-xs);
+}
+
+.tipItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.tipValue {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--size-sm);
+  color: var(--text-secondary);
+}
+
+.swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex: none;
+}
+
+.hint {
+  margin-left: auto;
+  font-size: var(--size-xs);
+  color: var(--text-muted);
+}
+
+@media (max-width: 900px) {
+  .hint {
+    margin-left: 0;
+  }
+}
+
+/* On a phone the card cannot be as wide as the chart, and a card wider than
+   the screen stretches the whole page. Keep the depth and the largest mineral. */
+@media (max-width: 640px) {
+  .tipItem[data-rank="1"],
+  .tipItem[data-rank="2"] {
+    display: none;
+  }
+}

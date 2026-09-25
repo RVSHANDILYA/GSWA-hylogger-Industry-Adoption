@@ -106,6 +106,17 @@
   border-left-style: solid;
 }
 
+/* Set from the timeline chart above, when a hovered depth falls inside this
+   card's range. Independent of the flagged/excluded treatment, so a marginal
+   reading being traced from the timeline still shows both. A white ring set
+   off from the card plus a tint, deliberately not the warm orange the flagged
+   cards use, so the two never read as the same signal. */
+.intervals .highlighted {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 3px;
+  background: var(--accent-soft);
+}
+
 .empty {
   display: grid;
   place-items: center;

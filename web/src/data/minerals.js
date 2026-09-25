@@ -53,6 +53,33 @@ export function mineralLabel(mineral) {
   return MINERAL_LABELS[mineral] ?? mineral;
 }
 
+/* Fold an interval's raw mineral array down to the fixed five plus Other,
+   keyed by name so a chart can spread it straight into one data point.
+   Shared by every chart that draws mineral composition, so the five-series
+   rule above is enforced in one place. */
+export function groupMinerals(minerals = []) {
+  /* The API only sends minerals that are present in an interval. Start every
+     series at zero so an absent mineral is a real 0 and not undefined, which
+     stacked areas cannot draw through. */
+  const result = Object.fromEntries(TRACKED_MINERALS.map((name) => [name, 0]));
+  let otherTotal = 0;
+
+  minerals.forEach((mineral) => {
+    const name = mineral.name;
+    const percentage = Number(mineral.percentage) || 0;
+
+    if (TRACKED_MINERALS.includes(name)) {
+      result[name] = percentage;
+    } else {
+      otherTotal += percentage;
+    }
+  });
+
+  result[OTHER_MINERAL] = otherTotal;
+
+  return result;
+}
+
 /* Largest mineral in an interval, used for the summary line on a card. */
 export function dominantMineral(minerals = []) {
 
