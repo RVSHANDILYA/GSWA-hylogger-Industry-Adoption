@@ -1,0 +1,92 @@
+/* The timeline chart above has a 4px left margin and a 56px axis, and a 44px
+   right margin. The label column and right padding here are the same widths,
+   so the strip lines up with the plot area. Keep them in step with
+   DepthMineralTimeline.jsx if those margins change. */
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-right: 44px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 60px minmax(0, 1fr);
+  align-items: center;
+}
+
+.rowLabel {
+  padding-right: var(--space-3);
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: var(--size-xs);
+  color: var(--text-muted);
+}
+
+.strip {
+  position: relative;
+  height: 26px;
+}
+
+.segment {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-right: 1px solid #0f1520;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: #0a1220;
+}
+
+/* Hatched rather than a fourth flat colour, so "no rule matched" cannot be
+   mistaken for the grey used by waste rock. */
+.unclassified {
+  background-color: #2a3446;
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.12) 0 4px,
+    transparent 4px 8px
+  );
+  color: var(--text-secondary);
+}
+
+/* The interval under the cursor on the timeline above. */
+.active {
+  outline: 2px solid var(--text-primary);
+  outline-offset: -2px;
+  z-index: 2;
+}
+
+.key {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  padding-left: 60px;
+  font-size: var(--size-xs);
+  color: var(--text-muted);
+}
+
+.keyItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex: none;
+}
+
+/* The five rule names, on their own line under the label chips. */
+.codes {
+  flex-basis: 100%;
+  color: var(--text-muted);
+}
