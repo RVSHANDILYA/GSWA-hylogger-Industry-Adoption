@@ -1,12 +1,16 @@
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import PageTransition from "../components/layout/PageTransition.jsx";
-import { Badge, Button, Icon, Skeleton, StateMessage, Stat } from "../components/ui/index.js";
+import { Badge, Button, Icon, Skeleton, Stat } from "../components/ui/index.js";
 import CountUp from "../components/ui/CountUp.jsx";
 import Reveal from "../components/ui/Reveal.jsx";
 import CoreColumn from "../components/charts/CoreColumn.jsx";
 import MineralLegend from "../components/charts/MineralLegend.jsx";
+import CorePoster from "../components/home/CorePoster.jsx";
 import useSurvey from "../hooks/useSurvey.js";
 import useDataSource from "../hooks/useDataSource.js";
+import useMotionPreference from "../hooks/useMotionPreference.js";
+import { easeOut } from "../styles/theme.js";
 import { summariseIntervals, depthRange } from "../data/analysis.js";
 import styles from "./LandingPage.module.css";
 
@@ -17,40 +21,47 @@ const PIPELINE = [
   {name: "Readable rules", note: "Apply five provisional rules and record the reason.", icon: "list"},
   {name: "Your interpretation", note: "Trace a finding, check its limits, decide what to review.", icon: "crosshair"},
 ];
+const HERO_HOLES = ["05GJD001", "05KCD001", "07THD002"];
+const MotionLink = motion.create(Link);
 
 export default function LandingPage() {
   const request = useSurvey();
   const source = useDataSource();
+  const reduced = useMotionPreference();
   const survey = request.data;
   const summary = summariseIntervals(survey?.intervals);
-  const featured = (survey?.holes ?? []).filter(hole => survey.intervalsByHole[hole.hole_id]?.length).slice(0, 3);
+  const featured = HERO_HOLES.map(id => survey?.holes.find(hole => hole.hole_id === id))
+    .filter(hole => hole && survey.intervalsByHole[hole.hole_id]?.length);
+  const showLiveCores = !request.loading && !request.error && source.mode === "live" && featured.length === HERO_HOLES.length;
   return <PageTransition>
     <div className={styles.hero}>
       <div className={styles.heroInner}>
         <Reveal className={styles.heroCopy}>
           <p className="eyebrow"><span className={styles.kickerRule} /> GSWA HyLogger / Industry adoption</p>
-          <h1>A clearer view<br />beneath the<br />surface.</h1>
-          <p className={styles.intro}>Open drill-core data, made easier to read. Explore Western Australia's mineral readings, follow the evidence down a hole, and see exactly where interpretation is still needed.</p>
+          <h1>See what the drill core is telling you.</h1>
+          <p className={styles.intro}>Read the minerals, follow the rules, and see where a geologist's interpretation is still needed.</p>
           <div className={styles.actions}><Button to="/explorer" trailingIcon="arrowUpRight" size="lg">Explore drill holes</Button>
-            <Button to="/results" variant="secondary" size="lg">Review classifications</Button></div>
-          <div className={styles.heroFoot}><span>Public data. Traceable rules.</span><Link to="/about">Know the method <Icon name="arrowRight" size={14} /></Link></div>
+            <Button to="/about#rules" variant="secondary" size="lg">How the rules work</Button></div>
+          <p className={styles.heroFoot}>Public NVCL data. Every label shows the rule behind it.</p>
         </Reveal>
-        <Reveal className={styles.dataStage} delay={.12}>
-          <div className={styles.stageTop}><span className="eyebrow">The rock is the starting point</span>
-            <Badge tone="neutral" icon={survey && source.mode === "live" ? "check" : "clock"}>{survey ? source.mode === "snapshot" ? "Saved archive data" : "From loaded API data" : request.error ? "Data unavailable" : "Reading the archive"}</Badge></div>
-          <div className={styles.coreGallery}>
-            {request.loading ? [0, 1, 2].map(index => <div key={index} className={styles.coreSpecimen}><Skeleton height="280px" /></div>) :
-              request.error ? <StateMessage tone="problem" icon="plug" title="Connect to the core archive"
-                action={<Button onClick={request.retry} variant="secondary" size="sm">Try again</Button>}>{request.error}</StateMessage> :
-              featured.length ? featured.map((hole, index) => {
+        <Reveal className={styles.dataStage} delay={.04} aria-label="Mineral columns from three real drill holes">
+          <div className={styles.stageTop}><span>Three holes. Real intervals.</span>
+            <Badge tone={showLiveCores ? "good" : "neutral"} icon={showLiveCores ? "check" : "clock"}>
+              {showLiveCores ? "Live API" : source.mode === "snapshot" ? "Saved archive" : request.error ? "Archive unavailable" : "Reading the archive"}</Badge></div>
+          {showLiveCores ? <div className={styles.coreGallery}>
+            {featured.map((hole, index) => {
                 const range = depthRange(survey.intervalsByHole[hole.hole_id]);
-                return <Link to={`/results?hole=${encodeURIComponent(hole.hole_id)}`} className={styles.coreSpecimen} key={hole.hole_id}>
+                return <MotionLink to={`/results?hole=${encodeURIComponent(hole.hole_id)}`} className={styles.coreSpecimen} key={hole.hole_id}
+                  aria-label={`Inspect ${hole.hole_id}, measured intervals from ${range.from} to ${range.to} metres`}
+                  initial={reduced ? false : {opacity:0,y:12}} whileInView={{opacity:1,y:0}} viewport={{once:true}}
+                  transition={{duration:reduced ? 0 : .35,delay:reduced ? 0 : index * .06,ease:easeOut}}>
                   <span className={styles.specimenIndex}>0{index + 1}</span>
-                  <div className={styles.specimenCore}><CoreColumn intervals={survey.intervalsByHole[hole.hole_id]} height={275} showRuler={false} /></div>
-                  <strong>{hole.hole_id}</strong><span>{range.from} to {range.to} m</span></Link>;
-              }) : <StateMessage title="No interval data loaded">The archive is reachable, but no core intervals are available.</StateMessage>}
-          </div>
-          <div className={styles.stageBottom}><span>Mineral identity / Real interval lengths</span><Icon name="arrowUpRight" size={18} /></div>
+                  <div className={styles.specimenCore}><CoreColumn intervals={survey.intervalsByHole[hole.hole_id]} height={275} showRuler={false} showScan={false} /></div>
+                  <strong>{hole.hole_id}</strong><span>{range.from} to {range.to} m</span></MotionLink>;
+              })}
+          </div> : <div className={styles.heroFallback}><CorePoster />
+            {request.error && <Button onClick={request.retry} variant="secondary" size="sm">Try the archive again</Button>}</div>}
+          <div className={styles.stageBottom}><span>Colour shows minerals. Length shows depth.</span><Icon name="arrowUpRight" size={18} /></div>
           <MineralLegend compact />
         </Reveal>
       </div>

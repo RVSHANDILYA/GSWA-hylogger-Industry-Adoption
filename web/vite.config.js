@@ -1,4 +1,5 @@
 import { copyFile, writeFile } from "node:fs/promises";
+import { existsSync } from "node:fs";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
@@ -6,6 +7,9 @@ const suppliedBase=process.env.GITHUB_PAGES_BASE||"/";
 if(!/^\/(?:[a-zA-Z0-9._-]+\/)*$/.test(suppliedBase)) throw new Error("GITHUB_PAGES_BASE must be a path with leading and trailing slashes.");
 export default defineConfig({
  base:suppliedBase,
+ define:{
+   "import.meta.env.VITE_HAS_HERO_POSTER":JSON.stringify(existsSync(new URL("./public/hero-poster.png",import.meta.url))),
+ },
  plugins:[react(),{
    name:"github-pages-entry",
    async closeBundle() {

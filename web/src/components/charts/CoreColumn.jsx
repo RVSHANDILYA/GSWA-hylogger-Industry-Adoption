@@ -32,6 +32,7 @@ export default function CoreColumn({
   highlightDepth,
   showRuler = true,
   showMaskExcluded = true,
+  showScan = true,
   activeIntervalKeys,
   onSelectDepth,
   onHoverDepth,
@@ -172,7 +173,7 @@ export default function CoreColumn({
           );
         })}
 
-        {!reduceMotion && (
+        {showScan && !reduceMotion && (
           <span
             className={styles.scan}
             style={{ animationTimingFunction: `cubic-bezier(${easeOut.join(",")})` }}
