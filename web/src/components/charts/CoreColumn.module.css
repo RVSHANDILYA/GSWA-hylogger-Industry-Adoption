@@ -1,0 +1,147 @@
+.wrap {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+  min-width: 0;
+}
+
+.filter {
+  position: absolute;
+  pointer-events: none;
+}
+
+.ruler {
+  position: relative;
+  width: 4.25rem;
+  height: 100%;
+  flex: none;
+}
+
+.tick {
+  position: absolute;
+  right: 0;
+  color: var(--viz-axis);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  text-align: right;
+  white-space: nowrap;
+  transform: translateY(-50%);
+}
+
+.tick::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -0.5rem;
+  width: 0.25rem;
+  height: 1px;
+  background: var(--viz-axis);
+  opacity: 0.55;
+}
+
+.column {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--surface-sunken);
+}
+
+/* Each measured band has its own cylindrical shading and end shadows. */
+.band {
+  position: absolute;
+  right: 0;
+  left: 0;
+  background-image:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--text-primary) 48%, transparent) 0%,
+      transparent 28%,
+      color-mix(in srgb, var(--surface-page) 30%, transparent) 45%,
+      transparent 64%,
+      color-mix(in srgb, var(--text-primary) 46%, transparent) 100%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--text-primary) 12%, transparent) 0%,
+      transparent 18%,
+      transparent 78%,
+      color-mix(in srgb, var(--text-primary) 22%, transparent) 100%
+    );
+}
+
+.grain,
+.hatch {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.grain {
+  background: var(--viz-other);
+  opacity: 0.11;
+}
+
+/* Mask status sits above the grain and preserves the mineral colour. */
+.hatch {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--status-problem) 0 2px,
+    transparent 2px 7px
+  );
+  opacity: 0.3;
+}
+
+.highlighted {
+  outline: 1px solid var(--viz-other);
+  outline-offset: -1px;
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--viz-other) 65%, transparent);
+}
+
+.scan {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background: var(--viz-other);
+  box-shadow: 0 0 5px var(--viz-other);
+  opacity: 0.55;
+  pointer-events: none;
+  animation-name: scan;
+  /* The shared slow token is 420ms, so 24 units gives a quiet 10 second pass. */
+  animation-duration: calc(var(--duration-slow) * 24);
+  animation-iteration-count: infinite;
+}
+
+@keyframes scan {
+  from {
+    top: 0;
+  }
+
+  to {
+    top: calc(100% - 1px);
+  }
+}
+
+.empty {
+  display: grid;
+  place-items: center;
+  color: var(--viz-axis);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-align: center;
+  border-radius: var(--radius-lg);
+  background: var(--surface-sunken);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scan {
+    display: none;
+    animation: none;
+  }
+}

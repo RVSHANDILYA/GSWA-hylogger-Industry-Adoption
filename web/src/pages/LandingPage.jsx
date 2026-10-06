@@ -1,254 +1,102 @@
 import { Link } from "react-router-dom";
-import { motion, useReducedMotion } from "framer-motion";
 import PageTransition from "../components/layout/PageTransition.jsx";
-import { Button, Card, Icon, Stat } from "../components/ui/index.js";
-import { chart, easeOut } from "../styles/theme.js";
-import { PROJECT_FIGURES } from "../data/placeholderData.js";
+import { Badge, Button, Icon, Skeleton, StateMessage, Stat } from "../components/ui/index.js";
+import CountUp from "../components/ui/CountUp.jsx";
+import Reveal from "../components/ui/Reveal.jsx";
+import CoreColumn from "../components/charts/CoreColumn.jsx";
+import MineralLegend from "../components/charts/MineralLegend.jsx";
+import useSurvey from "../hooks/useSurvey.js";
+import { summariseIntervals, depthRange } from "../data/analysis.js";
 import styles from "./LandingPage.module.css";
 
-/* The pipeline as the client sees it, left to right. Each step matches a real
-   folder in the repository, so this doubles as a map of the codebase. */
 const PIPELINE = [
-  { name: "NVCL", note: "6,200 open drill holes, pulled with nvcl-kit" },
-  { name: "ETL", note: "Final Mask filter, scans converted to percentages" },
-  { name: "PostgreSQL", note: "Holes, intervals, classifications, validation" },
-  { name: "Classifier", note: "Five SWIR rules, confidence judged on Error" },
-  { name: "FastAPI", note: "Holes and intervals served over REST" },
-  { name: "This site", note: "Explore a hole and read what the rules found" },
+  {name: "Open core data", note: "HyLogger scans from the National Virtual Core Library.", icon: "core"},
+  {name: "Final Mask", note: "Retain readings that pass the survey's scan filter.", icon: "filter"},
+  {name: "Mineral percentages", note: "Translate SWIR detections into interval composition.", icon: "layers"},
+  {name: "Readable rules", note: "Apply five provisional rules and record the reason.", icon: "list"},
+  {name: "Your interpretation", note: "Trace a finding, check its limits, decide what to review.", icon: "crosshair"},
 ];
-
-const ROUTES = [
-  {
-    to: "/explorer",
-    icon: "core",
-    name: "Hole Explorer",
-    note: "Browse the processed holes, search by ID or region, and open one to see how deep it goes and how many intervals were classified.",
-    cta: "Browse the holes",
-  },
-  {
-    to: "/results",
-    icon: "chart",
-    name: "Classification results",
-    note: "For a chosen hole, see which of the five rules fired at each depth, what the rock is made of, and how far each reading sits inside the error gate.",
-    cta: "See the results view",
-  },
-  {
-    to: "/about",
-    icon: "info",
-    name: "About the project",
-    note: "What the HyLogger measures, what our classifier can and cannot tell you yet, and the questions still open with the client.",
-    cta: "Read the background",
-  },
-];
-
-/* A short section of core, banded with the five mineral colours. The bands
-   grow downward on load, which is the same direction a hole is drilled. */
-function CoreStrip() {
-  const reduceMotion = useReducedMotion();
-  const bands = [
-    { colour: chart.series[0], height: 84 },
-    { colour: chart.series[2], height: 46 },
-    { colour: chart.series[1], height: 62 },
-    { colour: chart.other, height: 28 },
-    { colour: chart.series[3], height: 54 },
-    { colour: chart.series[4], height: 38 },
-    { colour: chart.series[0], height: 70 },
-  ];
-
-  return (
-    <motion.div
-      className={styles.core}
-      initial={{ opacity: 0, y: reduceMotion ? 0 : 18 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, delay: 0.25, ease: easeOut }}
-      aria-hidden="true"
-    >
-      <div className={styles.coreCap} />
-      <div className={styles.coreBody}>
-        {bands.map((band, index) => (
-          <motion.div
-            key={index}
-            className={styles.coreBand}
-            style={{ background: band.colour }}
-            initial={{ height: reduceMotion ? band.height : 0 }}
-            animate={{ height: band.height }}
-            transition={{
-              duration: 0.45,
-              delay: 0.35 + index * 0.07,
-              ease: easeOut,
-            }}
-          />
-        ))}
-      </div>
-      <div className={styles.coreFoot} />
-      <div className={styles.coreScale}>
-        <span>0 m</span>
-        <span>382 m</span>
-      </div>
-    </motion.div>
-  );
-}
 
 export default function LandingPage() {
-  const reduceMotion = useReducedMotion();
-
-  /* One shared rise used by every element in the hero, delayed down the
-     column so the page assembles rather than appearing all at once. */
-  const rise = (delay) => ({
-    initial: { opacity: 0, y: reduceMotion ? 0 : 16 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6, delay, ease: easeOut },
-  });
-
-  /* The washes drift slowly and forever. Held still for reduced motion. */
-  const drift = reduceMotion
-    ? {}
-    : {
-        animate: { x: [0, 26, -14, 0], y: [0, -18, 12, 0] },
-        transition: { duration: 26, repeat: Infinity, ease: "easeInOut" },
-      };
-
-  return (
-    <PageTransition>
-      <section className={styles.hero}>
-        <motion.div
-          className={`${styles.wash} ${styles.washWarm}`}
-          {...drift}
-          aria-hidden="true"
-        />
-        <motion.div
-          className={`${styles.wash} ${styles.washCool}`}
-          {...drift}
-          transition={
-            reduceMotion ? undefined : { duration: 32, repeat: Infinity, ease: "easeInOut", delay: 2 }
-          }
-          aria-hidden="true"
-        />
-        <div className={styles.grid} aria-hidden="true" />
-
-        <div className={styles.heroInner}>
-          <div>
-            <motion.div className={styles.eyebrowRow} {...rise(0)}>
-              <span className={styles.rule} />
-              <span className="eyebrow">Geological Survey of Western Australia</span>
-            </motion.div>
-
-            <motion.h1 className={styles.title} {...rise(0.08)}>
-              GSWA HyLogger <span className={styles.titleAccent}>Industry Adoption</span>
-            </motion.h1>
-
-            <motion.p className={styles.tagline} {...rise(0.16)}>
-              Western Australia has hyperspectral scans of thousands of drill
-              holes, free to anyone who wants them, and almost nobody uses them.
-              They arrive as raw mineral readings rather than answers. This is
-              the pipeline that turns those readings into a call on every metre
-              of core: ore, waste, altered, or not yet worth guessing.
-            </motion.p>
-
-            <motion.div className={styles.actions} {...rise(0.24)}>
-              <Button to="/explorer" size="lg" trailingIcon="arrowRight">
-                Open the Hole Explorer
-              </Button>
-              <Button to="/about" size="lg" variant="secondary">
-                How this works
-              </Button>
-            </motion.div>
+  const request = useSurvey();
+  const survey = request.data;
+  const summary = summariseIntervals(survey?.intervals);
+  const featured = (survey?.holes ?? []).filter(hole => survey.intervalsByHole[hole.hole_id]?.length).slice(0, 3);
+  return <PageTransition>
+    <div className={styles.hero}>
+      <div className={styles.heroInner}>
+        <Reveal className={styles.heroCopy}>
+          <p className="eyebrow"><span className={styles.kickerRule} /> GSWA HyLogger / Industry adoption</p>
+          <h1>A clearer view<br />beneath the<br /><em>surface.</em></h1>
+          <p className={styles.intro}>Open drill-core data, made easier to read. Explore Western Australia's mineral readings, follow the evidence down a hole, and see exactly where interpretation is still needed.</p>
+          <div className={styles.actions}><Button to="/explorer" trailingIcon="arrowUpRight" size="lg">Explore drill holes</Button>
+            <Button to="/results" variant="secondary" size="lg">Review classifications</Button></div>
+          <div className={styles.heroFoot}><span>Public data. Traceable rules.</span><Link to="/about">Know the method <Icon name="arrowRight" size={14} /></Link></div>
+        </Reveal>
+        <Reveal className={styles.dataStage} delay={.12}>
+          <div className={styles.stageTop}><span className="eyebrow">The rock is the starting point</span>
+            <Badge tone="neutral" icon={survey ? "check" : "clock"}>{survey ? "From loaded API data" : request.error ? "API unavailable" : "Reading the archive"}</Badge></div>
+          <div className={styles.coreGallery}>
+            {request.loading ? [0, 1, 2].map(index => <div key={index} className={styles.coreSpecimen}><Skeleton height="280px" /></div>) :
+              request.error ? <StateMessage tone="problem" icon="plug" title="Connect to the core archive"
+                action={<Button onClick={request.retry} variant="secondary" size="sm">Try again</Button>}>{request.error}</StateMessage> :
+              featured.length ? featured.map((hole, index) => {
+                const range = depthRange(survey.intervalsByHole[hole.hole_id]);
+                return <Link to={`/results?hole=${encodeURIComponent(hole.hole_id)}`} className={styles.coreSpecimen} key={hole.hole_id}>
+                  <span className={styles.specimenIndex}>0{index + 1}</span>
+                  <div className={styles.specimenCore}><CoreColumn intervals={survey.intervalsByHole[hole.hole_id]} height={275} showRuler={false} /></div>
+                  <strong>{hole.hole_id}</strong><span>{range.from} to {range.to} m</span></Link>;
+              }) : <StateMessage title="No interval data loaded">The archive is reachable, but no core intervals are available.</StateMessage>}
           </div>
+          <div className={styles.stageBottom}><span>Mineral identity / Real interval lengths</span><Icon name="arrowUpRight" size={18} /></div>
+          <MineralLegend compact />
+        </Reveal>
+      </div>
+    </div>
 
-          <CoreStrip />
+    <section className={styles.statsBand} aria-label="Live archive statistics"><div className={styles.statsInner}>
+      <div className={styles.statsIntro}><p className="eyebrow">A live view of the archive</p><p>Evidence before certainty.</p></div>
+      {request.loading ? [0,1,2,3].map(index => <Skeleton key={index} height="72px" />) :
+        survey ? <>
+          <Stat value={<CountUp value={survey.holes.length} />} label="Drill holes" />
+          <Stat value={<CountUp value={summary.total} />} label="Intervals reviewed by rules" />
+          <Stat value={<CountUp value={summary.unclassifiedShare} decimals={1} suffix="%" />} label="Remain Unclassified" />
+          <Stat value={<CountUp value={summary.flaggedShare} decimals={1} suffix="%" />} label="Flagged readings" />
+        </> : <p className={styles.statsUnavailable}>Statistics need a reachable API. No estimated figures are shown.</p>}
+    </div></section>
+
+    <div className={styles.content}>
+      {survey?.missingHoles.length > 0 && <p className={styles.partial} role="status">Partial coverage: {survey.missingHoles.length} holes could not load their intervals. Percentages describe the readings that loaded.</p>}
+      <Reveal className={styles.truth}>
+        <div><p className="eyebrow">A useful result includes its uncertainty</p><h2>Unclassified<br /><em>is a result, too.</em></h2></div>
+        <div><p>{survey ? <><strong>{summary.unclassifiedShare.toFixed(1)}% of the loaded intervals remain Unclassified.</strong> That is {summary.unclassified} of {summary.total} intervals where the baseline does not assign a geological label.</> : "Unclassified intervals stay visible. The baseline leaves much of the archive open for expert interpretation."}</p>
+          <p>Use these rules to organise a review, not to confirm a deposit. Mineral thresholds are provisional, and confidence is judged on Error, not Wt1.</p>
+          <Link to="/results?label=Unclassified" className={styles.textLink}>See the intervals that need interpretation <Icon name="arrowUpRight" size={16} /></Link></div>
+      </Reveal>
+
+      <Reveal className={styles.section}>
+        <div className={styles.sectionHead}><div><p className="eyebrow">From scan to understanding</p><h2>Follow the evidence.</h2></div>
+          <p>Five connected steps. Every displayed label keeps the rule and reason that produced it.</p></div>
+        <ol className={styles.pipeline}>{PIPELINE.map((step, index) => <li key={step.name}>
+          <div className={styles.stepTop}><span>0{index + 1}</span><Icon name={step.icon} size={20} /></div>
+          <h3>{step.name}</h3><p>{step.note}</p>{index < 4 && <Icon name="arrowRight" className={styles.stepArrow} size={16} />}
+        </li>)}</ol>
+      </Reveal>
+
+      <Reveal className={styles.section}>
+        <div className={styles.sectionHead}><div><p className="eyebrow">A workspace for your next question</p><h2>Start with a purpose.</h2></div></div>
+        <div className={styles.tasks}>
+          <Link to="/explorer"><span className={styles.taskIndex}>01 / Locate</span><h3>Where is this hole?</h3><p>Connect real coordinates, regional context and a depth profile in one workspace.</p><span className={styles.textLink}>Open the explorer <Icon name="arrowUpRight" size={18} /></span></Link>
+          <Link to="/results?quality=problem"><span className={styles.taskIndex}>02 / Review</span><h3>What needs a closer look?</h3><p>Isolate readings outside the error gate, trace their intervals, and export the evidence.</p><span className={styles.textLink}>Review flagged readings <Icon name="arrowUpRight" size={18} /></span></Link>
+          <Link to="/about"><span className={styles.taskIndex}>03 / Understand</span><h3>Why did that rule fire?</h3><p>Read the exact thresholds, the order of the rules and the limits of SWIR.</p><span className={styles.textLink}>Read the methodology <Icon name="arrowUpRight" size={18} /></span></Link>
         </div>
-      </section>
+      </Reveal>
 
-      <motion.section
-        className={styles.figures}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.35, ease: easeOut }}
-      >
-        <div className={styles.figuresInner}>
-          <Stat
-            value={PROJECT_FIGURES.holesProcessed}
-            label="Holes pulled and processed"
-            note="Capped at twenty while NVCL rate limits"
-          />
-          <Stat
-            value={PROJECT_FIGURES.depthIntervals}
-            label="Depth intervals classified"
-          />
-          <Stat
-            value={PROJECT_FIGURES.mineralsDetected}
-            label="Minerals detected in SWIR"
-            note="Five carry almost all the weight"
-          />
-          <Stat
-            value={PROJECT_FIGURES.classifierRules}
-            label="Rules in the baseline classifier"
-            note="Thresholds still provisional"
-          />
-        </div>
-      </motion.section>
-
-      <section className={styles.section}>
-        <div className={styles.sectionHead}>
-          <p className="eyebrow">The pipeline</p>
-          <h2 className={styles.sectionTitle}>From a government archive to a call on the rock</h2>
-          <p className={styles.sectionLede}>
-            Six stages, each one a folder in the repository. Nothing here is a
-            black box: if a result looks wrong you can follow it back to the
-            scan it came from.
-          </p>
-        </div>
-
-        <ul className={styles.pipeline}>
-          {PIPELINE.map((step, index) => (
-            <motion.li
-              key={step.name}
-              className={styles.step}
-              initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.4, delay: index * 0.06, ease: easeOut }}
-            >
-              <span className={styles.stepIndex}>
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <span className={styles.stepName}>{step.name}</span>
-              <span className={styles.stepNote}>{step.note}</span>
-            </motion.li>
-          ))}
-        </ul>
-      </section>
-
-      <section className={styles.section}>
-        <div className={styles.sectionHead}>
-          <p className="eyebrow">Where to go next</p>
-          <h2 className={styles.sectionTitle}>Three ways into the data</h2>
-        </div>
-
-        <ul className={styles.routes}>
-          {ROUTES.map((route, index) => (
-            <motion.li
-              key={route.to}
-              initial={{ opacity: 0, y: reduceMotion ? 0 : 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.45, delay: index * 0.08, ease: easeOut }}
-            >
-              <Card as={Link} to={route.to} interactive className={styles.routeCard}>
-                <span className={styles.routeIcon}>
-                  <Icon name={route.icon} size={18} />
-                </span>
-                <span className={styles.routeName}>{route.name}</span>
-                <span className={styles.routeNote}>{route.note}</span>
-                <span className={styles.routeLink}>
-                  {route.cta}
-                  <Icon name="arrowRight" size={15} />
-                </span>
-              </Card>
-            </motion.li>
-          ))}
-        </ul>
-      </section>
-    </PageTransition>
-  );
+      <Reveal className={styles.limitations}>
+        <Icon name="info" size={26} /><div><p className="eyebrow">Know what the instrument cannot see</p>
+          <h2>Mineral patterns are not an ore assay.</h2><p>This pipeline uses SWIR mineral outputs. Hematite and goethite are not detected here. An oxide-based interpretation requires other spectral data and expert validation.</p></div>
+        <Button to="/about#limitations" variant="secondary" trailingIcon="arrowRight">Explore the limitations</Button>
+      </Reveal>
+    </div>
+  </PageTransition>;
 }
