@@ -72,6 +72,7 @@ export default function WAMap({ holes = [], selectedHoleId, onSelect }) {
          onClick={()=>activate(group)} onKeyDown={event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();activate(group);}}}
          onMouseEnter={()=>setHovered(group)} onMouseLeave={()=>setHovered(null)} onFocus={()=>setHovered(group)} onBlur={()=>setHovered(null)}>
          <circle cx={group.x} cy={group.y} r={(group.members.length>1?12:6)*pointScale} strokeWidth={1.5*pointScale}/>
+         <circle cx={group.x} cy={group.y} r={22*pointScale} className={styles.hitArea}/>
          <circle cx={group.x} cy={group.y} r={(group.members.length>1?17:11)*pointScale} className={styles.selectionRing} strokeWidth={pointScale}/>
          {group.members.length>1&&<text x={group.x} y={group.y+3.5*pointScale} style={{fontSize:10*pointScale}}>{group.members.length}</text>}
        </g>;

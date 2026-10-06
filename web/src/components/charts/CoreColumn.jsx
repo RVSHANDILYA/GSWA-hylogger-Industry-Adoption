@@ -1,5 +1,5 @@
 import { useId, useMemo } from "react";
-import { useReducedMotion } from "framer-motion";
+import useMotionPreference from "../../hooks/useMotionPreference.js";
 import {
   dominantMineral,
   mineralColour,
@@ -36,7 +36,7 @@ export default function CoreColumn({
   onSelectDepth,
   onHoverDepth,
 }) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useMotionPreference();
   const instanceId = useId();
   const filterId = `core-grain-${instanceId.replace(/[^a-zA-Z0-9_-]/g, "")}`;
 

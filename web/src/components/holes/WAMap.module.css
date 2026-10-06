@@ -1,7 +1,7 @@
 .map { position: relative; min-width: 0; overflow: hidden; background: var(--surface-map); border: 1px solid var(--border-default); border-radius: 10px;
   background-image: radial-gradient(#172b2518 .6px,transparent .6px); background-size: 16px 16px; }
 .mapTop { position: absolute; z-index: 2; top: 20px; left: 20px; right: 20px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-.mapTop .eyebrow { font-size: .5625rem; }
+.mapTop [class~="eyebrow"] { font-size: .625rem; }
 .overview { display: inline-flex; gap: 5px; align-items: center; padding: 7px 9px; background: #fffffff0; border: 1px solid var(--border-default);
   border-radius: 4px; font-size: .5625rem; color: var(--text-secondary); }
 .overview:hover { border-color: var(--accent); color: var(--accent); }
@@ -12,8 +12,9 @@
 .pin { cursor: pointer; } .pin > circle:first-child { fill: var(--accent); stroke: white; transition: fill var(--duration-fast); }
 .pin:hover > circle:first-child, .pin:focus-visible > circle:first-child { fill: var(--accent-hover); }
 .pin text { fill: white; font-family: var(--font-sans); text-anchor: middle; font-weight: 500; pointer-events: none; }
+.hitArea { fill: transparent; stroke: none; }
 .pin:focus-visible { outline: none; }
-.selectionRing { fill: none; stroke: var(--accent); stroke-dasharray: 3 2; opacity: 0; }
+.selectionRing { fill: none; stroke: var(--accent); stroke-dasharray: 3 2; opacity: 0; pointer-events: none; }
 .selected .selectionRing, .pin:focus-visible .selectionRing { opacity: 1; }
 .north { position: absolute; right: 22px; bottom: 65px; display: flex; flex-direction: column; align-items: center; font-family: var(--font-mono); font-size: .5625rem; color: var(--text-muted); }
 .north span { font-size: 24px; }

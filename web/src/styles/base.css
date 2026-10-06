@@ -9,7 +9,7 @@ p { text-wrap: pretty; }
 img, svg { display: block; max-width: 100%; }
 button, input, select, textarea { font: inherit; color: inherit; }
 button, select { touch-action: manipulation; }
-button { cursor: pointer; }
+button { cursor: pointer; border: 0; background: transparent; padding: 0; }
 a { color: var(--accent); text-underline-offset: 4px; }
 a:hover { color: var(--accent-hover); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
@@ -24,6 +24,7 @@ a:hover { color: var(--accent-hover); }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition-duration: 0ms !important; }
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
 }
 @media print {
   body { color: #172b25; background: white; }

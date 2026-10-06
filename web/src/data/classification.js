@@ -71,8 +71,11 @@ export function confidenceState(confidenceError, finalMask = true) {
   if (finalMask === false) {
     return { state: "problem", text: "Excluded by mask", icon: "x" };
   }
-  if (confidenceError == null || Number.isNaN(confidenceError)) {
+  if (!Number.isFinite(confidenceError)) {
     return { state: "problem", text: "No error value", icon: "x" };
+  }
+  if (confidenceError < 0) {
+    return { state: "problem", text: "Invalid error value", icon: "x" };
   }
   if (confidenceError > EXPECTED_MAX_ERROR) {
     return { state: "problem", text: "Above error ceiling", icon: "x" };

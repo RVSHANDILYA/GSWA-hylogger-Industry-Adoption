@@ -69,7 +69,10 @@
   color: var(--text-primary);
 }
 
-/* Compact variant, used in the selection rail on the Classification page */
+/* Compact variant, used in the linked Explorer list. */
+.compact .id { font-size: .75rem; }
+.compact .region { font-size: .6875rem; }
+.compact .compactRow { gap: 5px; flex-wrap: wrap; }
 .compactRow {
   display: flex;
   align-items: center;
@@ -80,6 +83,6 @@
 .compactMeta {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  font-size: var(--size-xs);
+  font-size: .625rem;
   color: var(--text-muted);
 }

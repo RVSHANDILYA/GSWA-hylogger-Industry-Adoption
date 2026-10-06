@@ -5,7 +5,7 @@ import { Container } from "../components/layout/Layout.jsx";
 import CoreColumn from "../components/charts/CoreColumn.jsx";
 import MineralLegend from "../components/charts/MineralLegend.jsx";
 import IntervalRecord, { ErrorBadge, RecordDetails } from "../components/results/IntervalRecord.jsx";
-import { Badge, Button, Card, Icon, Loading, Notice, Skeleton, StateMessage } from "../components/ui/index.js";
+import { Button, Card, Icon, Loading, Notice, Skeleton, StateMessage } from "../components/ui/index.js";
 import { fetchHole, fetchHoles, fetchIntervals } from "../api/client.js";
 import useAsyncData from "../hooks/useAsyncData.js";
 import useMotionPreference from "../hooks/useMotionPreference.js";
@@ -127,8 +127,8 @@ export default function ResultsPage() {
        <div className={styles.listToolbar}><span aria-live="polite"><strong>{filtered.length}</strong> of {intervals.length} intervals{hasFilters?" match":" shown"}</span>
          <div className={styles.viewToggle} role="group" aria-label="Interval view"><button type="button" aria-pressed={view==="cards"} onClick={()=>setView("cards")}><Icon name="list" size={15}/> Cards</button>
            <button type="button" aria-pressed={view==="table"} onClick={()=>setView("table")}><Icon name="table" size={15}/> Table</button></div></div>
-       {view==="cards"&&<label className={styles.cardSort}>Sort by <select value={sort.key+(sort.descending?"-desc":"")} onChange={event=>setSort({key:event.target.value.replace("-desc",""),descending:event.target.value.endsWith("-desc")})}>
-         <option value="depth">Shallowest first</option><option value="depth-desc">Deepest first</option><option value="error">Lowest Error</option><option value="error-desc">Highest Error</option><option value="label">Classifier label</option><option value="rule">Rule fired</option></select></label>}
+       <label className={styles.cardSort}>Sort by <select value={sort.key+(sort.descending?"-desc":"")} onChange={event=>setSort({key:event.target.value.replace("-desc",""),descending:event.target.value.endsWith("-desc")})}>
+         <option value="depth">Shallowest first</option><option value="depth-desc">Deepest first</option><option value="error">Lowest Error</option><option value="error-desc">Highest Error</option><option value="label">Classifier label</option><option value="label-desc">Classifier label, reverse</option><option value="rule">Rule fired</option><option value="rule-desc">Rule fired, reverse</option></select></label>
        <div className={styles.records}>
          {!sorted.length?<StateMessage title="No intervals match these filters" icon="search" action={<Button variant="secondary" onClick={clearFilters}>Show all intervals</Button>}>The whole core remains visible so you keep the depth context.</StateMessage>:
            view==="cards"?<ul className={styles.cardList}>{sorted.map(row=><li key={intervalKey(row)} data-interval={intervalKey(row)} tabIndex={-1}

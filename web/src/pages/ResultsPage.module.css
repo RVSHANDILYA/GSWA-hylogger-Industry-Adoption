@@ -32,7 +32,7 @@
 .hatchSample { flex: none; width: 18px; height: 18px; border: 1px solid var(--border-default); background: repeating-linear-gradient(135deg,color-mix(in srgb,var(--status-problem) 30%,transparent) 0 2px,transparent 2px 6px); }
 .evidence { min-width: 0; border: 1px solid var(--border-default); border-radius: 8px; background: var(--surface-page); overflow: hidden; }
 .evidenceHead { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 26px 24px; }
-.evidenceHead .eyebrow { margin-bottom: 8px; }
+.evidenceHead [class~="eyebrow"] { margin-bottom: 8px; }
 .filters { padding: 20px 24px; background: var(--surface-tint); border-top: 1px solid var(--border-default); border-bottom: 1px solid var(--border-default); }
 .filters fieldset { border: 0; padding: 0; margin: 0 0 15px; min-width: 0; }
 .filters legend { margin-bottom: 9px; font-size: .625rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .07em; }
@@ -76,6 +76,7 @@
 .charts > * { min-width: 0; }
 @media(max-width:1100px) { .workspace { grid-template-columns: 290px minmax(0,1fr); gap: 20px; } .corePanel { padding: 22px; } .summary > div { padding: 18px 14px; } .charts { grid-template-columns: 1fr; } }
 @media(max-width:768px) { .workspace { grid-template-columns: 1fr; } .corePanel { position: static; } .coreStage { width: 245px; } .summary { grid-template-columns: repeat(2,1fr); } .summary > div { border-bottom: 1px solid var(--border-default); } .summary > div:nth-child(even) { border-right: 0; } .summary .summaryContext { grid-column: 1/-1; padding: 18px; }
+ .pageHeading { padding-top: 12px; }
  .holeBar { flex-wrap: wrap; gap: 16px; } .holeBar > label { max-width: none; flex: 1 1 100%; } .holeMeta { flex: 1; }
  .records { max-height: none; } .sectionHeading { flex-direction: column; align-items: flex-start; } .sectionHeading > p { max-width: 500px; }
  .chartsSection { margin-top: 48px; } .intervalTable th, .intervalTable td { padding: 14px 10px; } }

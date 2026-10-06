@@ -2,15 +2,12 @@
    mineral identity stays in the five fixed chart slots plus Other. */
 :root {
   color-scheme: light;
-  --ink-1000: #ffffff; --ink-900: #f5f5ef; --ink-800: #ffffff;
-  --ink-700: #eff2ec; --ink-600: #dce2da; --ink-500: #c6d0c5; --ink-400: #9ca99f;
   --surface-page: #ffffff; --surface-sunken: #f5f5ef;
   --surface-raised: #ffffff; --surface-hover: #eff2ec;
   --surface-map: #edf1e8; --surface-tint: #fafaf7;
   --border-subtle: #e5e8df; --border-default: #d7ddd3; --border-strong: #a7b3a8;
   --text-primary: #172b25; --text-secondary: #485650; --text-muted: #626e67;
   --text-on-accent: #ffffff;
-  --ochre-300: #9b482d; --ochre-400: #9b482d; --ochre-500: #9b482d; --ochre-600: #7f371e;
   --accent: #9b482d; --accent-hover: #7f371e; --accent-soft: #f7ede7; --accent-line: #dab9a9;
   --status-good: #246747; --status-caution: #8b5c12; --status-problem: #b12d3c;
   --status-good-soft: #edf5ee; --status-caution-soft: #faf2df; --status-problem-soft: #fbeef0;

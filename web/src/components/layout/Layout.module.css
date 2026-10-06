@@ -5,3 +5,4 @@
 .skipLink { position: absolute; z-index: 60; top: 8px; left: 8px; padding: 10px 16px; border-radius: 4px;
   background: var(--accent); color: white; transform: translateY(-200%); }
 .skipLink:focus-visible { transform: none; color: white; }
+@media(max-width:768px) { .container { padding-top: 32px; } }

@@ -8,7 +8,7 @@
 .body { min-width: 0; }
 .section { padding-bottom: 72px; margin-bottom: 48px; border-bottom: 1px solid var(--border-default); scroll-margin-top: 118px; }
 .section > h2 { font-family: var(--font-display); font-size: clamp(2rem,3.3vw,3.1rem); font-weight: 500; letter-spacing: -.035em; line-height: 1.1; max-width: 21ch; margin: 16px 0 24px; }
-.section > p:not(.eyebrow) { color: var(--text-secondary); font-size: .9375rem; line-height: 1.85; max-width: 70ch; margin-top: 18px; }
+.section > p:not([class~="eyebrow"]) { color: var(--text-secondary); font-size: .9375rem; line-height: 1.85; max-width: 70ch; margin-top: 18px; }
 .coverage { display: grid; grid-template-columns: 220px 1fr; gap: 34px; padding: 32px; background: var(--surface-sunken); border-radius: 6px; margin-top: 32px; }
 .coverage > div { display: flex; flex-direction: column; gap: 8px; }
 .coverageNumber { font-family: var(--font-display); font-size: 4rem; line-height: 1; letter-spacing: -.035em; font-variant-numeric: tabular-nums; }

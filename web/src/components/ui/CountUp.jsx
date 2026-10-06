@@ -9,9 +9,10 @@ export default function CountUp({ value, decimals = 0, suffix = "" }) {
   const format = number => Number(number).toLocaleString("en-AU", {minimumFractionDigits: decimals, maximumFractionDigits: decimals}) + suffix;
   useEffect(() => {
     if (!ref.current || !visible || reduced) return undefined;
+    const node = ref.current;
     const control = animate(0, value, {duration: 1.15, ease: easeOut,
-      onUpdate: current => { if (ref.current) ref.current.textContent = format(current); }});
-    return () => { control.stop(); if (ref.current) ref.current.textContent = format(value); };
+      onUpdate: current => { node.textContent = format(current); }});
+    return () => { control.stop(); node.textContent = format(value); };
     // Formatting is determined by these primitive values.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, decimals, suffix, visible, reduced]);

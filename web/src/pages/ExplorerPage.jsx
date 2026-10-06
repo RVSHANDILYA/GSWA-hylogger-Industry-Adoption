@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { motion } from "framer-motion";
 import PageTransition from "../components/layout/PageTransition.jsx";
 import { Container } from "../components/layout/Layout.jsx";
 import HoleCard from "../components/holes/HoleCard.jsx";
@@ -9,6 +10,8 @@ import MineralLegend from "../components/charts/MineralLegend.jsx";
 import { Badge, Button, Card, Icon, Loading, Notice, PageHeader, SearchField, Skeleton, StateMessage } from "../components/ui/index.js";
 import { fetchHole, fetchHoles, fetchIntervals } from "../api/client.js";
 import useAsyncData from "../hooks/useAsyncData.js";
+import useMotionPreference from "../hooks/useMotionPreference.js";
+import { easeOut } from "../styles/theme.js";
 import { depthRange, summariseIntervals } from "../data/analysis.js";
 import styles from "./ExplorerPage.module.css";
 
@@ -17,6 +20,7 @@ export default function ExplorerPage() {
  const [query,setQuery]=useState("");
  const [sort,setSort]=useState("id");
  const [view,setView]=useState("map");
+ const reduced=useMotionPreference();
  const holesRequest=useAsyncData(fetchHoles,[]);
  const holes=useMemo(()=>holesRequest.data?.holes??[],[holesRequest.data]);
  const selected=holes.find(hole=>hole.hole_id===params.get("hole"))??holes[0]??null;
@@ -52,7 +56,8 @@ export default function ExplorerPage() {
    {holesRequest.error?<Card><StateMessage tone="problem" icon="plug" title="The archive could not be reached"
      action={<Button onClick={holesRequest.retry} variant="secondary">Try again</Button>}>{holesRequest.error}</StateMessage></Card>:
    holesRequest.loading?<div className={styles.workspace}><Skeleton height="590px"/><Skeleton height="590px"/><Skeleton height="590px"/></div>:
-   <div className={`${styles.workspace} ${view==="table"?styles.tableLayout:""}`}>
+   <motion.div key={view} initial={reduced?false:{opacity:0,y:6}} animate={{opacity:1,y:0}} transition={{duration:reduced?0:.24,ease:easeOut}}
+     className={`${styles.workspace} ${view==="table"?styles.tableLayout:""}`}>
      {view==="map"?<>
        <div className={styles.holeList}><p className={styles.panelLabel}>Hole index <span>{visible.length}</span></p>
          {visible.length?<ul>{visible.map(hole=><li key={hole.hole_id}><HoleCard hole={hole} variant="compact" selected={hole.hole_id===holeId} onSelect={select}/></li>)}</ul>:
@@ -69,7 +74,7 @@ export default function ExplorerPage() {
          </tr>)}</tbody></table>
        {!visible.length&&<StateMessage title="No matching holes">Clear the search to see all holes.</StateMessage>}
      </div>}
-     <aside className={styles.detail} aria-label="Selected hole details">
+     <motion.aside key={holeId} initial={reduced?false:{opacity:0}} animate={{opacity:1}} transition={{duration:reduced?0:.24,ease:easeOut}} className={styles.detail} aria-label="Selected hole details">
        {!detail?<StateMessage icon="core" title="No hole selected">Select a hole to inspect its record.</StateMessage>:<>
          <div className={styles.detailHead}><p className="eyebrow">Selected core</p><h2>{detail.hole_id}</h2><p>{detail.region||"Region not recorded"}</p></div>
          <dl className={styles.facts}><div><dt>Recorded total depth</dt><dd>{detail.total_depth_m??"n/a"} m</dd></div>
@@ -79,14 +84,14 @@ export default function ExplorerPage() {
          {intervalsRequest.loading?<Loading>Reading the depth profile</Loading>:intervalsRequest.error?
            <StateMessage tone="problem" title="Intervals could not load" action={<Button size="sm" variant="secondary" onClick={intervalsRequest.retry}>Retry intervals</Button>}>{intervalsRequest.error}</StateMessage>:
            <><div className={styles.preview}><div className={styles.previewHead}><span className="eyebrow">Logged interval range</span><span className="tabular">{range?`${range.from} to ${range.to} m`:"No intervals"}</span></div>
-             <CoreColumn intervals={intervals} height={245}/><MineralLegend compact/></div>
+             <div className={styles.previewColumn}><CoreColumn intervals={intervals} height={245}/></div><MineralLegend compact/></div>
              <div className={styles.readingSummary}><span><strong>{summary.unclassifiedShare.toFixed(1)}%</strong> Unclassified</span><Badge tone={summary.flagged?"caution":"neutral"} icon={summary.flagged?"alert":"check"}>{summary.flagged} flagged</Badge></div>
              {range&&Number.isFinite(detail.total_depth_m)&&range.to>detail.total_depth_m&&
-               <Notice title="Metadata needs review">Intervals reach {range.to} m, beyond the recorded total depth of {detail.total_depth_m} m. Both values are shown as returned.</Notice>}</>}
-         <Button to={`/results?hole=${encodeURIComponent(detail.hole_id)}`} trailingIcon="arrowRight">Open in Classification</Button>
+               <div className={styles.detailNotice}><Notice title="Metadata needs review">Intervals reach {range.to} m, beyond the recorded total depth of {detail.total_depth_m} m. Both values are shown as returned.</Notice></div>}</>}
+         <Button className={styles.openClassification} to={`/results?hole=${encodeURIComponent(detail.hole_id)}`} trailingIcon="arrowRight">Open in Classification</Button>
        </>}
-     </aside>
-   </div>}
+     </motion.aside>
+   </motion.div>}
    <div className={styles.bottomNote}><Badge tone="neutral" icon="info">Confidence judged on Error, not Wt1</Badge>
      <span>Coordinates and metadata come directly from the API. Classifier thresholds are provisional.</span></div>
  </Container></PageTransition>;

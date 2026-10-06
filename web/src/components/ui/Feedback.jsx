@@ -5,9 +5,8 @@ import styles from "./Feedback.module.css";
   The three "nothing to show yet" states, kept together so they stay
   consistent with each other.
 
-  Task 9 needs Loading and StateMessage for the API calls, so reach for these
-  rather than writing a new spinner. A blank screen while a request is in
-  flight is the thing we are trying to avoid.
+  API requests use Loading and StateMessage so a pending request or a failed
+  connection always has an explicit, readable state.
 */
 
 export function Spinner({ size = 18, label = "Loading" }) {

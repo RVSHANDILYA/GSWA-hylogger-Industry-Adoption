@@ -4,12 +4,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
   Load something asynchronous and expose the three states a page has to show:
   loading, ready, and could not load.
 
-  Both the Hole Explorer and the Classification page need exactly this, so it
-  lives here once rather than twice. Task 9 keeps the hook and changes only
-  the loader it is handed:
-
-    const holes = useAsyncData(fetchHoles);              // placeholder module
-    const holes = useAsyncData(() => api.getHoles());    // Axios client
+  All data pages share this loading, success and error treatment. The loader
+  calls the real API client and changes when its dependencies change.
 
   `deps` is the list of values the loader depends on. Change one, for example
   the selected hole, and the hook re-runs and reports loading again rather

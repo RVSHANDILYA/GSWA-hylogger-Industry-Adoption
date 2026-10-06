@@ -10,10 +10,6 @@
 .workspace { display: grid; grid-template-columns: minmax(180px,.65fr) minmax(320px,1.55fr) minmax(260px,.95fr); gap: 20px; align-items: start; }
 .panelLabel { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: .625rem; color: var(--text-muted); letter-spacing: .09em; text-transform: uppercase; }
 .holeList { min-width: 0; } .holeList ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px; max-height: 590px; overflow-y: auto; padding-right: 3px; }
-.holeList :global([class*="_compactMeta_"]) { font-size: .5625rem; }
-.holeList :global([class*="_compactRow_"]) { gap: 5px; flex-wrap: wrap; }
-.holeList :global([class*="_id_"]) { font-size: .75rem; }
-.holeList :global([class*="_region_"]) { font-size: .625rem; }
 .mapPanel { min-width: 0; } .mapHint { display: flex; align-items: start; gap: 6px; margin-top: 12px; color: var(--text-muted); font-size: .6875rem; }
 .mapHint svg { flex: none; margin-top: 2px; }
 .detail { display: flex; flex-direction: column; gap: 22px; min-width: 0; padding: 24px; border: 1px solid var(--border-default); border-radius: 10px; background: white; }
@@ -23,12 +19,12 @@
 .facts dt { color: var(--text-muted); font-size: .5625rem; } .facts dd { margin-top: 5px; font-family: var(--font-mono); font-size: .8125rem; }
 .preview { display: flex; flex-direction: column; gap: 16px; }
 .previewHead { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; font-size: .5625rem; }
-.previewHead .eyebrow { font-size: .5rem; }
-.preview > :global([class*="_wrap_"]) { max-width: 185px; margin: auto; }
+.previewHead [class~="eyebrow"] { font-size: .625rem; }
+.previewColumn { width: 185px; max-width: 100%; margin: auto; }
 .readingSummary { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: .625rem; color: var(--text-secondary); }
 .readingSummary strong { font-size: 1.125rem; color: var(--text-primary); }
-.detail :global([class*="_notice_"]) { font-size: .6875rem; padding: 12px; }
-.detail :global([class*="_button_"]) { width: 100%; font-size: .75rem; }
+.detailNotice > div { font-size: .75rem; padding: 12px; }
+.openClassification { width: 100%; font-size: .75rem; }
 .partial { color: var(--status-caution); font-size: .75rem; }
 .bottomNote { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border-subtle); }
 .bottomNote > span:last-child { font-size: .6875rem; color: var(--text-muted); }

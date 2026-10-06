@@ -5,11 +5,9 @@ import styles from "./HoleCard.module.css";
   One drill hole, as a card.
 
   Purely presentational: it takes a hole object shaped the way the API returns
-  it and knows nothing about where that object came from. Task 9 can hand it
-  live rows without touching this file.
+  it and leaves data loading to the page.
 
-  variant "full"    the grid card on the Hole Explorer
-  variant "compact" the one line row in the selection rail
+  The compact variant is used in the Explorer's linked hole list.
 */
 export default function HoleCard({ hole, variant = "full", selected = false, onSelect }) {
   const interactive = typeof onSelect === "function";
@@ -25,7 +23,7 @@ export default function HoleCard({ hole, variant = "full", selected = false, onS
 
   if (variant === "compact") {
     return (
-      <Card {...shared}>
+      <Card {...shared} className={styles.compact}>
         <div className={styles.compactRow}>
           <span className={styles.id}>{hole.hole_id}</span>
           <span className={styles.compactMeta}>
@@ -59,11 +57,11 @@ export default function HoleCard({ hole, variant = "full", selected = false, onS
           </div>
           <div className={styles.fact}>
             <span className={styles.factLabel}>Latitude</span>
-            <span className={styles.factValue}>{hole.latitude.toFixed(3)}</span>
+            <span className={styles.factValue}>{Number.isFinite(hole.latitude) ? hole.latitude.toFixed(3) : "Unavailable"}</span>
           </div>
           <div className={styles.fact}>
             <span className={styles.factLabel}>Longitude</span>
-            <span className={styles.factValue}>{hole.longitude.toFixed(3)}</span>
+            <span className={styles.factValue}>{Number.isFinite(hole.longitude) ? hole.longitude.toFixed(3) : "Unavailable"}</span>
           </div>
         </div>
       </div>
