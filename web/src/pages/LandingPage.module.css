@@ -47,6 +47,15 @@
   .coreGallery { gap: 16px; }
 }
 
+.filmSection { display: grid; grid-template-columns: minmax(0,1.5fr) minmax(0,1fr); align-items: center; gap: 48px;
+  max-width: var(--page-max); margin: auto; padding: 72px var(--page-gutter); }
+.filmCopy h2 { margin: 14px 0 24px; font-size: var(--size-h2); line-height: var(--line-h2); }
+.filmCopy ol { display: flex; flex-direction: column; gap: 16px; padding: 0; list-style: none; }
+.filmCopy li { display: grid; grid-template-columns: 28px minmax(0,1fr); gap: 14px; }
+.filmCopy li > span { padding-top: 4px; color: var(--text-muted); font-family: var(--font-mono); font-size: 12px; line-height: 20px; }
+.filmCopy li p { color: var(--text-secondary); font-size: var(--size-body); line-height: var(--line-body); }
+.filmCopy .textLink { margin-top: 24px; font-size: var(--size-small); }
+@media (max-width: 899px) { .filmSection { grid-template-columns: 1fr; gap: 32px; padding-block: 48px; } .filmCopy { max-width: 65ch; } }
 .statsBand { background: var(--surface-tint); border-bottom: 1px solid var(--border-subtle); }
 .statsInner { display: grid; grid-template-columns: 1.2fr repeat(4, 1fr); gap: 24px; max-width: var(--page-max); margin: auto; padding: 32px var(--page-gutter); }
 .statsIntro { padding-right: 18px; border-right: 1px solid var(--border-default); }

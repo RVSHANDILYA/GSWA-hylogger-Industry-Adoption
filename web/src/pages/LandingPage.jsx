@@ -7,6 +7,7 @@ import Reveal from "../components/ui/Reveal.jsx";
 import CoreColumn from "../components/charts/CoreColumn.jsx";
 import MineralLegend from "../components/charts/MineralLegend.jsx";
 import CorePoster from "../components/home/CorePoster.jsx";
+import CoreFilm from "../components/home/CoreFilm.jsx";
 import useSurvey from "../hooks/useSurvey.js";
 import useDataSource from "../hooks/useDataSource.js";
 import useMotionPreference from "../hooks/useMotionPreference.js";
@@ -66,6 +67,20 @@ export default function LandingPage() {
         </Reveal>
       </div>
     </div>
+
+    <Reveal className={styles.filmSection}>
+      <CoreFilm />
+      <div className={styles.filmCopy}>
+        <p className="eyebrow">One hole, slice by slice</p>
+        <h2>What happens to one drill hole</h2>
+        <ol>
+          <li><span>01</span><p>First we set aside the readings the instrument flagged as unreliable.</p></li>
+          <li><span>02</span><p>Then we read the minerals in each slice.</p></li>
+          <li><span>03</span><p>Where no rule fits, we leave the slice unclassified and say so.</p></li>
+        </ol>
+        <Link to="/explorer?hole=05GJD001" className={styles.textLink}>Open this hole in the Explorer <Icon name="arrowUpRight" size={16} /></Link>
+      </div>
+    </Reveal>
 
     <section className={styles.statsBand} aria-label="Live archive statistics"><div className={styles.statsInner}>
       <div className={styles.statsIntro}><p className="eyebrow">{source.mode === "snapshot" ? "A saved view of the archive" : "A live view of the archive"}</p><p>Evidence before certainty.</p></div>
