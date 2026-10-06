@@ -217,7 +217,7 @@ function DepthMineralTimeline({
               domain={["dataMin", "dataMax"]}
               tickFormatter={(value) => `${Math.round(value)}m`}
               stroke={chart.grid}
-              tick={{ fill: chart.axis, fontSize: 11, fontFamily: "IBM Plex Mono" }}
+              tick={{ fill: chart.axis, fontSize: 11, fontFamily: "var(--font-mono)" }}
               tickLine={false}
               axisLine={false}
             />

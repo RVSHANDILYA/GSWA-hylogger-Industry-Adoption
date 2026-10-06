@@ -13,19 +13,23 @@
   --status-good-soft: #edf5ee; --status-caution-soft: #faf2df; --status-problem-soft: #fbeef0;
   --label-ore: #246747; --label-altered: #66508c;
   --label-waste: #626d7c; --label-unclassified: #626e67;
-  /* All six marks exceed 5:1 on white. Same hue families and fixed order. */
-  --viz-1: #2768bc; --viz-2: #ba4820; --viz-3: #14774f;
-  --viz-4: #996400; --viz-5: #b83d6b; --viz-other: #626d7c;
+  /* Mineral marks use the fixed palette; their labels use the ink tokens. */
+  --viz-1: #3987e5; --viz-2: #d95926; --viz-3: #199e70;
+  --viz-4: #c98500; --viz-5: #d55181; --viz-other: #7d8ba1;
   --viz-surface: #ffffff; --viz-grid: #e3e8df; --viz-axis: #626e67;
-  --font-display: "Source Serif 4", "Iowan Old Style", Georgia, serif;
-  --font-sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
-  --size-xs: 0.75rem; --size-sm: 0.875rem; --size-base: 1rem;
-  --size-md: 1.125rem; --size-lg: 1.375rem; --size-xl: 2rem;
-  --size-2xl: clamp(2.75rem, 4.3vw, 4.5rem);
-  --size-hero: clamp(3.5rem, 6.4vw, 6.5rem);
-  --leading-tight: 1.04; --leading-snug: 1.35; --leading-normal: 1.65;
-  --tracking-label: 0.13em; --tracking-tight: -0.035em;
+  --font-sans: "Inter Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  --size-display: 56px; --line-display: 64px;
+  --size-h1: 40px; --line-h1: 48px;
+  --size-h2: 28px; --line-h2: 36px;
+  --size-h3: 20px; --line-h3: 28px;
+  --size-body: 17px; --line-body: 28px;
+  --size-small: 14px; --line-small: 20px;
+  --size-xs: 12px; --size-sm: var(--size-small); --size-base: var(--size-body);
+  --size-md: 18px; --size-lg: var(--size-h3); --size-xl: var(--size-h2);
+  --size-2xl: var(--size-h1); --size-hero: var(--size-display);
+  --leading-tight: 1.14; --leading-snug: 1.4; --leading-normal: 1.64706;
+  --tracking-label: 0.08em; --tracking-tight: -0.02em;
   --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem;
   --space-4: 1rem; --space-5: 1.5rem; --space-6: 2rem;
   --space-7: 3rem; --space-8: 4rem; --space-9: 6rem; --space-10: 8rem;
@@ -36,6 +40,5 @@
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --duration-fast: 140ms; --duration-base: 240ms; --duration-slow: 420ms;
-  --page-max: 1320px; --page-gutter: clamp(1.25rem, 4.2vw, 3.75rem); --nav-height: 84px;
+  --page-max: 1280px; --page-gutter: 24px; --nav-height: 80px;
 }
-@media (max-width: 640px) { :root { --nav-height: 116px; --page-gutter: 1.25rem; } }

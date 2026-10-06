@@ -29,7 +29,7 @@ export default function LandingPage() {
       <div className={styles.heroInner}>
         <Reveal className={styles.heroCopy}>
           <p className="eyebrow"><span className={styles.kickerRule} /> GSWA HyLogger / Industry adoption</p>
-          <h1>A clearer view<br />beneath the<br /><em>surface.</em></h1>
+          <h1>A clearer view<br />beneath the<br />surface.</h1>
           <p className={styles.intro}>Open drill-core data, made easier to read. Explore Western Australia's mineral readings, follow the evidence down a hole, and see exactly where interpretation is still needed.</p>
           <div className={styles.actions}><Button to="/explorer" trailingIcon="arrowUpRight" size="lg">Explore drill holes</Button>
             <Button to="/results" variant="secondary" size="lg">Review classifications</Button></div>
@@ -70,7 +70,7 @@ export default function LandingPage() {
     <div className={styles.content}>
       {survey?.missingHoles.length > 0 && <p className={styles.partial} role="status">Partial coverage: {survey.missingHoles.length} holes could not load their intervals. Percentages describe the readings that loaded.</p>}
       <Reveal className={styles.truth}>
-        <div><p className="eyebrow">A useful result includes its uncertainty</p><h2>Unclassified<br /><em>is a result, too.</em></h2></div>
+        <div><p className="eyebrow">A useful result includes its uncertainty</p><h2>Unclassified<br />is a result, too.</h2></div>
         <div><p>{survey ? <><strong>{summary.unclassifiedShare.toFixed(1)}% of the loaded intervals remain Unclassified.</strong> That is {summary.unclassified} of {summary.total} intervals where the baseline does not assign a geological label.</> : "Unclassified intervals stay visible. The baseline leaves much of the archive open for expert interpretation."}</p>
           <p>Use these rules to organise a review, not to confirm a deposit. Mineral thresholds are provisional, and confidence is judged on Error, not Wt1.</p>
           <Link to="/results?label=Unclassified" className={styles.textLink}>See the intervals that need interpretation <Icon name="arrowUpRight" size={16} /></Link></div>

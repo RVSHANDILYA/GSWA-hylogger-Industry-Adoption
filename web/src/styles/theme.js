@@ -1,7 +1,7 @@
 /* Keep chart colours in step with tokens.css. The five slot order is fixed. */
-export const seriesColours = ["#2768bc", "#ba4820", "#14774f", "#996400", "#b83d6b"];
+export const seriesColours = ["#3987e5", "#d95926", "#199e70", "#c98500", "#d55181"];
 export const chart = {
-  series: seriesColours, other: "#626d7c", surface: "#ffffff",
+  series: seriesColours, other: "#7d8ba1", surface: "#ffffff",
   grid: "#e3e8df", axis: "#626e67", text: "#485650", textStrong: "#172b25",
 };
 export const statusColours = { good: "#246747", caution: "#8b5c12", problem: "#b12d3c" };

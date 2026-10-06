@@ -1,5 +1,5 @@
 .pageHeading { padding: 44px 0 32px; }
-.pageHeading h1 { margin: 15px 0 14px; font-family: var(--font-display); font-size: clamp(2.75rem,4.5vw,4.25rem); font-weight: 500; line-height: 1.08; letter-spacing: -.045em; }
+.pageHeading h1 { margin: 15px 0 14px; font-family: var(--font-sans); font-size: var(--size-h1); font-weight: 600; line-height: var(--line-h1); letter-spacing: var(--tracking-tight); }
 .pageHeading > p:last-child { max-width: 670px; color: var(--text-secondary); font-size: .9375rem; line-height: 1.7; }
 .holeBar { display: flex; align-items: center; gap: 24px; padding: 20px 0; border-top: 1px solid var(--border-default); border-bottom: 1px solid var(--border-default); }
 .holeBar > label { display: flex; flex-direction: column; gap: 7px; color: var(--text-muted); font-size: .625rem; text-transform: uppercase; letter-spacing: .08em; flex: 1; max-width: 400px; }
@@ -12,7 +12,7 @@
 .summary { display: grid; grid-template-columns: repeat(4,1fr) 1.4fr; border: 1px solid var(--border-default); border-radius: 7px; margin: 12px 0 28px; overflow: hidden; }
 .summary > div { display: flex; flex-direction: column; justify-content: center; gap: 4px; padding: 23px; border-right: 1px solid var(--border-default); font-size: .6875rem; color: var(--text-secondary); }
 .summary > div:last-child { border: 0; }
-.summaryNumber { font-family: var(--font-display); font-size: 2.5rem; line-height: 1.1; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.summaryNumber { font-family: var(--font-sans); font-size: 2.5rem; line-height: 1.1; color: var(--text-primary); font-variant-numeric: tabular-nums; }
 .summary strong { font-weight: 500; }
 .summary .unclassified { background: var(--surface-sunken); }
 .unclassified strong { color: var(--text-primary); }
@@ -22,7 +22,7 @@
 .workspace { display: grid; grid-template-columns: minmax(290px,.75fr) minmax(0,1.5fr); align-items: start; gap: 28px; }
 .corePanel { position: sticky; top: 104px; background: var(--surface-tint); border: 1px solid var(--border-default); border-radius: 8px; padding: 28px; }
 .coreHead { display: flex; flex-direction: column; gap: 7px; }
-.coreHead h2, .evidenceHead h2 { font-family: var(--font-display); font-size: 1.875rem; font-weight: 500; letter-spacing: -.025em; }
+.coreHead h2, .evidenceHead h2 { font-family: var(--font-sans); font-size: var(--size-h2); font-weight: 600; letter-spacing: var(--tracking-tight); }
 .coreHead > span { font-size: .6875rem; color: var(--text-secondary); }
 .coreStage { width: 250px; max-width: 100%; margin: 28px auto; }
 .coreStatus { padding: 12px 0 20px; display: flex; flex-direction: column; gap: 6px; min-height: 70px; font-size: .6875rem; border-top: 1px solid var(--border-default); }
@@ -70,7 +70,7 @@
 .liveMessage { border-top: 1px solid var(--border-default); padding: 15px 24px; font-size: .625rem; line-height: 1.6; color: var(--text-secondary); }
 .chartsSection { margin: 72px 0 60px; }
 .sectionHeading { display: flex; align-items: flex-end; justify-content: space-between; gap: 28px; margin-bottom: 26px; }
-.sectionHeading h2 { font-family: var(--font-display); font-size: clamp(2rem,3vw,2.75rem); font-weight: 500; letter-spacing: -.035em; margin-top: 10px; }
+.sectionHeading h2 { font-family: var(--font-sans); font-size: var(--size-h2); font-weight: 600; letter-spacing: var(--tracking-tight); margin-top: 10px; }
 .sectionHeading > p { max-width: 310px; font-size: .75rem; color: var(--text-secondary); line-height: 1.7; }
 .charts { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
 .charts > * { min-width: 0; }

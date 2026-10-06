@@ -7,11 +7,11 @@
 .projectStamp svg { color: var(--accent); } .projectStamp span { font-family: var(--font-mono); font-size: .5625rem; color: var(--text-muted); }
 .body { min-width: 0; }
 .section { padding-bottom: 72px; margin-bottom: 48px; border-bottom: 1px solid var(--border-default); scroll-margin-top: 118px; }
-.section > h2 { font-family: var(--font-display); font-size: clamp(2rem,3.3vw,3.1rem); font-weight: 500; letter-spacing: -.035em; line-height: 1.1; max-width: 21ch; margin: 16px 0 24px; }
-.section > p:not([class~="eyebrow"]) { color: var(--text-secondary); font-size: .9375rem; line-height: 1.85; max-width: 70ch; margin-top: 18px; }
+.section > h2 { font-family: var(--font-sans); font-size: var(--size-h2); font-weight: 600; letter-spacing: var(--tracking-tight); line-height: var(--line-h2); max-width: 21ch; margin: 16px 0 24px; }
+.section > p:not([class~="eyebrow"]) { color: var(--text-secondary); font-size: var(--size-body); line-height: var(--line-body); max-width: 70ch; margin-top: 18px; }
 .coverage { display: grid; grid-template-columns: 220px 1fr; gap: 34px; padding: 32px; background: var(--surface-sunken); border-radius: 6px; margin-top: 32px; }
 .coverage > div { display: flex; flex-direction: column; gap: 8px; }
-.coverageNumber { font-family: var(--font-display); font-size: 4rem; line-height: 1; letter-spacing: -.035em; font-variant-numeric: tabular-nums; }
+.coverageNumber { font-family: var(--font-sans); font-weight: 600; font-size: var(--size-display); line-height: 1; letter-spacing: -.035em; font-variant-numeric: tabular-nums; }
 .coverage > div > span:last-child { font-size: .75rem; color: var(--text-secondary); }
 .coverage > p { font-size: .8125rem; line-height: 1.8; color: var(--text-secondary); align-self: center; }
 .coverage strong { display: block; color: var(--text-primary); font-weight: 500; margin-bottom: 5px; }
@@ -19,11 +19,11 @@
 .pipeline li { display: grid; grid-template-columns: 40px 1fr 20px; gap: 20px; padding: 22px 0; border-bottom: 1px solid var(--border-default); }
 .pipeline li > span { font-family: var(--font-mono); font-size: .75rem; color: var(--accent); padding-top: 2px; }
 .pipeline li:last-child > svg { display: none; }
-.pipeline h3 { font-size: 1rem; } .pipeline p { color: var(--text-secondary); font-size: .8125rem; line-height: 1.75; margin-top: 6px; }
+.pipeline h3 { font-size: var(--size-h3); } .pipeline p { color: var(--text-secondary); font-size: .8125rem; line-height: 1.75; margin-top: 6px; }
 .pipeline svg { color: var(--text-muted); margin-top: 4px; }
 .liveExample { padding: 28px; margin-top: 32px; background: var(--surface-tint); border: 1px solid var(--border-default); border-radius: 7px; }
 .exampleHeading { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; }
-.exampleHeading h3 { font-family: var(--font-display); font-size: 1.5rem; margin-top: 10px; }
+.exampleHeading h3 { font-family: var(--font-sans); font-size: var(--size-h3); margin-top: 10px; }
 .sampleSelect { display: flex; flex-direction: column; gap: 6px; font-size: .625rem; color: var(--text-muted); }
 .sampleSelect select { font-family: var(--font-mono); font-size: .6875rem; padding: 7px; border: 1px solid var(--border-default); background: white; border-radius: 3px; }
 .sample { display: grid; grid-template-columns: 155px minmax(0,1fr); gap: 28px; align-items: center; margin-top: 30px; }
@@ -35,20 +35,20 @@
 .evaluation svg { color: var(--accent); flex: none; }.evaluation strong { font-weight: 500; } .evaluation p { color: var(--text-secondary); margin-top: 6px; line-height: 1.8; }
 .rule { display: grid; grid-template-columns: 45px minmax(0,1fr); gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--border-default); }
 .ruleId { font-family: var(--font-mono); color: var(--accent); font-size: .8125rem; padding-top: 4px; }
-.ruleHead { display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap; } .rule h3 { font-size: 1rem; }
+.ruleHead { display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap; } .rule h3 { font-size: var(--size-h3); }
 .rule p { font-size: .8125rem; line-height: 1.75; color: var(--text-secondary); margin-top: 10px; }
 .rule .threshold { color: var(--text-primary); font-family: var(--font-mono); font-size: .75rem; }
 .errorGate { display: grid; grid-template-columns: 175px 1fr; gap: 30px; padding: 30px; margin-top: 28px; border-radius: 6px; background: var(--surface-sunken); }
 .errorGate > div:first-child { display: flex; flex-direction: column; gap: 10px; font-size: .6875rem; color: var(--text-secondary); }
-.errorGate strong { font-family: var(--font-display); font-size: 4rem; line-height: 1; color: var(--text-primary); }
-.errorGate h3 { font-size: .9375rem; } .errorGate p { font-size: .8125rem; line-height: 1.8; color: var(--text-secondary); margin-top: 12px; }
+.errorGate strong { font-family: var(--font-sans); font-weight: 600; font-size: var(--size-display); line-height: 1; color: var(--text-primary); }
+.errorGate h3 { font-size: var(--size-h3); } .errorGate p { font-size: .8125rem; line-height: 1.8; color: var(--text-secondary); margin-top: 12px; }
 .limitations { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 35px; }
 .limitations article { padding: 25px 0; border-top: 1px solid var(--border-default); } .limitations svg { color: var(--accent); margin-bottom: 18px; }
-.limitations h3 { font-size: 1rem; } .limitations p { font-size: .8125rem; line-height: 1.85; color: var(--text-secondary); margin-top: 10px; }
+.limitations h3 { font-size: var(--size-h3); } .limitations p { font-size: .8125rem; line-height: 1.85; color: var(--text-secondary); margin-top: 10px; }
 .credits { display: flex; flex-direction: column; gap: 8px; margin-top: 24px; }
 .credits a { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 16px 0; border-bottom: 1px solid var(--border-default); text-decoration: none; font-size: .8125rem; }
 .credits a:hover { text-decoration: underline; }
-.teamHeading { margin-top: 48px; } .teamHeading h3 { font-size: 1.125rem; } .teamHeading p { font-size: .75rem; color: var(--text-secondary); margin-top: 6px; }
+.teamHeading { margin-top: 48px; } .teamHeading h3 { font-size: var(--size-h3); } .teamHeading p { font-size: .75rem; color: var(--text-secondary); margin-top: 6px; }
 .team { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 20px 30px; margin-top: 28px; }
 .team li { display: flex; flex-direction: column; gap: 6px; border-top: 1px solid var(--border-default); padding-top: 16px; } .team strong { font-size: .8125rem; font-weight: 500; } .team span { font-size: .75rem; color: var(--text-muted); }
 .stack { margin-top: 36px; } .stack > div { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
