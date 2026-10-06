@@ -1,68 +1,10 @@
-.footer {
-  margin-top: var(--space-9);
-  border-top: 1px solid var(--border-subtle);
-  background: var(--surface-sunken);
-}
-
-.inner {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-5);
-  max-width: var(--page-max);
-  margin: 0 auto;
-  padding: var(--space-6) var(--page-gutter);
-}
-
-.block {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  font-size: var(--size-sm);
-  color: var(--text-muted);
-}
-
-.heading {
-  font-family: var(--font-mono);
-  font-size: var(--size-xs);
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-  color: var(--text-secondary);
-}
-
-.links {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
-
-.links a {
-  color: var(--text-muted);
-  text-decoration: none;
-}
-
-.links a:hover {
-  color: var(--text-primary);
-}
-
-/* A short banded rule, not a full width rainbow. It repeats the five mineral
-   slot colours once, as a signature, and stops. */
-.strip {
-  display: flex;
-  width: 10.5rem;
-  height: 3px;
-  margin: 0 auto 0 var(--page-gutter);
-  overflow: hidden;
-  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-}
-
-.strip span {
-  flex: 1;
-}
-
-@media (min-width: 1244px) {
-  .strip {
-    margin-left: calc((100vw - var(--page-max)) / 2);
-  }
-}
+.footer { margin-top: var(--space-9); background: var(--surface-sunken); border-top: 1px solid var(--border-subtle); }
+.inner { display: grid; grid-template-columns: 1.3fr .7fr 1fr; gap: var(--space-7); max-width: var(--page-max); margin: auto; padding: var(--space-7) var(--page-gutter); }
+.brand { display: flex; gap: 12px; align-items: flex-start; } .brand strong { font-size: 1.75rem; letter-spacing: -.06em; }
+.brand p { font-size: .8125rem; color: var(--text-muted); margin-top: 5px; }
+.block { display: flex; flex-direction: column; gap: 10px; font-size: .8125rem; color: var(--text-secondary); }
+.links { display: flex; flex-direction: column; gap: 8px; }
+.block a { text-decoration: none; color: var(--text-secondary); } .block a:hover { text-decoration: underline; color: var(--accent); }
+.bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; border-top: 1px solid var(--border-default);
+  max-width: var(--page-max); margin: auto; padding: 20px var(--page-gutter); color: var(--text-muted); font-size: .6875rem; }
+@media(max-width: 640px) { .inner { grid-template-columns: 1fr 1fr; gap: 28px; } .brand { grid-column: 1 / -1; } }

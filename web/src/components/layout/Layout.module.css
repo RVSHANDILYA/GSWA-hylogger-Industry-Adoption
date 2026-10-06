@@ -1,44 +1,7 @@
-.shell {
-  display: flex;
-  flex-direction: column;
-  min-height: 100dvh;
-}
-
-.main {
-  flex: 1;
-}
-
-/* Shared page container. Pages use this rather than setting their own width,
-   so every page lines up with the nav bar above it. */
-.container {
-  max-width: var(--page-max);
-  margin: 0 auto;
-  padding: var(--space-7) var(--page-gutter) var(--space-8);
-}
-
-/* The landing page runs its hero to the full width, so it opts out. */
-.bleed {
-  max-width: none;
-  padding: 0;
-}
-
-.skipLink {
-  position: absolute;
-  top: var(--space-2);
-  left: var(--space-2);
-  z-index: 60;
-  padding: 0.55rem 1rem;
-  border-radius: var(--radius-pill);
-  background: var(--accent);
-  color: var(--text-on-accent);
-  font-size: var(--size-sm);
-  font-weight: 600;
-  text-decoration: none;
-  transform: translateY(-160%);
-  transition: transform var(--duration-fast) var(--ease-out);
-}
-
-.skipLink:focus-visible {
-  transform: translateY(0);
-  color: var(--text-on-accent);
-}
+.shell { display: flex; flex-direction: column; min-height: 100dvh; }
+.main { flex: 1; min-width: 0; }
+.container { max-width: var(--page-max); margin: auto; padding: var(--space-7) var(--page-gutter) var(--space-6); }
+.bleed { max-width: none; padding: 0; }
+.skipLink { position: absolute; z-index: 60; top: 8px; left: 8px; padding: 10px 16px; border-radius: 4px;
+  background: var(--accent); color: white; transform: translateY(-200%); }
+.skipLink:focus-visible { transform: none; color: white; }
