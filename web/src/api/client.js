@@ -1,37 +1,76 @@
 import axios from "axios";
+import { validateSnapshot } from "../data/snapshot.js";
 
-const API_BASE_URL = "http://localhost:8000";
-
-const api = axios.create({
-  baseURL: API_BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
+const api=axios.create({
+ baseURL:import.meta.env.VITE_API_BASE_URL||"http://localhost:8000",
+ timeout:6000,
+ headers:{"Content-Type":"application/json"},
 });
-
-
-export async function fetchHoles() {
-  const response = await api.get("/holes");
-  return response.data;
+const initialSource={mode:"live",generatedAt:null};
+let source=initialSource;
+let snapshotPromise;
+const listeners=new Set();
+export const getDataSource=()=>source;
+export const getInitialDataSource=()=>initialSource;
+export function subscribeDataSource(listener) {
+ listeners.add(listener);
+ return ()=>listeners.delete(listener);
 }
-
-
-export async function fetchHole(holeId) {
-  const response = await api.get(`/holes/${holeId}`);
-  return response.data;
+function loadSnapshot() {
+ if(!snapshotPromise) {
+   snapshotPromise=fetch(import.meta.env.BASE_URL+"snapshot.json",{cache:"no-cache"})
+     .then(response=>{if(!response.ok) throw new Error("Saved archive unavailable");return response.json();})
+     .then(validateSnapshot)
+     .catch(error=>{snapshotPromise=undefined;throw error;});
+ }
+ return snapshotPromise;
 }
-
-
-export async function fetchIntervals(holeId, { minConfidence } = {}) {
-  const params =
-    minConfidence == null
-      ? undefined
-      : { min_confidence: minConfidence };
-
-  const response = await api.get(
-    `/holes/${holeId}/intervals`,
-    { params }
-  );
-
-  return response.data;
+async function activateSnapshot() {
+ const archive=await loadSnapshot();
+ if(source.mode!=="snapshot") {
+   source={mode:"snapshot",generatedAt:archive.generatedAt};
+   listeners.forEach(listener=>listener());
+ }
+ return archive;
+}
+async function request(path,saved,{params}={}) {
+ if(source.mode==="snapshot") return saved(await loadSnapshot());
+ try {
+   const response=await api.get(path,{params});
+   // A parallel request may have established that the API is unreachable.
+   // Once that happens, each view reads one consistent saved archive.
+   return source.mode==="snapshot"?saved(await loadSnapshot()):response.data;
+ } catch(error) {
+   // A real HTTP error is an API response, so never conceal it with saved data.
+   if(error.response||error.code==="ERR_CANCELED") throw error;
+   let archive;
+   try {archive=await activateSnapshot();}
+   catch {throw new Error("The live API is unreachable and a readable saved archive is unavailable.",{cause:error});}
+   return saved(archive);
+ }
+}
+function notFound(detail) {
+ const error=new Error(detail);
+ error.response={status:404,data:{detail}};
+ return error;
+}
+export function fetchHoles() {
+ return request("/holes",archive=>archive.holes);
+}
+export function fetchHole(holeId) {
+ return request("/holes/"+encodeURIComponent(holeId),archive=>{
+   const detail=archive.details[holeId];
+   if(!detail) throw notFound("Hole "+holeId+" not found");
+   return detail;
+ });
+}
+export function fetchIntervals(holeId,{minConfidence}={}) {
+ return request("/holes/"+encodeURIComponent(holeId)+"/intervals",archive=>{
+   const record=archive.intervals[holeId];
+   if(!record) throw notFound("No intervals found for "+holeId);
+   // Despite the parameter name, the API filters using Error <= this value.
+   const intervals=minConfidence==null?record.intervals:record.intervals.filter(row=>row.confidence_error!=null&&row.confidence_error<=minConfidence);
+   if(!intervals.length) throw notFound("No intervals found for "+holeId);
+   return {...record,count:intervals.length,intervals};
+ },{params:minConfidence==null?undefined:{min_confidence:minConfidence}});
 }

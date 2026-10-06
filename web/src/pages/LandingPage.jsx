@@ -6,6 +6,7 @@ import Reveal from "../components/ui/Reveal.jsx";
 import CoreColumn from "../components/charts/CoreColumn.jsx";
 import MineralLegend from "../components/charts/MineralLegend.jsx";
 import useSurvey from "../hooks/useSurvey.js";
+import useDataSource from "../hooks/useDataSource.js";
 import { summariseIntervals, depthRange } from "../data/analysis.js";
 import styles from "./LandingPage.module.css";
 
@@ -19,6 +20,7 @@ const PIPELINE = [
 
 export default function LandingPage() {
   const request = useSurvey();
+  const source = useDataSource();
   const survey = request.data;
   const summary = summariseIntervals(survey?.intervals);
   const featured = (survey?.holes ?? []).filter(hole => survey.intervalsByHole[hole.hole_id]?.length).slice(0, 3);
@@ -35,7 +37,7 @@ export default function LandingPage() {
         </Reveal>
         <Reveal className={styles.dataStage} delay={.12}>
           <div className={styles.stageTop}><span className="eyebrow">The rock is the starting point</span>
-            <Badge tone="neutral" icon={survey ? "check" : "clock"}>{survey ? "From loaded API data" : request.error ? "API unavailable" : "Reading the archive"}</Badge></div>
+            <Badge tone="neutral" icon={survey && source.mode === "live" ? "check" : "clock"}>{survey ? source.mode === "snapshot" ? "Saved archive data" : "From loaded API data" : request.error ? "Data unavailable" : "Reading the archive"}</Badge></div>
           <div className={styles.coreGallery}>
             {request.loading ? [0, 1, 2].map(index => <div key={index} className={styles.coreSpecimen}><Skeleton height="280px" /></div>) :
               request.error ? <StateMessage tone="problem" icon="plug" title="Connect to the core archive"
@@ -55,7 +57,7 @@ export default function LandingPage() {
     </div>
 
     <section className={styles.statsBand} aria-label="Live archive statistics"><div className={styles.statsInner}>
-      <div className={styles.statsIntro}><p className="eyebrow">A live view of the archive</p><p>Evidence before certainty.</p></div>
+      <div className={styles.statsIntro}><p className="eyebrow">{source.mode === "snapshot" ? "A saved view of the archive" : "A live view of the archive"}</p><p>Evidence before certainty.</p></div>
       {request.loading ? [0,1,2,3].map(index => <Skeleton key={index} height="72px" />) :
         survey ? <>
           <Stat value={<CountUp value={survey.holes.length} />} label="Drill holes" />

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import useDataSource from "./useDataSource.js";
 
 /*
   Load something asynchronous and expose the three states a page has to show:
@@ -24,6 +25,7 @@ function messageFor(problem) {
 }
 
 export default function useAsyncData(loader, deps = [], { skip = false } = {}) {
+  const source = useDataSource();
   const [attempt, setAttempt] = useState(0);
   const [result, setResult] = useState({ key: null, data: null, error: null });
 
@@ -31,9 +33,9 @@ export default function useAsyncData(loader, deps = [], { skip = false } = {}) {
      the run identity in the result is what lets the hook report "loading"
      for a new request without setting state from inside the effect. */
   const runKey = useMemo(
-    () => `${attempt}:${JSON.stringify(deps)}`,
+    () => `${source.mode}:${attempt}:${JSON.stringify(deps)}`,
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [attempt, JSON.stringify(deps)]
+    [source.mode, attempt, JSON.stringify(deps)]
   );
 
   useEffect(() => {

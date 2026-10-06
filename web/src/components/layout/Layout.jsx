@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import NavBar from "./NavBar.jsx";
 import Footer from "./Footer.jsx";
 import AnimatedOutlet from "./AnimatedOutlet.jsx";
+import DataSourceBanner from "./DataSourceBanner.jsx";
 import { Loading } from "../ui/index.js";
 import useMotionPreference from "../../hooks/useMotionPreference.js";
 import styles from "./Layout.module.css";
@@ -45,6 +46,7 @@ export default function Layout() {
         Skip to content
       </a>
       <NavBar />
+      <DataSourceBanner />
       <main id="main" className={styles.main} tabIndex={-1}>
         <Suspense fallback={<div className={styles.container} style={{paddingBlock: "60px", minHeight: "60vh"}}><Loading>Opening the workspace</Loading></div>}>
           <AnimatedOutlet />

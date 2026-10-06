@@ -1,0 +1,5 @@
+.banner { background: var(--accent-soft); border-bottom: 1px solid var(--accent-line); color: var(--text-secondary); }
+.inner { display: flex; align-items: center; gap: 12px; max-width: var(--page-max); margin: auto; padding: 12px var(--page-gutter); font-size: .75rem; }
+.inner svg { color: var(--accent); flex: none; } .inner p { flex: 1; line-height: 1.7; } .inner strong { font-weight: 500; color: var(--text-primary); }
+.inner button { flex: none; }
+@media(max-width:640px) { .inner { flex-wrap: wrap; gap: 8px; } .inner p { flex-basis: calc(100% - 32px); }.inner button { margin-left: 26px; padding-left: 0; } }

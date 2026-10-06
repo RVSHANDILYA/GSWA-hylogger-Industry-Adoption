@@ -66,7 +66,7 @@ export default function AboutPage() {
          <ol className={styles.pipeline}>{STEPS.map(([number,title,description])=><li key={number}><span>{number}</span><div><h3>{title}</h3><p>{description}</p></div><Icon name="arrowDown" size={18}/></li>)}</ol>
          <div className={styles.liveExample}><div className={styles.exampleHeading}><div><p className="eyebrow">A record from the archive</p><h3>Read the evidence yourself.</h3></div>
            {holes.length>0&&<label className={styles.sampleSelect}>Example hole<select value={holeId??""} onChange={event=>setParams({hole:event.target.value},{replace:true})}>{holes.map(hole=><option key={hole.hole_id}>{hole.hole_id}</option>)}</select></label>}</div>
-           {survey.loading?<Loading>Reading live interval records</Loading>:sample?<div className={styles.sample}>
+           {survey.loading?<Loading>Reading interval records</Loading>:sample?<div className={styles.sample}>
              <div className={styles.sampleCore}><CoreColumn intervals={intervals} height={185} highlightDepth={(sample.depth_from_m+sample.depth_to_m)/2}/></div>
              <div><p className={styles.sampleId}>{holeId} / {detail.data?.region??selected.region}</p><h4>{sample.depth_from_m} to {sample.depth_to_m} m</h4>
                <div className={styles.sampleBadges}><Badge tone="neutral" mono>{ruleShort(sample.rule_fired)}</Badge><Badge tone={labelTone(sample.label)}>{sample.label}</Badge><ErrorBadge interval={sample}/></div>
@@ -79,7 +79,7 @@ export default function AboutPage() {
          <div className={styles.evaluation}><Icon name="info" size={18}/><div><strong>Actual evaluation order</strong><p>Final Mask filter → R4 data check → Error gate → R1 → R2 → R3 → R5 if nothing matches.</p></div></div>
          <div className={styles.rules}>{RULES.map(rule=><article key={rule.id} className={styles.rule}><span className={styles.ruleId}>{rule.id}</span><div><div className={styles.ruleHead}><h3>{rule.title}</h3><Badge tone="neutral">{rule.label}</Badge></div><p className={styles.threshold}>{rule.threshold}</p><p>{rule.note}</p></div></article>)}</div>
          <div className={styles.errorGate}><div><span className="eyebrow">Error ceiling</span><strong>{EXPECTED_MAX_ERROR}</strong><span>Provisional, not validated</span></div>
-           <div><h3>Confidence judged on Error, not Wt1.</h3><p>The ceiling is the rounded 75th percentile of the observed Error distribution, 306.619297 across the current 276 interval means. It controls coverage and needs validation. It is not a spectroscopy standard.</p>
+           <div><h3>Confidence judged on Error, not Wt1.</h3><p>The ceiling is the rounded 75th percentile of the observed Error distribution, 306.619297 across the baseline's 276 interval means. It controls coverage and needs validation. It is not a spectroscopy standard.</p>
              <p>Wt1 is a dominance weight, not a quality score. The UI separately marks readings above 60% of the ceiling, 184.2, as marginal. That caution marker does not change the backend classification.</p></div></div>
        </Reveal>
        <Reveal id="limitations" className={styles.section}><p className="eyebrow">04 / What remains open</p><h2>Useful context. Clear limits.</h2>
