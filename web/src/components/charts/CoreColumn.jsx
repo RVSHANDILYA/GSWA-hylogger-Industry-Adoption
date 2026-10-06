@@ -32,6 +32,9 @@ export default function CoreColumn({
   highlightDepth,
   showRuler = true,
   showMaskExcluded = true,
+  activeIntervalKeys,
+  onSelectDepth,
+  onHoverDepth,
 }) {
   const reduceMotion = useReducedMotion();
   const instanceId = useId();
@@ -136,14 +139,18 @@ export default function CoreColumn({
             highlightDepth >= interval.depth_from_m &&
             (highlightDepth < interval.depth_to_m ||
               (highlightDepth === endDepth && interval.depth_to_m === endDepth));
+          const dimmed = activeIntervalKeys && !activeIntervalKeys.has(`${interval.depth_from_m}-${interval.depth_to_m}`);
+          const depth = (interval.depth_from_m + interval.depth_to_m) / 2;
 
           return (
             <div
               key={`${interval.depth_from_m}-${interval.depth_to_m}-${index}`}
-              className={`${styles.band}${highlighted ? ` ${styles.highlighted}` : ""}`}
+              className={`${styles.band}${highlighted ? ` ${styles.highlighted}` : ""}${dimmed ? ` ${styles.dimmed}` : ""}`}
               role="listitem"
-              aria-label={description}
+              aria-label={onSelectDepth ? undefined : description}
               title={description}
+              onMouseEnter={() => onHoverDepth?.(depth)}
+              onMouseLeave={() => onHoverDepth?.(null)}
               style={{
                 top: `${((interval.depth_from_m - startDepth) / depthRange) * 100}%`,
                 height: `${((interval.depth_to_m - interval.depth_from_m) / depthRange) * 100}%`,
@@ -158,6 +165,9 @@ export default function CoreColumn({
               {showMaskExcluded && interval.final_mask === false && (
                 <span className={styles.hatch} aria-hidden="true" />
               )}
+              {onSelectDepth && <button type="button" className={styles.bandButton}
+                aria-label={description + (dimmed ? "\nOutside active filters. Select to clear filters and inspect." : "\nSelect to inspect interval.")}
+                onClick={() => onSelectDepth(depth)} onFocus={() => onHoverDepth?.(depth)} onBlur={() => onHoverDepth?.(null)} />}
             </div>
           );
         })}

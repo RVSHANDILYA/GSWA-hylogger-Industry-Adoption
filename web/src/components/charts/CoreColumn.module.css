@@ -56,6 +56,7 @@
   position: absolute;
   right: 0;
   left: 0;
+  transition: opacity var(--duration-fast);
   background-image:
     linear-gradient(
       90deg,
@@ -97,10 +98,12 @@
 }
 
 .highlighted {
-  outline: 1px solid var(--viz-other);
-  outline-offset: -1px;
-  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--viz-other) 65%, transparent);
+  box-shadow: inset 0 0 0 2px var(--surface-page), inset 0 0 0 4px var(--text-primary);
 }
+
+.dimmed { opacity: .25; }
+.bandButton { position: absolute; inset: 0; width: 100%; height: 100%; background: transparent; cursor: pointer; }
+.bandButton:focus-visible { outline: 2px solid var(--surface-page); outline-offset: -3px; box-shadow: inset 0 0 0 5px var(--text-primary); }
 
 .scan {
   position: absolute;

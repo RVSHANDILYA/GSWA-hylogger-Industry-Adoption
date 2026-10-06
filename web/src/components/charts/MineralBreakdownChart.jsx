@@ -237,7 +237,7 @@ export default function MineralBreakdownChart({
               isAnimationActive={false}
 
               cursor={{
-                fill:"rgba(255,255,255,0.035)"
+                fill:chart.grid
               }}
 
             />
