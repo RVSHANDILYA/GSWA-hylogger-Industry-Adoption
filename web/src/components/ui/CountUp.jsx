@@ -10,7 +10,7 @@ export default function CountUp({ value, decimals = 0, suffix = "" }) {
   useEffect(() => {
     if (!ref.current || !visible || reduced) return undefined;
     const node = ref.current;
-    const control = animate(0, value, {duration: 1.15, ease: easeOut,
+    const control = animate(0, value, {duration: .5, ease: easeOut,
       onUpdate: current => { node.textContent = format(current); }});
     return () => { control.stop(); node.textContent = format(value); };
     // Formatting is determined by these primitive values.
