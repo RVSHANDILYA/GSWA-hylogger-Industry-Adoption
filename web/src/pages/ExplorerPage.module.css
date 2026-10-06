@@ -1,136 +1,47 @@
-.notice {
-  margin-bottom: var(--space-6);
-}
-
-.split {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-6);
-  align-items: start;
-}
-
-/* Selecting a hole opens a sticky panel beside the grid rather than pushing
-   the list down the page, so the cards stay in view while you read one. */
-@media (min-width: 960px) {
-  .withDetail {
-    grid-template-columns: minmax(0, 1fr) 24rem;
-  }
-}
-
-.detail {
-  position: sticky;
-  top: calc(var(--nav-height) + var(--space-4));
-}
-
-.detailHead {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-3);
-  padding-bottom: var(--space-4);
-  border-bottom: 1px solid var(--border-subtle);
-}
-
-.detailId {
-  font-family: var(--font-mono);
-  font-size: var(--size-lg);
-  color: var(--text-primary);
-}
-
-.detailRegion {
-  margin-top: 2px;
-  color: var(--text-muted);
-  font-size: var(--size-sm);
-}
-
-.close {
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 2rem;
-  height: 2rem;
-  padding: 0;
-  border: 1px solid var(--border-default);
-  border-radius: 50%;
-  background: transparent;
-  color: var(--text-muted);
-  cursor: pointer;
-}
-
-.close:hover {
-  background: var(--surface-hover);
-  color: var(--text-primary);
-}
-
-.detailGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
-  gap: var(--space-4);
-  padding: var(--space-4) 0;
-  border-bottom: 1px solid var(--border-subtle);
-}
-
-.detailFoot {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-3);
-  padding-top: var(--space-4);
-}
-
-.intervalList {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  list-style: none;
-  padding: var(--space-4) 0 0;
-  margin: 0;
-}
-
-.intervalRow {
-  display: grid;
-  grid-template-columns: 7.5rem minmax(0, 1fr) auto;
-  align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-3);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  background: var(--surface-sunken);
-}
-
-.intervalDepth {
-  font-family: var(--font-mono);
-  font-variant-numeric: tabular-nums;
-  font-size: var(--size-sm);
-  color: var(--text-secondary);
-}
-
-.intervalLabel {
-  font-size: var(--size-sm);
-  color: var(--text-primary);
-}
-
-.sectionLabel {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--space-3);
-  padding-top: var(--space-5);
-}
-
-@media (max-width: 959px) {
-  .detail {
-    position: static;
-  }
-}
-
-@media (max-width: 720px) {
-  .intervalRow {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-2);
-  }
-
-  .detail {
-    position: static;
-  }
-}
+.toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; padding: 18px 0; border-top: 1px solid var(--border-default); border-bottom: 1px solid var(--border-default); margin-bottom: 26px; }
+.toolbar > :first-child { flex: 1; max-width: 370px; min-width: 180px; }
+.count { color: var(--text-muted); font-size: .6875rem; white-space: nowrap; }
+.sort { display: inline-flex; align-items: center; gap: 8px; margin-left: auto; color: var(--text-muted); font-size: .6875rem; }
+.sort select { max-width: 145px; border: 0; background: var(--surface-sunken); padding: 10px; border-radius: 4px; color: var(--text-primary); font-size: .75rem; }
+.viewToggle { display: inline-flex; border: 1px solid var(--border-default); padding: 3px; border-radius: 5px; }
+.viewToggle button { display: flex; align-items: center; gap: 7px; padding: 9px 11px; border: 0; border-radius: 3px; background: transparent; color: var(--text-secondary); font-size: .6875rem; }
+.viewToggle button[aria-pressed="true"] { background: var(--surface-hover); color: var(--text-primary); }
+.viewToggle button:hover { background: var(--surface-hover); }
+.workspace { display: grid; grid-template-columns: minmax(180px,.65fr) minmax(320px,1.55fr) minmax(260px,.95fr); gap: 20px; align-items: start; }
+.panelLabel { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: .625rem; color: var(--text-muted); letter-spacing: .09em; text-transform: uppercase; }
+.holeList { min-width: 0; } .holeList ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px; max-height: 590px; overflow-y: auto; padding-right: 3px; }
+.holeList :global([class*="_compactMeta_"]) { font-size: .5625rem; }
+.holeList :global([class*="_compactRow_"]) { gap: 5px; flex-wrap: wrap; }
+.holeList :global([class*="_id_"]) { font-size: .75rem; }
+.holeList :global([class*="_region_"]) { font-size: .625rem; }
+.mapPanel { min-width: 0; } .mapHint { display: flex; align-items: start; gap: 6px; margin-top: 12px; color: var(--text-muted); font-size: .6875rem; }
+.mapHint svg { flex: none; margin-top: 2px; }
+.detail { display: flex; flex-direction: column; gap: 22px; min-width: 0; padding: 24px; border: 1px solid var(--border-default); border-radius: 10px; background: white; }
+.detailHead h2 { margin: 10px 0 6px; font-family: var(--font-mono); font-size: 1.5rem; font-weight: 500; letter-spacing: -.04em; overflow-wrap: anywhere; }
+.detailHead > p:last-child { color: var(--text-muted); font-size: .6875rem; }
+.facts { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; border-top: 1px solid var(--border-subtle); padding-top: 18px; }
+.facts dt { color: var(--text-muted); font-size: .5625rem; } .facts dd { margin-top: 5px; font-family: var(--font-mono); font-size: .8125rem; }
+.preview { display: flex; flex-direction: column; gap: 16px; }
+.previewHead { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; font-size: .5625rem; }
+.previewHead .eyebrow { font-size: .5rem; }
+.preview > :global([class*="_wrap_"]) { max-width: 185px; margin: auto; }
+.readingSummary { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: .625rem; color: var(--text-secondary); }
+.readingSummary strong { font-size: 1.125rem; color: var(--text-primary); }
+.detail :global([class*="_notice_"]) { font-size: .6875rem; padding: 12px; }
+.detail :global([class*="_button_"]) { width: 100%; font-size: .75rem; }
+.partial { color: var(--status-caution); font-size: .75rem; }
+.bottomNote { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border-subtle); }
+.bottomNote > span:last-child { font-size: .6875rem; color: var(--text-muted); }
+.tableLayout { grid-template-columns: minmax(0,2fr) minmax(260px,.9fr); }
+.tableWrap { min-width: 0; } .holesTable { width: 100%; border-collapse: collapse; text-align: left; }
+.holesTable thead th { padding: 14px 12px; color: var(--text-muted); font-size: .625rem; font-weight: 500; border-bottom: 1px solid var(--border-default); }
+.holesTable tbody th, .holesTable td { padding: 14px 12px; border-bottom: 1px solid var(--border-subtle); font-size: .6875rem; font-weight: 400; overflow-wrap: anywhere; }
+.holesTable th button { display: flex; gap: 8px; align-items: center; border: 0; background: transparent; color: var(--accent); font-family: var(--font-mono); font-size: .75rem; }
+.holesTable tr:hover { background: var(--surface-tint); } .selectedRow { background: var(--accent-soft); }
+@media(max-width:1100px) { .workspace { grid-template-columns: 210px minmax(0,1fr); } .detail { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; }
+  .detail > :last-child { align-self: end; } .detail .preview { grid-row: span 3; } .tableLayout { grid-template-columns: 1fr; } }
+@media(max-width:768px) { .workspace { grid-template-columns: 1fr; } .mapPanel { grid-row: 1; } .holeList ul { max-height: 260px; }
+  .detail { display: flex; } .toolbar > :first-child { max-width: none; flex-basis: 100%; } .sort { margin-left: 0; } .viewToggle { margin-left: auto; }
+  .holesTable thead { display: none; } .holesTable tbody tr { display: grid; grid-template-columns: 1fr 1fr; padding: 10px 0; border-bottom: 1px solid var(--border-default); }
+  .holesTable tbody th { grid-column: 1 / -1; } .holesTable tbody th,.holesTable td { border: 0; padding: 8px; }
+  .holesTable td::before { content: attr(data-label); display: block; font-size: .5625rem; color: var(--text-muted); margin-bottom: 3px; } }
