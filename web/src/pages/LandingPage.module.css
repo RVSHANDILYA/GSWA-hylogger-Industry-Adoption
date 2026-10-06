@@ -39,7 +39,7 @@
 }
 @media (max-width: 540px) {
   .heroInner { padding-block: 36px; }
-  .heroCopy :global(.eyebrow) { font-size: 11px; gap: 10px; }
+  .heroCopy :global(.eyebrow) { font-size: 12px; gap: 10px; }
   .kickerRule { display: none; }
   .heroCopy h1 { font-size: var(--size-h1); line-height: var(--line-h1); margin-block: 20px; }
   .actions { flex-direction: column; align-items: stretch; }
@@ -109,6 +109,9 @@
 .limitations :global(a:hover svg) { transform: none; }
 @media (max-width: 1199px) { .limitations { grid-template-columns: 26px minmax(0,1fr); } .limitations > a { grid-column: 2; justify-self: start; } }
 @media (max-width: 899px) {
+  .statsInner { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 28px 0; }
+  .statsInner > div:nth-child(odd) { padding-left: 0; }
+  .statsInner > div:nth-child(even) { padding-right: 0; border-right: 0; }
   .truth { gap: 32px; }
   .sectionHead { flex-direction: column; align-items: start; gap: 16px; }
   .pipeline { grid-template-columns: 1fr; gap: 24px; }

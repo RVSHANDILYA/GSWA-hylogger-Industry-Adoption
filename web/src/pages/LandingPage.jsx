@@ -40,15 +40,15 @@ export default function LandingPage() {
         <Reveal className={styles.heroCopy}>
           <p className="eyebrow"><span className={styles.kickerRule} /> GSWA HyLogger / Industry adoption</p>
           <h1>See what the drill core is telling you.</h1>
-          <p className={styles.intro}>Read the minerals, follow the rules, and see where a geologist's interpretation is still needed.</p>
+          <p className={styles.intro}>Read the minerals, follow the rules, and see what still needs interpretation.</p>
           <div className={styles.actions}><Button to="/explorer" trailingIcon="arrowUpRight" size="lg">Explore drill holes</Button>
             <Button to="/about#rules" variant="secondary" size="lg">How the rules work</Button></div>
           <p className={styles.heroFoot}>Public NVCL data. Every label shows the rule behind it.</p>
         </Reveal>
-        <Reveal className={styles.dataStage} delay={.04} aria-label="Mineral columns from three real drill holes">
+        <Reveal className={styles.dataStage} delay={.04} aria-label={showLiveCores ? "Mineral columns from three real drill holes" : "Drill core preview"}>
           <div className={styles.stageTop}><span>Three holes. Real intervals.</span>
             <Badge tone={showLiveCores ? "good" : "neutral"} icon={showLiveCores ? "check" : "clock"}>
-              {showLiveCores ? "Live API" : source.mode === "snapshot" ? "Saved archive" : request.error ? "Archive unavailable" : "Reading the archive"}</Badge></div>
+              {showLiveCores ? "Live API" : source.mode === "snapshot" ? "Saved archive" : request.error ? "Archive unavailable" : request.loading ? "Reading the archive" : "Preview unavailable"}</Badge></div>
           {showLiveCores ? <div className={styles.coreGallery}>
             {featured.map((hole, index) => {
                 const range = depthRange(survey.intervalsByHole[hole.hole_id]);
@@ -96,7 +96,7 @@ export default function LandingPage() {
     <div className={styles.content}>
       {survey?.missingHoles.length > 0 && <p className={styles.partial} role="status">Partial coverage: {survey.missingHoles.length} holes could not load their intervals. Percentages describe the readings that loaded.</p>}
       <Reveal className={styles.truth}>
-        <div><p className="eyebrow">A useful result includes its uncertainty</p><h2>Unclassified<br />is a result, too.</h2></div>
+        <div><p className="eyebrow">A useful result includes its uncertainty</p><h2>Unclassified is a result, too.</h2></div>
         <div><p>{survey ? <><strong>{summary.unclassifiedShare.toFixed(1)}% of the loaded intervals remain Unclassified.</strong> That is {summary.unclassified} of {summary.total} intervals where the baseline does not assign a geological label.</> : "Unclassified intervals stay visible. The baseline leaves much of the archive open for expert interpretation."}</p>
           <p>Use these rules to organise a review, not to confirm a deposit. Mineral thresholds are provisional, and confidence is judged on Error, not Wt1.</p>
           <Link to="/results?label=Unclassified" className={styles.textLink}>See the intervals that need interpretation <Icon name="arrowUpRight" size={16} /></Link></div>
