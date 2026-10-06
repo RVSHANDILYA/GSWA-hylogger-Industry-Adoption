@@ -1,0 +1,11 @@
+.lockup { display: inline-flex; align-items: center; gap: 10px; white-space: nowrap; color: var(--text-primary); line-height: 1; }
+.lockup > svg { flex: none; }
+.name { font-size: 22px; font-weight: 700; letter-spacing: var(--tracking-tight); }
+.divider { width: 1px; height: 20px; background: var(--border-strong); margin-inline: 2px; }
+.product { font-size: 20px; font-weight: 400; letter-spacing: var(--tracking-tight); }
+@media (max-width: 440px) {
+  .lockup { gap: 8px; }
+  .lockup > svg { width: 26px; height: 26px; }
+  .name { font-size: 19px; }
+  .product { font-size: 17px; }
+}

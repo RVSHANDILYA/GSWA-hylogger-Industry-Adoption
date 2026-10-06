@@ -22,7 +22,7 @@ export default function Layout() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
     const titles = { "/": "Open core, clearer understanding", "/explorer": "Hole Explorer", "/results": "Classification workspace", "/about": "Methodology" };
-    document.title = (titles[pathname] ?? "Page not found") + " | GSWA HyLogger";
+    document.title = (titles[pathname] ?? "Page not found") + " | CoreSense | HyLogger";
   }, [pathname]);
 
   useEffect(() => {
