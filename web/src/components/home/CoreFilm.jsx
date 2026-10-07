@@ -45,7 +45,7 @@ export default function CoreFilm() {
         poster={import.meta.env.VITE_HAS_HERO_POSTER ? import.meta.env.BASE_URL + "hero-poster.png" : undefined}
         aria-label="Silent drill core walkthrough for 05GJD001"
         onPlaying={() => setPlaying(true)} onPause={() => setPlaying(false)} onError={() => setFailed(true)} /> :
-        // TODO: Add the supplied film and poster in public/, then restart Vite or rebuild.
+        // Reduced motion and unavailable video use the supplied poster.
         <CorePoster className={styles.poster} />}
     </div>
     <figcaption><span>05GJD001 / Core walkthrough</span>

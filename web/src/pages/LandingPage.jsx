@@ -79,6 +79,7 @@ export default function LandingPage() {
           <li><span>03</span><p>Where no rule fits, we leave the slice unclassified and say so.</p></li>
         </ol>
         <Link to="/explorer?hole=05GJD001" className={styles.textLink}>Open this hole in the Explorer <Icon name="arrowUpRight" size={16} /></Link>
+        <p className={styles.filmSource}>Film source: NVCL uTSAS scans across 20 holes. Final Mask excludes 160,431 of 874,530 readings (18.34%, rounded to 18%). For 05GJD001 alone: 28.65%.</p>
       </div>
     </Reveal>
 

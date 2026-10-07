@@ -15,7 +15,11 @@ Open the URL printed by Vite. The app calls `http://localhost:8000` by default. 
 
 ## Home page media and fonts
 
-Supply `public/hero-05GJD001.mp4` and `public/hero-poster.png`, then restart Vite or rebuild. Vite checks for these files at startup and build time, so missing media renders a neutral area without requesting nonexistent assets. Both media URLs respect the deployment base path. A corrupt or unplayable film falls back to the poster.
+The included `public/hero-05GJD001.mp4` is the supplied 14-second, 1920 by 1080 HyLogger walkthrough, preserved without re-encoding. `public/hero-poster.png` is its classification frame at 12 seconds. The poster preserves the whole frame so depth labels and annotations remain visible on narrow screens.
+
+The film's 18% caption refers to the full 20-hole source dataset, not just 05GJD001. In `../data/raw_holes.csv`, 160,431 of 874,530 native uTSAS readings have `Final Mask = 0`: 18.3448%, rounded to 18%. For 05GJD001, the same calculation is 7,430 / 25,938 = 28.6452%. The extraction in `../etl/fetch_holes.py` retains each scan's linked NVCL Final Mask; `../etl/convert_percentages.py` excludes mask value 0 before aggregation. This mask statistic is distinct from the mineral-label quality flags in `interval_quality.csv` and the interval Error flags shown in the numbers strip. The home page includes the film's source and scope beside the walkthrough.
+
+After replacing either file, restart Vite or rebuild. Vite checks for these files at startup and build time, so missing media renders a neutral area without requesting nonexistent assets. Both media URLs respect the deployment base path. A corrupt or unplayable film falls back to the poster.
 
 The silent film plays only while at least a quarter is visible and the browser tab is visible. Visitors can pause it. Reduced-motion mode renders the poster without a video element. The home hero shows live intervals for `05GJD001`, `05KCD001`, and `07THD002`; while loading or when the live source is unavailable, it shows the supplied poster or the neutral fallback. The numbers continue to use the existing live or explicitly identified saved archive.
 

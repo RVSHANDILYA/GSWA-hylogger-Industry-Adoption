@@ -55,6 +55,7 @@
 .filmCopy li > span { padding-top: 4px; color: var(--text-muted); font-family: var(--font-mono); font-size: 12px; line-height: 20px; }
 .filmCopy li p { color: var(--text-secondary); font-size: var(--size-body); line-height: var(--line-body); }
 .filmCopy .textLink { margin-top: 24px; font-size: var(--size-small); }
+.filmSource { margin-top: 20px; color: var(--text-muted); font-size: var(--size-small); line-height: var(--line-small); }
 @media (max-width: 899px) { .filmSection { grid-template-columns: 1fr; gap: 32px; padding-block: 48px; } .filmCopy { max-width: 65ch; } }
 .statsBand { background: var(--surface-tint); border-block: 1px solid var(--border-subtle); }
 .statsInner { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); max-width: var(--page-max); margin: auto; padding: 36px var(--page-gutter); }
