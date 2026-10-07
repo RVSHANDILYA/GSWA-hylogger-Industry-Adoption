@@ -127,4 +127,3 @@
   .limitations { grid-template-columns: minmax(0,1fr); gap: 12px; padding: 24px; }
   .limitations > a { grid-column: 1; margin-top: 8px; }
 }
-

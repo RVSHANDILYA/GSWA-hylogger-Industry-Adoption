@@ -12,6 +12,5 @@ shap
 matplotlib
 seaborn
 jupyter
-streamlit
 plotly
 requests
