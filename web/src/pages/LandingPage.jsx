@@ -1,18 +1,15 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import PageTransition from "../components/layout/PageTransition.jsx";
-import { Badge, Button, Icon, Stat } from "../components/ui/index.js";
+import { Button, Icon, Stat } from "../components/ui/index.js";
 import CountUp from "../components/ui/CountUp.jsx";
 import Reveal from "../components/ui/Reveal.jsx";
-import CoreColumn from "../components/charts/CoreColumn.jsx";
-import MineralLegend from "../components/charts/MineralLegend.jsx";
-import CorePoster from "../components/home/CorePoster.jsx";
 import CoreFilm from "../components/home/CoreFilm.jsx";
 import useSurvey from "../hooks/useSurvey.js";
 import useDataSource from "../hooks/useDataSource.js";
 import useMotionPreference from "../hooks/useMotionPreference.js";
 import { easeOut } from "../styles/theme.js";
-import { summariseIntervals, depthRange } from "../data/analysis.js";
+import { summariseIntervals } from "../data/analysis.js";
 import styles from "./LandingPage.module.css";
 
 const PIPELINE = [
@@ -31,9 +28,6 @@ export default function LandingPage() {
   const reduced = useMotionPreference();
   const survey = request.data;
   const summary = summariseIntervals(survey?.intervals);
-  const featured = HERO_HOLES.map(id => survey?.holes.find(hole => hole.hole_id === id))
-    .filter(hole => hole && survey.intervalsByHole[hole.hole_id]?.length);
-  const showLiveCores = !request.loading && !request.error && source.mode === "live" && featured.length === HERO_HOLES.length;
   return <PageTransition>
     <div className={styles.hero}>
       <div className={styles.heroInner}>
@@ -45,25 +39,17 @@ export default function LandingPage() {
             <Button to="/about#rules" variant="secondary" size="lg">How the rules work</Button></div>
           <p className={styles.heroFoot}>Public NVCL data. Every label shows the rule behind it.</p>
         </Reveal>
-        <Reveal className={styles.dataStage} delay={.04} aria-label={showLiveCores ? "Mineral columns from three real drill holes" : "Drill core preview"}>
-          <div className={styles.stageTop}><span>Three holes. Real intervals.</span>
-            <Badge tone={showLiveCores ? "good" : "neutral"} icon={showLiveCores ? "check" : "clock"}>
-              {showLiveCores ? "Live API" : source.mode === "snapshot" ? "Saved archive" : request.error ? "Archive unavailable" : request.loading ? "Reading the archive" : "Preview unavailable"}</Badge></div>
-          {showLiveCores ? <div className={styles.coreGallery}>
-            {featured.map((hole, index) => {
-                const range = depthRange(survey.intervalsByHole[hole.hole_id]);
-                return <MotionLink to={`/results?hole=${encodeURIComponent(hole.hole_id)}`} className={styles.coreSpecimen} key={hole.hole_id}
-                  aria-label={`Inspect ${hole.hole_id}, measured intervals from ${range.from} to ${range.to} metres`}
-                  initial={reduced ? false : {opacity:0,y:12}} whileInView={{opacity:1,y:0}} viewport={{once:true}}
-                  transition={{duration:reduced ? 0 : .35,delay:reduced ? 0 : index * .06,ease:easeOut}}>
-                  <span className={styles.specimenIndex}>0{index + 1}</span>
-                  <div className={styles.specimenCore}><CoreColumn intervals={survey.intervalsByHole[hole.hole_id]} height={275} showRuler={false} showScan={false} /></div>
-                  <strong>{hole.hole_id}</strong><span>{range.from} to {range.to} m</span></MotionLink>;
-              })}
-          </div> : <div className={styles.heroFallback}><CorePoster />
-            {request.error && <Button onClick={request.retry} variant="secondary" size="sm">Try the archive again</Button>}</div>}
-          <div className={styles.stageBottom}><span>Colour shows minerals. Length shows depth.</span><Icon name="arrowUpRight" size={18} /></div>
-          <MineralLegend compact />
+        <Reveal className={styles.heroVisual} delay={.04}>
+          <figure className={styles.heroIllustration}>
+            <img src={import.meta.env.BASE_URL + "hero-core-illustration.png"}
+              width={1672} height={941} fetchPriority="high" decoding="async"
+              alt="Illustrative cylindrical drill core with blue, amber and green bands, a depth ruler, and labels for Chlorite, Dark mica, Carbonate and Unclassified." />
+            <figcaption>Illustrative core. Open a hole to see its measured intervals.</figcaption>
+          </figure>
+          <nav className={styles.heroHoleLinks} aria-label="Featured drill holes">
+            {HERO_HOLES.map(id => <Link to={`/results?hole=${encodeURIComponent(id)}`} key={id}
+              aria-label={`Inspect ${id}`}>{id}<Icon name="arrowUpRight" size={14} /></Link>)}
+          </nav>
         </Reveal>
       </div>
     </div>
