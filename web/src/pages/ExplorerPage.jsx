@@ -25,7 +25,7 @@ export default function ExplorerPage() {
  const holes=useMemo(()=>holesRequest.data?.holes??[],[holesRequest.data]);
  const selected=holes.find(hole=>hole.hole_id===params.get("hole"))??holes[0]??null;
  const holeId=selected?.hole_id??null;
- const select=hole=>setParams({hole:hole.hole_id},{replace:true});
+ const select=useCallback(hole=>setParams({hole:hole.hole_id},{replace:true}),[setParams]);
  const loadHole=useCallback(()=>fetchHole(holeId),[holeId]);
  const loadIntervals=useCallback(()=>fetchIntervals(holeId),[holeId]);
  const detailRequest=useAsyncData(loadHole,[holeId],{skip:!holeId});
@@ -64,7 +64,7 @@ export default function ExplorerPage() {
            <StateMessage icon="search" title="No matching holes">Try another hole ID or region.</StateMessage>}
        </div>
        <div className={styles.mapPanel}><WAMap holes={visible} selectedHoleId={holeId} onSelect={select}/>
-         <p className={styles.mapHint}><Icon name="info" size={14}/> Select a pin or group. Nearby holes separate as you zoom.</p></div>
+         <p className={styles.mapHint}><Icon name="info" size={14}/> Drag to explore. Select a group to zoom or a pin to inspect. Use Ctrl + scroll to zoom; on touch screens, use two fingers.</p></div>
      </>:<div className={styles.tableWrap}>
        <table className={styles.holesTable}><caption className="visually-hidden">Drill holes sorted by {sort}</caption>
          <thead><tr><th scope="col">Hole ID</th><th scope="col">Region</th><th scope="col">Depth</th><th scope="col">Intervals</th></tr></thead>

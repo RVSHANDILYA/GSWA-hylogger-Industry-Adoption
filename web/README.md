@@ -25,7 +25,15 @@ The silent film plays only while at least a quarter is visible and the browser t
 
 The home hero uses the user-selected, generated `public/hero-core-illustration.png` at its native 1672 by 941 resolution. It is presented as an illustration, with shortcuts to the measured classifications for `05GJD001`, `05KCD001`, and `07THD002`. Its full frame remains visible on every screen size, and its URL respects the deployment base path. The numbers continue to use the existing live or explicitly identified saved archive.
 
-Inter Variable and JetBrains Mono are bundled from Fontsource. There are no external font requests. Inter provides all headings and body text; mono is reserved for small identifiers, depths, rule codes, and eyebrows.
+Inter Variable and JetBrains Mono are bundled from Fontsource. Application typography uses these local fonts. Inter provides all headings and body text; mono is reserved for small identifiers, depths, rule codes, and eyebrows. Geographic labels in the online map use the basemap provider's glyphs.
+
+## Explorer map
+
+Explorer uses [MapLibre GL JS](https://maplibre.org/maplibre-gl-js/docs/) with [OpenFreeMap](https://openfreemap.org/quick_start/) street and light basemaps. These maps include geographic features and place labels. Basemap tiles require internet access; no Mapbox access token is required. The engine and worker are self-hosted assets loaded only when Explorer opens, and their URLs follow the deployment base path.
+
+Hole pins use the API's longitude and latitude. Clusters are keyboard-accessible buttons: activating a group expands its holes without choosing an arbitrary member. Selecting a pin keeps the existing map and camera while refreshing the linked core details. A distant list selection pans into view. Map controls provide zoom, north reset, full screen, a metric scale, state overview, fit visible holes and focus selected hole. Camera changes respect reduced motion, and cooperative gestures preserve normal page scrolling.
+
+If the online basemap fails, the same map displays a local, coarse Australia coastline with the real hole locations and a retry control. The outline is extracted from Natural Earth's public-domain [1:110m country dataset](https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_110m_admin_0_countries.geojson); it supplies regional context and does not replace detailed street mapping. A browser that cannot start WebGL can still use the linked list and table.
 
 ## Validation
 
@@ -35,6 +43,8 @@ npm run build
 ```
 
 All four pages use the same API client. Labels, Error, mask status, reasons, and raw mineral records are retained. Core gaps represent missing interval coverage. Only Final Mask exclusion receives hatching. Rule thresholds are provisional.
+
+Explorer was checked in Chrome against the live API at widths 390, 768, 1024, 1440 and 1920. Pointer and keyboard pin selection preserve the canvas and camera; clusters, drag pan, Ctrl + scroll zoom, keyboard pan, basemap switching, full screen, search and table switching work. Normal and reduced motion were checked. Blocking basemap requests shows the local coastline and real pins; retry restores the detailed map without rebuilding the canvas.
 
 ## Saved real data for GitHub Pages
 
