@@ -1,5 +1,5 @@
 import { Suspense, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import NavBar from "./NavBar.jsx";
 import Footer from "./Footer.jsx";
 import AnimatedOutlet from "./AnimatedOutlet.jsx";
@@ -14,7 +14,7 @@ import styles from "./Layout.module.css";
   between them.
 */
 export default function Layout() {
-  const { pathname, hash } = useLocation();
+  const { pathname, search, hash } = useLocation();
   const reduced = useMotionPreference();
 
   /* Land at the top of a new page rather than halfway down it, which is
@@ -42,9 +42,9 @@ export default function Layout() {
 
   return (
     <div className={styles.shell}>
-      <a href="#main" className={styles.skipLink}>
+      <Link to={{ pathname, search, hash: "#main" }} className={styles.skipLink}>
         Skip to content
-      </a>
+      </Link>
       <NavBar />
       <DataSourceBanner />
       <main id="main" className={styles.main} tabIndex={-1}>

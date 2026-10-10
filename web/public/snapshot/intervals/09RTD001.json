@@ -1,0 +1,454 @@
+{
+  "hole_id": "09RTD001",
+  "count": 14,
+  "intervals": [
+    {
+      "depth_from_m": 50,
+      "depth_to_m": 70,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 178.63245178367387,
+      "minerals": [
+        {
+          "name": "CHLORITE",
+          "percentage": 99.7289972899729
+        },
+        {
+          "name": "SMECTITE",
+          "percentage": 0.2710027100271002
+        }
+      ]
+    },
+    {
+      "depth_from_m": 70,
+      "depth_to_m": 90,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 294.4692270797279,
+      "minerals": [
+        {
+          "name": "CHLORITE",
+          "percentage": 99.88644965934895
+        },
+        {
+          "name": "DARK-MICA",
+          "percentage": 0.1135503406510219
+        }
+      ]
+    },
+    {
+      "depth_from_m": 90,
+      "depth_to_m": 110,
+      "label": "Unclassified",
+      "confidence": 0.25,
+      "reason": "Error 343.8083854841149 fails confidence gate (0 to 307); needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 343.8083854841149,
+      "minerals": [
+        {
+          "name": "CHLORITE",
+          "percentage": 100
+        }
+      ]
+    },
+    {
+      "depth_from_m": 110,
+      "depth_to_m": 130,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 154.5040218413293,
+      "minerals": [
+        {
+          "name": "AMPHIBOLE",
+          "percentage": 0.2622377622377622
+        },
+        {
+          "name": "CARBONATE",
+          "percentage": 0.5681818181818182
+        },
+        {
+          "name": "CHLORITE",
+          "percentage": 98.6451048951049
+        },
+        {
+          "name": "DARK-MICA",
+          "percentage": 0.3059440559440559
+        },
+        {
+          "name": "EPIDOTE",
+          "percentage": 0.2185314685314685
+        }
+      ]
+    },
+    {
+      "depth_from_m": 130,
+      "depth_to_m": 150,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 215.46762734656835,
+      "minerals": [
+        {
+          "name": "AMPHIBOLE",
+          "percentage": 0.5747126436781609
+        },
+        {
+          "name": "CARBONATE",
+          "percentage": 0.4862953138815208
+        },
+        {
+          "name": "CHLORITE",
+          "percentage": 98.76215738284704
+        },
+        {
+          "name": "DARK-MICA",
+          "percentage": 0.04420866489832
+        },
+        {
+          "name": "EPIDOTE",
+          "percentage": 0.0884173297966401
+        },
+        {
+          "name": "WHITE-MICA",
+          "percentage": 0.04420866489832
+        }
+      ]
+    },
+    {
+      "depth_from_m": 150,
+      "depth_to_m": 170,
+      "label": "Unclassified",
+      "confidence": 0.25,
+      "reason": "Error 325.6010186249299 fails confidence gate (0 to 307); needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 325.6010186249299,
+      "minerals": [
+        {
+          "name": "CARBONATE",
+          "percentage": 0.0774593338497289
+        },
+        {
+          "name": "CHLORITE",
+          "percentage": 99.80635166537569
+        },
+        {
+          "name": "DARK-MICA",
+          "percentage": 0.0774593338497289
+        },
+        {
+          "name": "WHITE-MICA",
+          "percentage": 0.0387296669248644
+        }
+      ]
+    },
+    {
+      "depth_from_m": 170,
+      "depth_to_m": 190,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 199.8908429725148,
+      "minerals": [
+        {
+          "name": "AMPHIBOLE",
+          "percentage": 14.067879980324644
+        },
+        {
+          "name": "CARBONATE",
+          "percentage": 5.263157894736842
+        },
+        {
+          "name": "CHLORITE",
+          "percentage": 73.14313821938022
+        },
+        {
+          "name": "DARK-MICA",
+          "percentage": 3.443187407771766
+        },
+        {
+          "name": "EPIDOTE",
+          "percentage": 2.0659124446630592
+        },
+        {
+          "name": "OTHER-ALOH",
+          "percentage": 0.1475651746187899
+        },
+        {
+          "name": "SMECTITE",
+          "percentage": 1.7707820954254796
+        },
+        {
+          "name": "WHITE-MICA",
+          "percentage": 0.0983767830791933
+        }
+      ]
+    },
+    {
+      "depth_from_m": 190,
+      "depth_to_m": 210,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 158.32462614780323,
+      "minerals": [
+        {
+          "name": "AMPHIBOLE",
+          "percentage": 14.7502356267672
+        },
+        {
+          "name": "CARBONATE",
+          "percentage": 5.230914231856739
+        },
+        {
+          "name": "CHLORITE",
+          "percentage": 68.00188501413761
+        },
+        {
+          "name": "DARK-MICA",
+          "percentage": 4.853911404335533
+        },
+        {
+          "name": "EPIDOTE",
+          "percentage": 1.6965127238454287
+        },
+        {
+          "name": "OTHER-ALOH",
+          "percentage": 4.995287464655985
+        },
+        {
+          "name": "SMECTITE",
+          "percentage": 0.4712535344015079
+        }
+      ]
+    },
+    {
+      "depth_from_m": 210,
+      "depth_to_m": 230,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 175.132675954616,
+      "minerals": [
+        {
+          "name": "AMPHIBOLE",
+          "percentage": 24.272871496562665
+        },
+        {
+          "name": "CARBONATE",
+          "percentage": 4.019037546271814
+        },
+        {
+          "name": "CHLORITE",
+          "percentage": 64.41036488630354
+        },
+        {
+          "name": "DARK-MICA",
+          "percentage": 3.75462718138551
+        },
+        {
+          "name": "EPIDOTE",
+          "percentage": 2.168164992067689
+        },
+        {
+          "name": "OTHER-ALOH",
+          "percentage": 0.6345848757271285
+        },
+        {
+          "name": "SMECTITE",
+          "percentage": 0.74034902168165
+        }
+      ]
+    },
+    {
+      "depth_from_m": 230,
+      "depth_to_m": 250,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 120.56091892872998,
+      "minerals": [
+        {
+          "name": "AMPHIBOLE",
+          "percentage": 11.137162954279017
+        },
+        {
+          "name": "CARBONATE",
+          "percentage": 0.3907776475185619
+        },
+        {
+          "name": "CHLORITE",
+          "percentage": 87.61234857366159
+        },
+        {
+          "name": "DARK-MICA",
+          "percentage": 0.1172332942555685
+        },
+        {
+          "name": "EPIDOTE",
+          "percentage": 0.0781555295037123
+        },
+        {
+          "name": "OTHER-ALOH",
+          "percentage": 0.5470887065259866
+        },
+        {
+          "name": "WHITE-MICA",
+          "percentage": 0.1172332942555685
+        }
+      ]
+    },
+    {
+      "depth_from_m": 250,
+      "depth_to_m": 270,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 125.2882008527052,
+      "minerals": [
+        {
+          "name": "AMPHIBOLE",
+          "percentage": 33.155080213903744
+        },
+        {
+          "name": "CARBONATE",
+          "percentage": 0.4456327985739751
+        },
+        {
+          "name": "CHLORITE",
+          "percentage": 61.72014260249554
+        },
+        {
+          "name": "DARK-MICA",
+          "percentage": 0.8912655971479502
+        },
+        {
+          "name": "EPIDOTE",
+          "percentage": 0.4010695187165776
+        },
+        {
+          "name": "OTHER-ALOH",
+          "percentage": 3.074866310160428
+        },
+        {
+          "name": "SMECTITE",
+          "percentage": 0.3119429590017825
+        }
+      ]
+    },
+    {
+      "depth_from_m": 270,
+      "depth_to_m": 290,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 167.9026986427532,
+      "minerals": [
+        {
+          "name": "AMPHIBOLE",
+          "percentage": 0.9430255402750491
+        },
+        {
+          "name": "CARBONATE",
+          "percentage": 0.275049115913556
+        },
+        {
+          "name": "CHLORITE",
+          "percentage": 95.55992141453832
+        },
+        {
+          "name": "DARK-MICA",
+          "percentage": 0.2357563850687623
+        },
+        {
+          "name": "EPIDOTE",
+          "percentage": 0.0392927308447937
+        },
+        {
+          "name": "OTHER-ALOH",
+          "percentage": 0.3536345776031434
+        },
+        {
+          "name": "SMECTITE",
+          "percentage": 0.275049115913556
+        },
+        {
+          "name": "WHITE-MICA",
+          "percentage": 2.3182711198428287
+        }
+      ]
+    },
+    {
+      "depth_from_m": 290,
+      "depth_to_m": 310,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 224.24342089315843,
+      "minerals": [
+        {
+          "name": "CARBONATE",
+          "percentage": 0.0798084596967278
+        },
+        {
+          "name": "CHLORITE",
+          "percentage": 99.24181963288108
+        },
+        {
+          "name": "DARK-MICA",
+          "percentage": 0.1197126895450917
+        },
+        {
+          "name": "WHITE-MICA",
+          "percentage": 0.5586592178770949
+        }
+      ]
+    },
+    {
+      "depth_from_m": 310,
+      "depth_to_m": 330,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 258.7632894515991,
+      "minerals": [
+        {
+          "name": "CHLORITE",
+          "percentage": 98.94578313253012
+        },
+        {
+          "name": "WHITE-MICA",
+          "percentage": 1.0542168674698795
+        }
+      ]
+    }
+  ]
+}

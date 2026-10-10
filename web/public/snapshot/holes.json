@@ -1,0 +1,166 @@
+{
+  "count": 20,
+  "holes": [
+    {
+      "hole_id": "05GJD001",
+      "region": "GNIGNUPJUNCTION",
+      "latitude": -33.72188606,
+      "longitude": 118.96361011,
+      "total_depth_m": 166,
+      "intervals_classified": 9
+    },
+    {
+      "hole_id": "05KCD001",
+      "region": "KILLARACREEK",
+      "latitude": -33.72358607,
+      "longitude": 118.96961011,
+      "total_depth_m": 142,
+      "intervals_classified": 9
+    },
+    {
+      "hole_id": "07THD002",
+      "region": "Table Hill",
+      "latitude": -23.56987364,
+      "longitude": 121.46011927,
+      "total_depth_m": 405.8,
+      "intervals_classified": 21
+    },
+    {
+      "hole_id": "07THD003",
+      "region": "Table Hill",
+      "latitude": -23.68170266,
+      "longitude": 121.19778381,
+      "total_depth_m": 188,
+      "intervals_classified": 10
+    },
+    {
+      "hole_id": "09ATD015",
+      "region": "Austin",
+      "latitude": -27.13891542,
+      "longitude": 118.51447554,
+      "total_depth_m": 305.7,
+      "intervals_classified": 16
+    },
+    {
+      "hole_id": "09ATD019",
+      "region": "Austin",
+      "latitude": -27.13932172,
+      "longitude": 118.51391369,
+      "total_depth_m": 154.3,
+      "intervals_classified": 9
+    },
+    {
+      "hole_id": "09ATRCD025",
+      "region": "Austin",
+      "latitude": -27.1389674,
+      "longitude": 118.51392848,
+      "total_depth_m": 150.39999999999998,
+      "intervals_classified": 9
+    },
+    {
+      "hole_id": "09DKRCD001A",
+      "region": "Dicksons",
+      "latitude": -27.10432257,
+      "longitude": 118.5704829,
+      "total_depth_m": 279.4,
+      "intervals_classified": 15
+    },
+    {
+      "hole_id": "09DKRCD002",
+      "region": "Dicksons",
+      "latitude": -27.10606189,
+      "longitude": 118.56937469,
+      "total_depth_m": 291,
+      "intervals_classified": 15
+    },
+    {
+      "hole_id": "09FKRCD001",
+      "region": "Franklin",
+      "latitude": -27.11353815,
+      "longitude": 118.56271828,
+      "total_depth_m": 228.2,
+      "intervals_classified": 13
+    },
+    {
+      "hole_id": "09HBRCD001",
+      "region": "Herbert",
+      "latitude": -27.126619,
+      "longitude": 118.51856836,
+      "total_depth_m": 328.2,
+      "intervals_classified": 17
+    },
+    {
+      "hole_id": "09RTD001",
+      "region": "Austin",
+      "latitude": -27.13762329,
+      "longitude": 118.5137783,
+      "total_depth_m": 248.1,
+      "intervals_classified": 14
+    },
+    {
+      "hole_id": "09THD028",
+      "region": "Table Hill",
+      "latitude": -24.10490764,
+      "longitude": 121.69693605,
+      "total_depth_m": 288.90000000000003,
+      "intervals_classified": 15
+    },
+    {
+      "hole_id": "09THD029",
+      "region": "Table Hill",
+      "latitude": -24.11010619,
+      "longitude": 121.68184047,
+      "total_depth_m": 305.59999999999997,
+      "intervals_classified": 16
+    },
+    {
+      "hole_id": "09THD030",
+      "region": "Table Hill",
+      "latitude": -24.10251795,
+      "longitude": 121.70690634,
+      "total_depth_m": 198.89999999999998,
+      "intervals_classified": 11
+    },
+    {
+      "hole_id": "09THD031",
+      "region": "Table Hill",
+      "latitude": -24.21992379,
+      "longitude": 121.3276231,
+      "total_depth_m": 255.8,
+      "intervals_classified": 14
+    },
+    {
+      "hole_id": "09THD032",
+      "region": "Table Hill",
+      "latitude": -24.22771829,
+      "longitude": 121.32452798,
+      "total_depth_m": 309.3,
+      "intervals_classified": 20
+    },
+    {
+      "hole_id": "09THD033",
+      "region": "Table Hill",
+      "latitude": -24.20611811,
+      "longitude": 121.30641085,
+      "total_depth_m": 461.7,
+      "intervals_classified": 24
+    },
+    {
+      "hole_id": "10CHD006",
+      "region": "Copper Hills",
+      "latitude": -26.97170652,
+      "longitude": 118.69234804,
+      "total_depth_m": 195.4,
+      "intervals_classified": 10
+    },
+    {
+      "hole_id": "10CHRCD005",
+      "region": "Copper Hills",
+      "latitude": -26.9716929,
+      "longitude": 118.69555407,
+      "total_depth_m": 166.70000000000002,
+      "intervals_classified": 9
+    }
+  ],
+  "generatedAt": "2026-10-10T04:26:47.438Z"
+}

@@ -1,0 +1,518 @@
+{
+  "hole_id": "09THD029",
+  "count": 16,
+  "intervals": [
+    {
+      "depth_from_m": 50,
+      "depth_to_m": 70,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 82.69759568595389,
+      "minerals": [
+        {
+          "name": "AMPHIBOLE",
+          "percentage": 19.5822454308094
+        },
+        {
+          "name": "CARBONATE",
+          "percentage": 7.571801566579634
+        },
+        {
+          "name": "CHLORITE",
+          "percentage": 23.49869451697128
+        },
+        {
+          "name": "DARK-MICA",
+          "percentage": 5.221932114882506
+        },
+        {
+          "name": "EPIDOTE",
+          "percentage": 15.926892950391643
+        },
+        {
+          "name": "KAOLIN",
+          "percentage": 1.0443864229765014
+        },
+        {
+          "name": "OTHER-ALOH",
+          "percentage": 0.7832898172323759
+        },
+        {
+          "name": "OTHER-MGOH",
+          "percentage": 0.5221932114882507
+        },
+        {
+          "name": "SERPENTINE",
+          "percentage": 2.8720626631853787
+        },
+        {
+          "name": "SMECTITE",
+          "percentage": 8.093994778067886
+        },
+        {
+          "name": "TOURMALINE",
+          "percentage": 0.2610966057441253
+        },
+        {
+          "name": "WHITE-MICA",
+          "percentage": 14.621409921671018
+        }
+      ]
+    },
+    {
+      "depth_from_m": 70,
+      "depth_to_m": 90,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 99.7292473236896,
+      "minerals": [
+        {
+          "name": "AMPHIBOLE",
+          "percentage": 31.48558758314856
+        },
+        {
+          "name": "CARBONATE",
+          "percentage": 6.873614190687362
+        },
+        {
+          "name": "CHLORITE",
+          "percentage": 24.83370288248337
+        },
+        {
+          "name": "DARK-MICA",
+          "percentage": 9.534368070953436
+        },
+        {
+          "name": "EPIDOTE",
+          "percentage": 6.319290465631928
+        },
+        {
+          "name": "KAOLIN",
+          "percentage": 0.1108647450110864
+        },
+        {
+          "name": "OTHER-MGOH",
+          "percentage": 0.4434589800443459
+        },
+        {
+          "name": "SERPENTINE",
+          "percentage": 5.432372505543237
+        },
+        {
+          "name": "SMECTITE",
+          "percentage": 11.197339246119734
+        },
+        {
+          "name": "TOURMALINE",
+          "percentage": 0.4434589800443459
+        },
+        {
+          "name": "WHITE-MICA",
+          "percentage": 3.325942350332594
+        }
+      ]
+    },
+    {
+      "depth_from_m": 90,
+      "depth_to_m": 110,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 97.15405071282588,
+      "minerals": [
+        {
+          "name": "AMPHIBOLE",
+          "percentage": 33.403361344537814
+        },
+        {
+          "name": "CARBONATE",
+          "percentage": 5.88235294117647
+        },
+        {
+          "name": "CHLORITE",
+          "percentage": 16.80672268907563
+        },
+        {
+          "name": "DARK-MICA",
+          "percentage": 20.588235294117645
+        },
+        {
+          "name": "EPIDOTE",
+          "percentage": 10.504201680672267
+        },
+        {
+          "name": "KAOLIN",
+          "percentage": 0.8403361344537815
+        },
+        {
+          "name": "OTHER-ALOH",
+          "percentage": 0.2100840336134453
+        },
+        {
+          "name": "SERPENTINE",
+          "percentage": 6.722689075630252
+        },
+        {
+          "name": "SMECTITE",
+          "percentage": 3.7815126050420167
+        },
+        {
+          "name": "TOURMALINE",
+          "percentage": 0.2100840336134453
+        },
+        {
+          "name": "WHITE-MICA",
+          "percentage": 1.050420168067227
+        }
+      ]
+    },
+    {
+      "depth_from_m": 110,
+      "depth_to_m": 130,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 163.25484118434045,
+      "minerals": [
+        {
+          "name": "AMPHIBOLE",
+          "percentage": 4.76878612716763
+        },
+        {
+          "name": "CARBONATE",
+          "percentage": 12.86127167630058
+        },
+        {
+          "name": "CHLORITE",
+          "percentage": 23.41040462427745
+        },
+        {
+          "name": "DARK-MICA",
+          "percentage": 1.8786127167630056
+        },
+        {
+          "name": "EPIDOTE",
+          "percentage": 6.069364161849711
+        },
+        {
+          "name": "KAOLIN",
+          "percentage": 0.2890173410404624
+        },
+        {
+          "name": "OTHER-ALOH",
+          "percentage": 0.1445086705202312
+        },
+        {
+          "name": "SERPENTINE",
+          "percentage": 0.5780346820809248
+        },
+        {
+          "name": "SMECTITE",
+          "percentage": 41.76300578034682
+        },
+        {
+          "name": "TOURMALINE",
+          "percentage": 0.2890173410404624
+        },
+        {
+          "name": "WHITE-MICA",
+          "percentage": 7.947976878612717
+        }
+      ]
+    },
+    {
+      "depth_from_m": 130,
+      "depth_to_m": 150,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 218.81610739135743,
+      "minerals": [
+        {
+          "name": "AMPHIBOLE",
+          "percentage": 0.1333333333333333
+        },
+        {
+          "name": "CARBONATE",
+          "percentage": 5.666666666666666
+        },
+        {
+          "name": "CHLORITE",
+          "percentage": 67.73333333333333
+        },
+        {
+          "name": "DARK-MICA",
+          "percentage": 3.933333333333333
+        },
+        {
+          "name": "EPIDOTE",
+          "percentage": 0.3333333333333333
+        },
+        {
+          "name": "KAOLIN",
+          "percentage": 0.2
+        },
+        {
+          "name": "OTHER-MGOH",
+          "percentage": 0.6
+        },
+        {
+          "name": "SMECTITE",
+          "percentage": 8.666666666666668
+        },
+        {
+          "name": "WHITE-MICA",
+          "percentage": 12.733333333333333
+        }
+      ]
+    },
+    {
+      "depth_from_m": 150,
+      "depth_to_m": 170,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 201.84417181176235,
+      "minerals": [
+        {
+          "name": "AMPHIBOLE",
+          "percentage": 1.2570437798006069
+        },
+        {
+          "name": "CARBONATE",
+          "percentage": 0.3034243606415258
+        },
+        {
+          "name": "CHLORITE",
+          "percentage": 77.85002167316861
+        },
+        {
+          "name": "DARK-MICA",
+          "percentage": 8.322496749024708
+        },
+        {
+          "name": "OTHER-MGOH",
+          "percentage": 11.096662332032944
+        },
+        {
+          "name": "SERPENTINE",
+          "percentage": 0.0866926744690073
+        },
+        {
+          "name": "SMECTITE",
+          "percentage": 1.083658430862592
+        }
+      ]
+    },
+    {
+      "depth_from_m": 170,
+      "depth_to_m": 190,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 125.38191164577611,
+      "minerals": [
+        {
+          "name": "CARBONATE",
+          "percentage": 4.893893460372455
+        },
+        {
+          "name": "CHLORITE",
+          "percentage": 70.59333044608054
+        },
+        {
+          "name": "DARK-MICA",
+          "percentage": 4.374187960155912
+        },
+        {
+          "name": "OTHER-MGOH",
+          "percentage": 14.421827631009096
+        },
+        {
+          "name": "WHITE-MICA",
+          "percentage": 5.716760502381984
+        }
+      ]
+    },
+    {
+      "depth_from_m": 190,
+      "depth_to_m": 210,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 222.83584594896936,
+      "minerals": [
+        {
+          "name": "CARBONATE",
+          "percentage": 4.510942384993301
+        },
+        {
+          "name": "CHLORITE",
+          "percentage": 0.5806163465832961
+        },
+        {
+          "name": "SULPHATE",
+          "percentage": 0.0893255917820455
+        },
+        {
+          "name": "WHITE-MICA",
+          "percentage": 94.81911567664136
+        }
+      ]
+    },
+    {
+      "depth_from_m": 210,
+      "depth_to_m": 230,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 256.4505023476261,
+      "minerals": [
+        {
+          "name": "WHITE-MICA",
+          "percentage": 100
+        }
+      ]
+    },
+    {
+      "depth_from_m": 230,
+      "depth_to_m": 250,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 259.09059402864744,
+      "minerals": [
+        {
+          "name": "WHITE-MICA",
+          "percentage": 100
+        }
+      ]
+    },
+    {
+      "depth_from_m": 250,
+      "depth_to_m": 270,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 230.64154468228847,
+      "minerals": [
+        {
+          "name": "WHITE-MICA",
+          "percentage": 100
+        }
+      ]
+    },
+    {
+      "depth_from_m": 270,
+      "depth_to_m": 290,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 240.13288905384772,
+      "minerals": [
+        {
+          "name": "SULPHATE",
+          "percentage": 0.2197802197802197
+        },
+        {
+          "name": "WHITE-MICA",
+          "percentage": 99.78021978021978
+        }
+      ]
+    },
+    {
+      "depth_from_m": 290,
+      "depth_to_m": 310,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 253.5316210550949,
+      "minerals": [
+        {
+          "name": "SULPHATE",
+          "percentage": 0.5052824988516307
+        },
+        {
+          "name": "WHITE-MICA",
+          "percentage": 99.49471750114836
+        }
+      ]
+    },
+    {
+      "depth_from_m": 310,
+      "depth_to_m": 330,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 200.51049113114885,
+      "minerals": [
+        {
+          "name": "WHITE-MICA",
+          "percentage": 100
+        }
+      ]
+    },
+    {
+      "depth_from_m": 330,
+      "depth_to_m": 350,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 193.80043441936533,
+      "minerals": [
+        {
+          "name": "WHITE-MICA",
+          "percentage": 100
+        }
+      ]
+    },
+    {
+      "depth_from_m": 350,
+      "depth_to_m": 370,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 197.0348997019386,
+      "minerals": [
+        {
+          "name": "WHITE-MICA",
+          "percentage": 100
+        }
+      ]
+    }
+  ]
+}

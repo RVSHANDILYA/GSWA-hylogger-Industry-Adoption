@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
 import Layout from "./components/layout/Layout.jsx";
 const LandingPage = lazy(() => import("./pages/LandingPage.jsx"));
 const ExplorerPage = lazy(() => import("./pages/ExplorerPage.jsx"));
@@ -16,8 +16,10 @@ const NotFoundPage = lazy(() => import("./pages/NotFoundPage.jsx"));
   components/layout/NavBar.jsx.
 */
 export default function App() {
+  const snapshotMode = import.meta.env.VITE_DATA_MODE === "snapshot";
+  const Router = snapshotMode ? HashRouter : BrowserRouter;
   return (
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
+    <Router basename={snapshotMode ? undefined : import.meta.env.BASE_URL}>
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<LandingPage />} />
@@ -27,6 +29,6 @@ export default function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }

@@ -1,0 +1,434 @@
+{
+  "hole_id": "05GJD001",
+  "count": 9,
+  "intervals": [
+    {
+      "depth_from_m": 150,
+      "depth_to_m": 170,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 118.29245423765148,
+      "minerals": [
+        {
+          "name": "CARBONATE",
+          "percentage": 9.540636042402827
+        },
+        {
+          "name": "CHLORITE",
+          "percentage": 56.18374558303887
+        },
+        {
+          "name": "DARK-MICA",
+          "percentage": 22.85041224970554
+        },
+        {
+          "name": "EPIDOTE",
+          "percentage": 0.1177856301531213
+        },
+        {
+          "name": "KAOLIN",
+          "percentage": 2.120141342756184
+        },
+        {
+          "name": "SMECTITE",
+          "percentage": 0.3533568904593639
+        },
+        {
+          "name": "SULPHATE",
+          "percentage": 0.4711425206124852
+        },
+        {
+          "name": "WHITE-MICA",
+          "percentage": 8.362779740871613
+        }
+      ]
+    },
+    {
+      "depth_from_m": 170,
+      "depth_to_m": 190,
+      "label": "Possible ore zone",
+      "confidence": 0.65,
+      "reason": "Carbonate 26% and chlorite 22% exceed provisional ore-indication thresholds.",
+      "rule_fired": "R2_ore",
+      "final_mask": true,
+      "confidence_error": 133.01369479215597,
+      "minerals": [
+        {
+          "name": "AMPHIBOLE",
+          "percentage": 29.430379746835445
+        },
+        {
+          "name": "CARBONATE",
+          "percentage": 25.886075949367086
+        },
+        {
+          "name": "CHLORITE",
+          "percentage": 22.21518987341772
+        },
+        {
+          "name": "DARK-MICA",
+          "percentage": 7.151898734177216
+        },
+        {
+          "name": "EPIDOTE",
+          "percentage": 0.1265822784810126
+        },
+        {
+          "name": "KAOLIN",
+          "percentage": 1.0126582278481011
+        },
+        {
+          "name": "OTHER-ALOH",
+          "percentage": 0.4430379746835443
+        },
+        {
+          "name": "SMECTITE",
+          "percentage": 2.151898734177215
+        },
+        {
+          "name": "SULPHATE",
+          "percentage": 2.721518987341772
+        },
+        {
+          "name": "WHITE-MICA",
+          "percentage": 8.860759493670885
+        }
+      ]
+    },
+    {
+      "depth_from_m": 190,
+      "depth_to_m": 210,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 132.35429213649624,
+      "minerals": [
+        {
+          "name": "AMPHIBOLE",
+          "percentage": 7.967032967032966
+        },
+        {
+          "name": "CARBONATE",
+          "percentage": 4.8901098901098905
+        },
+        {
+          "name": "CHLORITE",
+          "percentage": 69.72527472527472
+        },
+        {
+          "name": "DARK-MICA",
+          "percentage": 9.175824175824175
+        },
+        {
+          "name": "EPIDOTE",
+          "percentage": 0.0549450549450549
+        },
+        {
+          "name": "KAOLIN",
+          "percentage": 0.0549450549450549
+        },
+        {
+          "name": "OTHER-ALOH",
+          "percentage": 3.5164835164835164
+        },
+        {
+          "name": "SULPHATE",
+          "percentage": 0.9890109890109888
+        },
+        {
+          "name": "WHITE-MICA",
+          "percentage": 3.626373626373627
+        }
+      ]
+    },
+    {
+      "depth_from_m": 210,
+      "depth_to_m": 230,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 141.4324578430693,
+      "minerals": [
+        {
+          "name": "CARBONATE",
+          "percentage": 3.728813559322034
+        },
+        {
+          "name": "CHLORITE",
+          "percentage": 68.37772397094432
+        },
+        {
+          "name": "DARK-MICA",
+          "percentage": 16.319612590799032
+        },
+        {
+          "name": "EPIDOTE",
+          "percentage": 0.0484261501210653
+        },
+        {
+          "name": "KAOLIN",
+          "percentage": 0.0968523002421307
+        },
+        {
+          "name": "OTHER-ALOH",
+          "percentage": 2.2760290556900724
+        },
+        {
+          "name": "SMECTITE",
+          "percentage": 0.2905569007263922
+        },
+        {
+          "name": "SULPHATE",
+          "percentage": 0.5326876513317191
+        },
+        {
+          "name": "WHITE-MICA",
+          "percentage": 8.329297820823244
+        }
+      ]
+    },
+    {
+      "depth_from_m": 230,
+      "depth_to_m": 250,
+      "label": "Possible ore zone",
+      "confidence": 0.59,
+      "reason": "Carbonate 31% and chlorite 16% exceed provisional ore-indication thresholds.",
+      "rule_fired": "R2_ore",
+      "final_mask": true,
+      "confidence_error": 155.69650477932808,
+      "minerals": [
+        {
+          "name": "AMPHIBOLE",
+          "percentage": 0.0835421888053467
+        },
+        {
+          "name": "CARBONATE",
+          "percentage": 31.16123642439432
+        },
+        {
+          "name": "CHLORITE",
+          "percentage": 15.789473684210526
+        },
+        {
+          "name": "DARK-MICA",
+          "percentage": 2.6733500417710943
+        },
+        {
+          "name": "EPIDOTE",
+          "percentage": 1.3366750208855471
+        },
+        {
+          "name": "KAOLIN",
+          "percentage": 0.0835421888053467
+        },
+        {
+          "name": "OTHER-ALOH",
+          "percentage": 19.21470342522974
+        },
+        {
+          "name": "SMECTITE",
+          "percentage": 0.2506265664160401
+        },
+        {
+          "name": "SULPHATE",
+          "percentage": 10.025062656641603
+        },
+        {
+          "name": "WHITE-MICA",
+          "percentage": 19.381787802840435
+        }
+      ]
+    },
+    {
+      "depth_from_m": 250,
+      "depth_to_m": 270,
+      "label": "Possible ore zone",
+      "confidence": 0.67,
+      "reason": "Carbonate 25% and chlorite 24% exceed provisional ore-indication thresholds.",
+      "rule_fired": "R2_ore",
+      "final_mask": true,
+      "confidence_error": 152.4560166856865,
+      "minerals": [
+        {
+          "name": "AMPHIBOLE",
+          "percentage": 12.42305540011192
+        },
+        {
+          "name": "CARBONATE",
+          "percentage": 24.84611080022384
+        },
+        {
+          "name": "CHLORITE",
+          "percentage": 23.670956911024064
+        },
+        {
+          "name": "DARK-MICA",
+          "percentage": 6.547285954113039
+        },
+        {
+          "name": "EPIDOTE",
+          "percentage": 1.175153889199776
+        },
+        {
+          "name": "OTHER-ALOH",
+          "percentage": 10.744264129826526
+        },
+        {
+          "name": "SULPHATE",
+          "percentage": 1.454952434247342
+        },
+        {
+          "name": "WHITE-MICA",
+          "percentage": 19.13822048125349
+        }
+      ]
+    },
+    {
+      "depth_from_m": 270,
+      "depth_to_m": 290,
+      "label": "Possible ore zone",
+      "confidence": 0.61,
+      "reason": "Carbonate 18% and chlorite 29% exceed provisional ore-indication thresholds.",
+      "rule_fired": "R2_ore",
+      "final_mask": true,
+      "confidence_error": 229.0535423255321,
+      "minerals": [
+        {
+          "name": "AMPHIBOLE",
+          "percentage": 0.2052334530528476
+        },
+        {
+          "name": "CARBONATE",
+          "percentage": 17.598768599281684
+        },
+        {
+          "name": "CHLORITE",
+          "percentage": 29.04053360697793
+        },
+        {
+          "name": "DARK-MICA",
+          "percentage": 24.52539763981529
+        },
+        {
+          "name": "EPIDOTE",
+          "percentage": 0.1026167265264238
+        },
+        {
+          "name": "KAOLIN",
+          "percentage": 0.0513083632632119
+        },
+        {
+          "name": "OTHER-ALOH",
+          "percentage": 16.98306824012314
+        },
+        {
+          "name": "SULPHATE",
+          "percentage": 5.746536685479733
+        },
+        {
+          "name": "WHITE-MICA",
+          "percentage": 5.746536685479733
+        }
+      ]
+    },
+    {
+      "depth_from_m": 290,
+      "depth_to_m": 310,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 147.54685787826728,
+      "minerals": [
+        {
+          "name": "AMPHIBOLE",
+          "percentage": 0.4872766648619382
+        },
+        {
+          "name": "CARBONATE",
+          "percentage": 9.095831077422847
+        },
+        {
+          "name": "CHLORITE",
+          "percentage": 63.29182458040064
+        },
+        {
+          "name": "DARK-MICA",
+          "percentage": 9.36654033567948
+        },
+        {
+          "name": "EPIDOTE",
+          "percentage": 0.1624255549539794
+        },
+        {
+          "name": "OTHER-ALOH",
+          "percentage": 2.219815917704385
+        },
+        {
+          "name": "SMECTITE",
+          "percentage": 0.6497022198159177
+        },
+        {
+          "name": "SULPHATE",
+          "percentage": 1.353546291283162
+        },
+        {
+          "name": "WHITE-MICA",
+          "percentage": 13.37303735787764
+        }
+      ]
+    },
+    {
+      "depth_from_m": 310,
+      "depth_to_m": 330,
+      "label": "Unclassified",
+      "confidence": 0.4,
+      "reason": "No rule threshold met. Needs expert review.",
+      "rule_fired": "R5_no_match",
+      "final_mask": true,
+      "confidence_error": 226.15680438619825,
+      "minerals": [
+        {
+          "name": "AMPHIBOLE",
+          "percentage": 0.0863557858376511
+        },
+        {
+          "name": "CARBONATE",
+          "percentage": 6.994818652849741
+        },
+        {
+          "name": "CHLORITE",
+          "percentage": 55.613126079447326
+        },
+        {
+          "name": "DARK-MICA",
+          "percentage": 26.07944732297064
+        },
+        {
+          "name": "EPIDOTE",
+          "percentage": 0.2590673575129534
+        },
+        {
+          "name": "OTHER-ALOH",
+          "percentage": 1.381692573402418
+        },
+        {
+          "name": "SULPHATE",
+          "percentage": 0.8635578583765112
+        },
+        {
+          "name": "WHITE-MICA",
+          "percentage": 8.721934369602764
+        }
+      ]
+    }
+  ]
+}
