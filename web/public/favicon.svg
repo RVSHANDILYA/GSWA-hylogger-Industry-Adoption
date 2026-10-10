@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="7" fill="#05080d"/>
-  <clipPath id="c"><path d="M8 8.5h16v15a8 3 0 0 1-16 0Z"/></clipPath>
-  <g clip-path="url(#c)">
-    <rect x="8" y="8.5" width="16" height="3.4" fill="#3987e5"/>
-    <rect x="8" y="11.9" width="16" height="3.4" fill="#d95926"/>
-    <rect x="8" y="15.3" width="16" height="3.4" fill="#199e70"/>
-    <rect x="8" y="18.7" width="16" height="3.4" fill="#c98500"/>
-    <rect x="8" y="22.1" width="16" height="5" fill="#d55181"/>
-  </g>
-  <ellipse cx="16" cy="8.5" rx="8" ry="3" fill="#05080d" stroke="#e39a3b" stroke-width="1.7"/>
-  <path d="M8 8.5v15a8 3 0 0 0 16 0v-15" fill="none" stroke="#e39a3b" stroke-width="1.7" stroke-linecap="round"/>
+ <rect width="32" height="32" rx="7" fill="#ffffff"/>
+ <defs><clipPath id="core"><path d="M7 7.5h18v17a9 3.4 0 0 1-18 0Z"/></clipPath></defs>
+ <g clip-path="url(#core)">
+  <rect x="7" y="7.5" width="18" height="3.6" fill="#2768bc"/>
+  <rect x="7" y="11.1" width="18" height="3.6" fill="#ba4820"/>
+  <rect x="7" y="14.7" width="18" height="3.6" fill="#14774f"/>
+  <rect x="7" y="18.3" width="18" height="3.6" fill="#996400"/>
+  <rect x="7" y="21.9" width="18" height="6" fill="#b83d6b"/>
+ </g>
+ <ellipse cx="16" cy="7.5" rx="9" ry="3.4" fill="#ffffff" stroke="#9b482d" stroke-width="1.6"/>
+ <path d="M7 7.5v17a9 3.4 0 0 0 18 0v-17" fill="none" stroke="#9b482d" stroke-width="1.6" stroke-linecap="round"/>
 </svg>

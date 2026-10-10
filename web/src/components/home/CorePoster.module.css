@@ -1,0 +1,6 @@
+.frame { width: 100%; height: 100%; min-height: 240px; background: var(--surface-sunken); overflow: hidden; }
+.frame img { width: 100%; height: 100%; object-fit: contain; }
+.placeholder { height: 100%; min-height: inherit; display: flex; flex-direction: column; justify-content: center;
+  align-items: center; gap: 16px; padding: 32px; text-align: center; }
+.placeholder > p { font-size: var(--size-h3); line-height: var(--line-h3); font-weight: 600; letter-spacing: var(--tracking-tight); }
+.placeholder > span:last-child { max-width: 35ch; font-size: var(--size-small); line-height: var(--line-small); color: var(--text-secondary); }

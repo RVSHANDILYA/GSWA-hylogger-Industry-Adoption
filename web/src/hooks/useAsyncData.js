@@ -1,15 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import useDataSource from "./useDataSource.js";
 
 /*
   Load something asynchronous and expose the three states a page has to show:
   loading, ready, and could not load.
 
-  Both the Hole Explorer and the Classification page need exactly this, so it
-  lives here once rather than twice. Task 9 keeps the hook and changes only
-  the loader it is handed:
-
-    const holes = useAsyncData(fetchHoles);              // placeholder module
-    const holes = useAsyncData(() => api.getHoles());    // Axios client
+  All data pages share this loading, success and error treatment. The loader
+  calls the real API client and changes when its dependencies change.
 
   `deps` is the list of values the loader depends on. Change one, for example
   the selected hole, and the hook re-runs and reports loading again rather
@@ -28,6 +25,7 @@ function messageFor(problem) {
 }
 
 export default function useAsyncData(loader, deps = [], { skip = false } = {}) {
+  const source = useDataSource();
   const [attempt, setAttempt] = useState(0);
   const [result, setResult] = useState({ key: null, data: null, error: null });
 
@@ -35,9 +33,9 @@ export default function useAsyncData(loader, deps = [], { skip = false } = {}) {
      the run identity in the result is what lets the hook report "loading"
      for a new request without setting state from inside the effect. */
   const runKey = useMemo(
-    () => `${attempt}:${JSON.stringify(deps)}`,
+    () => `${source.mode}:${attempt}:${JSON.stringify(deps)}`,
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [attempt, JSON.stringify(deps)]
+    [source.mode, attempt, JSON.stringify(deps)]
   );
 
   useEffect(() => {

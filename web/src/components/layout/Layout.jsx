@@ -1,8 +1,11 @@
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import NavBar from "./NavBar.jsx";
 import Footer from "./Footer.jsx";
 import AnimatedOutlet from "./AnimatedOutlet.jsx";
+import DataSourceBanner from "./DataSourceBanner.jsx";
+import { Loading } from "../ui/index.js";
+import useMotionPreference from "../../hooks/useMotionPreference.js";
 import styles from "./Layout.module.css";
 
 /*
@@ -11,13 +14,31 @@ import styles from "./Layout.module.css";
   between them.
 */
 export default function Layout() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
+  const reduced = useMotionPreference();
 
   /* Land at the top of a new page rather than halfway down it, which is
      where the browser leaves you after a client side navigation. */
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
+    const titles = { "/": "Open core, clearer understanding", "/explorer": "Hole Explorer", "/results": "Classification workspace", "/about": "Methodology" };
+    document.title = (titles[pathname] ?? "Page not found") + " | CoreSense | HyLogger";
   }, [pathname]);
+
+  useEffect(() => {
+    if (!hash) return undefined;
+    const scroll = () => {
+      const target = document.getElementById(hash.slice(1));
+      if (!target) return false;
+      target.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+      return true;
+    };
+    if (scroll()) return undefined;
+    // Lazy pages may not have mounted their anchored section yet.
+    const observer = new MutationObserver(() => { if (scroll()) observer.disconnect(); });
+    observer.observe(document.getElementById("main"), { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, [pathname, hash, reduced]);
 
   return (
     <div className={styles.shell}>
@@ -25,8 +46,11 @@ export default function Layout() {
         Skip to content
       </a>
       <NavBar />
-      <main id="main" className={styles.main}>
-        <AnimatedOutlet />
+      <DataSourceBanner />
+      <main id="main" className={styles.main} tabIndex={-1}>
+        <Suspense fallback={<div className={styles.container} style={{paddingBlock: "60px", minHeight: "60vh"}}><Loading>Opening the workspace</Loading></div>}>
+          <AnimatedOutlet />
+        </Suspense>
       </main>
       <Footer />
     </div>

@@ -6,8 +6,10 @@
   literally the thing the site does: a core, read as a stack of minerals.
 */
 import { chart } from "../../styles/theme.js";
+import { useId } from "react";
 
 export default function Logo({ size = 28 }) {
+  const clipId = `logo-core-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
   return (
     <svg
       width={size}
@@ -18,12 +20,12 @@ export default function Logo({ size = 28 }) {
       focusable="false"
     >
       <defs>
-        <clipPath id="logo-core-clip">
+        <clipPath id={clipId}>
           <path d="M7 7.5 h18 v17 a9 3.4 0 0 1 -18 0 Z" />
         </clipPath>
       </defs>
 
-      <g clipPath="url(#logo-core-clip)">
+      <g clipPath={`url(#${clipId})`}>
         <rect x="7" y="7.5" width="18" height="3.6" fill={chart.series[0]} />
         <rect x="7" y="11.1" width="18" height="3.6" fill={chart.series[1]} />
         <rect x="7" y="14.7" width="18" height="3.6" fill={chart.series[2]} />

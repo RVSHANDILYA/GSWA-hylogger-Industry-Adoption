@@ -1,27 +1,8 @@
-.wrap {
-  display: grid;
-  place-items: center;
-  min-height: 55vh;
-  text-align: center;
-}
-
-.code {
-  font-family: var(--font-mono);
-  font-size: var(--size-sm);
-  letter-spacing: var(--tracking-label);
-  color: var(--accent);
-}
-
-.title {
-  margin-top: var(--space-3);
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: var(--size-2xl);
-  color: var(--text-primary);
-}
-
-.lede {
-  max-width: 42ch;
-  margin: var(--space-3) auto var(--space-5);
-  color: var(--text-secondary);
-}
+.wrap { display: grid; grid-template-columns: 1.5fr 1fr; gap: 80px; padding: 100px 0; align-items: center; min-height: 70vh; }
+.wrap h1 { font-family: var(--font-sans); font-size: var(--size-h1); font-weight: 600; line-height: var(--line-h1); letter-spacing: var(--tracking-tight); margin: 23px 0; }
+.wrap p:not([class~="eyebrow"]) { max-width: 440px; color: var(--text-secondary); font-size: 1rem; line-height: 1.8; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 30px; }
+.diagram { display: flex; flex-direction: column; align-items: center; gap: 24px; background: var(--surface-sunken); border: 1px solid var(--border-default); border-radius: 10px; padding: 44px; }
+.diagram > span { font-family: var(--font-mono); font-size: .5625rem; letter-spacing: .12em; color: var(--text-muted); } .diagram svg { color: var(--accent); }
+.emptyCore { height: 230px; width: 100px; border: 1px dashed var(--border-strong); border-radius: 14px; background: repeating-linear-gradient(0deg,transparent 0 29px,var(--border-default) 29px 30px); }
+@media(max-width:768px) { .wrap { grid-template-columns: 1fr; gap: 40px; padding: 60px 0; }.diagram { max-width: 400px; width: 100%; } }

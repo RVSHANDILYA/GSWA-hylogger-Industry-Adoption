@@ -12,7 +12,7 @@ import { AnimatePresence } from "framer-motion";
 
   This sits inside Layout rather than around the whole router on purpose. If
   the nav bar were inside AnimatePresence it would unmount on every route
-  change and the sliding pill would restart from nothing each time.
+  change instead of staying available during navigation.
 */
 export default function AnimatedOutlet() {
   const location = useLocation();

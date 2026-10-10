@@ -1,0 +1,4 @@
+.legend { display: flex; flex-wrap: wrap; gap: 9px 16px; color: var(--text-secondary); font-size: .75rem; }
+.item { display: inline-flex; align-items: center; gap: 6px; }
+.swatch { width: 8px; height: 8px; border-radius: 2px; flex: none; }
+.compact { font-size: .625rem; gap: 6px 12px; }

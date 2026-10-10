@@ -1,10 +1,11 @@
+import { lazy } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./components/layout/Layout.jsx";
-import LandingPage from "./pages/LandingPage.jsx";
-import ExplorerPage from "./pages/ExplorerPage.jsx";
-import ResultsPage from "./pages/ResultsPage.jsx";
-import AboutPage from "./pages/AboutPage.jsx";
-import NotFoundPage from "./pages/NotFoundPage.jsx";
+const LandingPage = lazy(() => import("./pages/LandingPage.jsx"));
+const ExplorerPage = lazy(() => import("./pages/ExplorerPage.jsx"));
+const ResultsPage = lazy(() => import("./pages/ResultsPage.jsx"));
+const AboutPage = lazy(() => import("./pages/AboutPage.jsx"));
+const NotFoundPage = lazy(() => import("./pages/NotFoundPage.jsx"));
 
 /*
   Routes for the whole site.
@@ -16,7 +17,7 @@ import NotFoundPage from "./pages/NotFoundPage.jsx";
 */
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<LandingPage />} />

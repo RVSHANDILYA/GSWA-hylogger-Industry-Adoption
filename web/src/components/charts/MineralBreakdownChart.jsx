@@ -219,7 +219,7 @@ export default function MineralBreakdownChart({
               tick={{
                 fill: chart.axis,
                 fontSize:11,
-                fontFamily:"IBM Plex Mono"
+                fontFamily:"var(--font-mono)"
               }}
 
               tickLine={false}
@@ -237,7 +237,7 @@ export default function MineralBreakdownChart({
               isAnimationActive={false}
 
               cursor={{
-                fill:"rgba(255,255,255,0.035)"
+                fill:chart.grid
               }}
 
             />

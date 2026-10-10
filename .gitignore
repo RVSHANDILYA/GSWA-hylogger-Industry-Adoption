@@ -149,6 +149,7 @@ activemq-data/
 
 # Environments
 .env
+.env*
 .envrc
 .venv
 env/
@@ -226,3 +227,7 @@ data/tsg_files/
 # Locally generated project data is reproducible; keep it out of the repo.
 data/*.csv
 data/*.parquet
+
+# Local frontend dependencies and the unused source export.
+node_modules/
+/05GJD001.json
