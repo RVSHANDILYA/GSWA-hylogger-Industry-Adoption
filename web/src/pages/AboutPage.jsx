@@ -15,7 +15,7 @@ import styles from "./AboutPage.module.css";
 
 const TEAM=[
  ["Raja Venkata Shandilya Puram","Classifier"],["Zhenghao Cui","Database, API"],["Likhita Chowdary Moparthi","Validation"],
- ["Simrat Sandhu","Web app, design"],["Sahaj Jayeshbhai Patel","Web, API link"],["Dulya Murage","Results view"],
+ ["Simrat Sandhu","Web app, design"],["Sahaj Jayeshbhai Patel","Web, API link"],["Dulya Murage","API, classification results view"],
 ];
 const STACK=["React","Vite","React Router","Framer Motion","Recharts","Axios","FastAPI","PostgreSQL","Docker Compose","pandas","nvcl-kit"];
 const RULES=[
