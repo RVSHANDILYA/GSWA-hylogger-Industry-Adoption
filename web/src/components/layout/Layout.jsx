@@ -8,6 +8,8 @@ import { Loading } from "../ui/index.js";
 import useMotionPreference from "../../hooks/useMotionPreference.js";
 import styles from "./Layout.module.css";
 
+const PAGE_NAMES = { "/": "", "/explorer": "Hole Explorer", "/results": "Results", "/about": "About" };
+
 /*
   The frame every route renders inside: one nav bar, one footer, one content
   width. Routes render into AnimatedOutlet, which handles the transition
@@ -16,13 +18,20 @@ import styles from "./Layout.module.css";
 export default function Layout() {
   const { pathname, search, hash } = useLocation();
   const reduced = useMotionPreference();
+  const pagePath = pathname.replace(/\/+$/, "") || "/";
+  const holeId = new URLSearchParams(search).get("hole");
+  const pageName = pagePath === "/results" && holeId
+    ? `${holeId} Results`
+    : PAGE_NAMES[pagePath] ?? "Page not found";
+
+  useEffect(() => {
+    document.title = pageName ? `${pageName} | CoreSense | HyLogger` : "CoreSense | HyLogger";
+  }, [pageName]);
 
   /* Land at the top of a new page rather than halfway down it, which is
      where the browser leaves you after a client side navigation. */
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
-    const titles = { "/": "Open core, clearer understanding", "/explorer": "Hole Explorer", "/results": "Classification workspace", "/about": "Methodology" };
-    document.title = (titles[pathname] ?? "Page not found") + " | CoreSense | HyLogger";
   }, [pathname]);
 
   useEffect(() => {

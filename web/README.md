@@ -66,6 +66,8 @@ npm run check:snapshot
 
 Build and preview the committed snapshot without fetching the API:
 
+`npm run build:snapshot` sets snapshot mode and the repository base path automatically. Set `VITE_BASE` first to override that path. This uses the committed JSON and does not export or change data.
+
 ```powershell
 $env:VITE_DATA_MODE = 'snapshot'
 $env:VITE_BASE = '/GSWA-hylogger-Industry-Adoption/'
