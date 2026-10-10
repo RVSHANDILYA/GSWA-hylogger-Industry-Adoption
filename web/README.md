@@ -46,30 +46,48 @@ All four pages use the same API client. Labels, Error, mask status, reasons, and
 
 Explorer was checked in Chrome against the live API at widths 390, 768, 1024, 1440 and 1920. Pointer and keyboard pin selection preserve the canvas and camera; clusters, drag pan, Ctrl + scroll zoom, keyboard pan, basemap switching, full screen, search and table switching work. Normal and reduced motion were checked. Blocking basemap requests shows the local coastline and real pins; retry restores the detailed map without rebuilding the canvas.
 
-## Saved real data for GitHub Pages
+## Static snapshot for GitHub Pages
 
-GitHub Pages cannot host FastAPI or PostgreSQL. A saved archive lets this static frontend display actual classified records when the live API cannot be reached.
+GitHub Pages serves the frontend and committed JSON; it does not run FastAPI or PostgreSQL.
 
-With the real API running:
+With Docker Desktop running and the database loaded with exactly 20 holes:
 
 ```powershell
+docker compose up -d
+cd web
+npm ci
 npm run snapshot
-$env:GITHUB_PAGES_BASE = '/GSWA-hylogger-Industry-Adoption/'
-npm run build:pages
+npm run check:snapshot
 ```
 
-`build:pages` fetches a fresh real snapshot before building. It fails if the fetch or schema validation fails. To reuse the committed snapshot deliberately, run `npm run build` with the same base instead.
+`snapshot` uses Node's built-in fetch and writes the API responses to `public/snapshot/holes.json`, `public/snapshot/holes/{id}.json`, and `public/snapshot/intervals/{id}.json`. The index includes `generatedAt`. It refuses to export a dataset other than 20 holes and validates all responses before writing. Commit these JSON files when refreshing the published data. No backend code or data is changed by the exporter.
 
-Upload the contents of `web/dist/` as the GitHub Pages artifact. The build includes `404.html` for direct links to nested routes, plus `.nojekyll`. For example, `/GSWA-hylogger-Industry-Adoption/results?hole=05GJD001` opens the classification workspace. Configure Pages to deploy that artifact; this change does not enable Pages or modify repository settings.
+`check:snapshot` compares the actual API client in snapshot mode with the running API for three holes. It checks metadata, intervals, inclusive `min_confidence` Error ceilings, ignored query parameters, and 404 results. `min_confidence` is the only query parameter accepted by the current API.
 
-The snapshot contains the real hole index, individual metadata responses, interval records and generation timestamp. No synthetic data is used. The client tries the live API first. A network failure or timeout activates the saved archive for that browser session, and every page shows its date in an explicit banner. HTTP errors such as 404 or 500 remain errors. When the mode changes, active data requests refresh from the same source to avoid mixing archives. “Try live data” reloads the page and tries the API again.
-
-The API's existing `min_confidence` parameter is an Error ceiling, despite its name. Snapshot requests preserve that behaviour.
-
-After a Pages build, restore the default local base:
+Build and preview the committed snapshot without fetching the API:
 
 ```powershell
-Remove-Item Env:GITHUB_PAGES_BASE
+$env:VITE_DATA_MODE = 'snapshot'
+$env:VITE_BASE = '/GSWA-hylogger-Industry-Adoption/'
+npm run build
+# From web, the Compose file in the parent directory is discovered automatically.
+docker compose stop api
+npm run preview
 ```
 
-These scripts write only inside `web/`. They do not modify the database or backend.
+Open `http://localhost:4173/GSWA-hylogger-Industry-Adoption/`. Snapshot mode reads only the separate JSON files under the base path and shows the generation date in the footer. It uses HashRouter, so `/GSWA-hylogger-Industry-Adoption/#/results?hole=05GJD001` and every other route work after refresh. Page section and skip links also preserve the route. Images, video, poster, favicon, local fonts, map engine, and map worker respect the base path. Detailed map tiles still use the online basemap provider; the local coastline remains available if that provider is unreachable.
+
+The deployment workflow builds the committed snapshot on push to `main` or manual dispatch using Node 22, then uploads `web/dist` and deploys to Pages. On GitHub, choose **Settings → Pages → Build and deployment → Source → GitHub Actions**. Merge the deployment PR into `main` to trigger publishing, or use **Actions → Deploy GitHub Pages → Run workflow → main** afterward.
+
+The published URL is `https://rvshandilya.github.io/GSWA-hylogger-Industry-Adoption/`.
+
+Restore local development after previewing:
+
+```powershell
+Remove-Item Env:VITE_DATA_MODE -ErrorAction SilentlyContinue
+Remove-Item Env:VITE_BASE -ErrorAction SilentlyContinue
+docker compose start api
+npm run dev
+```
+
+With `VITE_DATA_MODE` absent or `live`, the client retains its existing live API behavior, including the dated `public/snapshot.json` fallback on a network failure. The small static-snapshot footer note appears only in explicit snapshot mode. The older `scripts/create-snapshot.mjs` can still refresh that legacy fallback if needed.

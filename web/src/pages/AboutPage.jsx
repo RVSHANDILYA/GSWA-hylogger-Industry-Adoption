@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import PageTransition from "../components/layout/PageTransition.jsx";
 import Reveal from "../components/ui/Reveal.jsx";
 import { Container } from "../components/layout/Layout.jsx";
@@ -33,6 +33,8 @@ const STEPS=[
  ["05","Human review","Return the label, rule, reason and quality information with the minerals."],
 ];
 export default function AboutPage() {
+ const location=useLocation();
+ const sectionLink=hash=>({search:location.search,hash});
  const [params,setParams]=useSearchParams();
  const survey=useSurvey();
  const holes=survey.data?.holes??[];
@@ -49,8 +51,8 @@ export default function AboutPage() {
      lede="A transparent route from hyperspectral drill-core readings to a conversation a geologist can check. Built with the Geological Survey of Western Australia."/>
    <div className={styles.layout}>
      <aside className={styles.contents} aria-label="On this page"><p className="eyebrow">On this page</p>
-       <a href="#purpose">The purpose <span>01</span></a><a href="#pipeline">The pipeline <span>02</span></a><a href="#rules">The five rules <span>03</span></a>
-       <a href="#limitations">What remains open <span>04</span></a><a href="#people">Data & people <span>05</span></a>
+       <Link to={sectionLink("#purpose")}>The purpose <span>01</span></Link><Link to={sectionLink("#pipeline")}>The pipeline <span>02</span></Link><Link to={sectionLink("#rules")}>The five rules <span>03</span></Link>
+       <Link to={sectionLink("#limitations")}>What remains open <span>04</span></Link><Link to={sectionLink("#people")}>Data & people <span>05</span></Link>
        <div className={styles.projectStamp}><Icon name="core" size={26}/><p>GSWA HyLogger<br/>Industry Adoption</p><span>Group 6 / CITS5553 / UWA</span></div>
      </aside>
      <div className={styles.body}>
