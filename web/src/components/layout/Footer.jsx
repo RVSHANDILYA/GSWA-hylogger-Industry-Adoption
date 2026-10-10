@@ -1,9 +1,14 @@
 import { Link } from "react-router-dom";
 import Brand from "./Brand.jsx";
 import { NAV_ITEMS } from "./navItems.js";
+import useDataSource from "../../hooks/useDataSource.js";
 import styles from "./Footer.module.css";
 
 export default function Footer() {
+  const source = useDataSource();
+  const snapshotDate = import.meta.env.VITE_DATA_MODE === "snapshot" && source.generatedAt
+    ? new Intl.DateTimeFormat("en-AU", { timeZone: "Australia/Perth", dateStyle: "long", timeStyle: "short" }).format(new Date(source.generatedAt))
+    : null;
   return <footer className={styles.footer}>
     <div className={styles.inner}>
       <div className={styles.brand}>
@@ -23,6 +28,7 @@ export default function Footer() {
       </div>
     </div>
     <div className={styles.bottom}><span>CoreSense | HyLogger / 2026</span>
+      {snapshotDate && <span>Static snapshot of the loaded data, generated {snapshotDate} AWST.</span>}
       <span>Research aid. Provisional rules. Expert interpretation required.</span></div>
   </footer>;
 }
